@@ -98,8 +98,8 @@
 
     .btn-apps { background:var(--ji-dark);color:#fff;border:none;border-radius:8px;padding:7px 16px;font-size:.78rem;font-weight:600;cursor:pointer;white-space:nowrap;transition:background .2s; }
     .btn-apps:hover { background:#2c2c54; }
-    .btn-edit-vac { background:transparent;color:#922b21;border:1px solid #fadbd8;border-radius:8px;padding:7px 16px;font-size:.78rem;font-weight:600;cursor:pointer;white-space:nowrap;transition:all .2s; }
-    .btn-edit-vac:hover { background:#fff5f5;border-color:#e74c3c; }
+    .btn-edit-vac { background:transparent;color:#b7770d;border:1px solid #fde68a;border-radius:8px;padding:7px 16px;font-size:.78rem;font-weight:600;cursor:pointer;white-space:nowrap;transition:all .2s; }
+    .btn-edit-vac:hover { background:#fffbeb;border-color:#f59e0b; }
 
     /* ── Edit modal ───────────────────────────────── */
     .edit-overlay { display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:950;align-items:center;justify-content:center; }
@@ -107,8 +107,9 @@
     .edit-modal { background:#fff;border-radius:16px;padding:28px 30px;width:540px;max-width:96%;max-height:90vh;overflow-y:auto;box-shadow:0 24px 60px rgba(0,0,0,.2); }
     .edit-modal h3 { font-size:1.1rem;font-weight:700;margin-bottom:16px; }
     .edit-modal label { font-size:.78rem;font-weight:600;color:#555;display:block;margin-bottom:4px;margin-top:14px; }
-    .edit-modal input, .edit-modal textarea { width:100%;padding:10px 13px;border:1px solid #dde1e7;border-radius:9px;font-size:.9rem;outline:none;font-family:inherit;resize:vertical; }
-    .edit-modal input:focus, .edit-modal textarea:focus { border-color:#7b2d8b;box-shadow:0 0 0 3px rgba(123,45,139,.12); }
+    .edit-modal input, .edit-modal select, .edit-modal textarea { width:100%;padding:10px 13px;border:1px solid #dde1e7;border-radius:9px;font-size:.9rem;outline:none;font-family:inherit;resize:vertical;background:#fff; }
+    .edit-modal select { appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 13px center;padding-right:36px;cursor:pointer; }
+    .edit-modal input:focus, .edit-modal select:focus, .edit-modal textarea:focus { border-color:#7b2d8b;box-shadow:0 0 0 3px rgba(123,45,139,.12); }
     .edit-modal .required { color:#e74c3c; }
     .edit-modal-actions { display:flex;gap:10px;justify-content:flex-end;margin-top:20px; }
     .btn-cancel-edit { background:#ecf0f1;color:#555;border:none;border-radius:9px;padding:10px 20px;font-weight:600;cursor:pointer; }
@@ -252,23 +253,98 @@
 <!-- ════════════════════ EDIT VACANCY MODAL ════════════════════ -->
 <div class="edit-overlay" id="edit-overlay">
   <div class="edit-modal">
-    <h3>✏️ Edit Rejected Vacancy</h3>
+    <h3>✏️ Edit Vacancy</h3>
     <div class="edit-note">
       <i class="bi bi-info-circle me-1"></i>
-      Editing will <strong>reset your vacancy to Pending</strong> for admin review.
+      Your vacancy will remain in <strong>Pending</strong> status for admin review.
       The admin will see it marked as "Edited".
     </div>
     <input type="hidden" id="edit-vac-id">
     <label>Job Code</label>
     <input type="text" id="edit-job-code" disabled style="background:#f5f5f5;color:#888">
+
+    <label>Job Category <span class="required">*</span></label>
+    <select id="edit-category">
+      <option value="">— Select category —</option>
+      <option value="retail">Retail &amp; Showrooms</option>
+      <option value="hospitality">Hospitality &amp; Food Service</option>
+      <option value="healthcare">Healthcare &amp; Caretaking</option>
+      <option value="driving">Driving &amp; Logistics</option>
+      <option value="office_admin">Office &amp; Admin</option>
+      <option value="maintenance_technician">Maintenance &amp; Technician</option>
+      <option value="it_professional">IT &amp; Professional</option>
+      <option value="gulf_abroad">Gulf / Abroad Jobs</option>
+      <option value="other">Other / General</option>
+    </select>
+
     <label>Job Title <span class="required">*</span></label>
     <input type="text" id="edit-title" placeholder="e.g. Senior Accountant" maxlength="200">
-    <label>Location <span class="required">*</span></label>
-    <input type="text" id="edit-location" placeholder="e.g. Kochi, Kerala" maxlength="200">
+
+    <label>District / Region <span class="required">*</span></label>
+    <select id="edit-district">
+      <option value="">— Select district —</option>
+      <option value="Thiruvananthapuram">Thiruvananthapuram</option>
+      <option value="Kollam">Kollam</option>
+      <option value="Pathanamthitta">Pathanamthitta</option>
+      <option value="Alappuzha">Alappuzha</option>
+      <option value="Kottayam">Kottayam</option>
+      <option value="Idukki">Idukki</option>
+      <option value="Ernakulam">Ernakulam</option>
+      <option value="Thrissur">Thrissur</option>
+      <option value="Palakkad">Palakkad</option>
+      <option value="Malappuram">Malappuram</option>
+      <option value="Kozhikode">Kozhikode</option>
+      <option value="Wayanad">Wayanad</option>
+      <option value="Kannur">Kannur</option>
+      <option value="Kasaragod">Kasaragod</option>
+      <option value="Bangalore">Bangalore</option>
+      <option value="GCC / Abroad">GCC / Abroad</option>
+      <option value="Other">Other</option>
+    </select>
+
+    <label>Exact Location <span class="required">*</span></label>
+    <input type="text" id="edit-location" placeholder="e.g. Vyttila, Mavoor Road, Edappally" maxlength="200">
+
+    <label>Job Mode <span class="required">*</span></label>
+    <select id="edit-mode">
+      <option value="">— Select mode —</option>
+      <option value="full_time">Full-Time</option>
+      <option value="part_time">Part-Time</option>
+      <option value="remote">Remote</option>
+      <option value="hybrid">Hybrid</option>
+    </select>
+
     <label>Salary Range</label>
-    <input type="text" id="edit-salary" placeholder="e.g. ₹20,000 – ₹30,000/month" maxlength="100">
+    <select id="edit-salary">
+      <option value="">— Select range —</option>
+      <option value="interview_based">Based on Interview</option>
+      <option value="not_mentioned">Not Mentioned</option>
+      <option value="stipend">Stipend</option>
+      <option value="below_10k">Below ₹10,000</option>
+      <option value="10k_20k">₹10,000 - ₹20,000</option>
+      <option value="20k_30k">₹20,000 - ₹30,000</option>
+      <option value="30k_40k">₹30,000 - ₹40,000</option>
+      <option value="40k_50k">₹40,000 - ₹50,000</option>
+      <option value="above_50k">Above ₹50,000</option>
+    </select>
+
     <label>Experience Required</label>
-    <input type="text" id="edit-experience" placeholder="e.g. 2+ years" maxlength="100">
+    <select id="edit-experience">
+      <option value="">— Select experience —</option>
+      <option value="no_experience">No Experience Required</option>
+      <option value="fresher_or_exp">Fresher or Experienced</option>
+      <option value="1_2_years">1-2 Years</option>
+      <option value="3_5_years">3-5 Years</option>
+      <option value="5_plus_years">5+ Years</option>
+    </select>
+
+    <label>CV / Resume Required</label>
+    <select id="edit-cv">
+      <option value="">— Select —</option>
+      <option value="no">No – CV is optional</option>
+      <option value="yes">Yes – CV is mandatory</option>
+    </select>
+
     <label>Job Description</label>
     <textarea id="edit-description" rows="5" placeholder="Describe the role, responsibilities, and requirements…"></textarea>
     <div id="edit-err" style="color:#e74c3c;font-size:.82rem;margin-top:8px;display:none"></div>
@@ -430,9 +506,10 @@ function renderVacancyTable(filter) {
     const rejBlock = (v.status === "rejected" && v.rejection_reason)
       ? `<div class="vc-reject-block">Reason: ${esc(v.rejection_reason)}</div>` : "";
 
-    const actionBtn = v.status === "rejected"
+    const canEdit = (v.status !== "approved");
+    const actionBtn = canEdit
       ? `<button class="btn-edit-vac" onclick="openEditModal(${JSON.stringify(v).replace(/"/g,'&quot;')})">
-           Edit &amp; resubmit
+           ✏️ Edit vacancy
          </button>`
       : `<button class="btn-apps" onclick="goToApps(${v.id},'${esc(v.job_code)}','${esc(v.job_title)}',${v.application_count},'${esc(v.company_name || '')}')">
            View apps
@@ -528,14 +605,19 @@ function openEditModal(v) {
   // v can be an object (when called programmatically) or come from onclick as
   // a stringified object via data-attribute — handle both cases.
   if (typeof v === "string") { try { v = JSON.parse(v); } catch { return; } }
-  document.getElementById("edit-vac-id").value      = v.id;
-  document.getElementById("edit-job-code").value     = v.job_code || "";
-  document.getElementById("edit-title").value        = v.job_title || "";
-  document.getElementById("edit-location").value     = v.exact_location || v.district_region || "";
-  document.getElementById("edit-salary").value       = v.salary_range || "";
-  document.getElementById("edit-experience").value   = v.experience_required || "";
-  document.getElementById("edit-description").value  = v.job_description || "";
-  document.getElementById("edit-err").style.display  = "none";
+  document.getElementById("edit-vac-id").value       = v.id;
+  document.getElementById("edit-job-code").value      = v.job_code || "";
+  document.getElementById("edit-category").value      = v.job_category || "";
+  document.getElementById("edit-title").value         = v.job_title || "";
+  document.getElementById("edit-district").value      = v.district_region || "";
+  document.getElementById("edit-location").value      = v.exact_location || "";
+  document.getElementById("edit-mode").value          = v.job_mode || "";
+  document.getElementById("edit-salary").value        = v.salary_range || "";
+  document.getElementById("edit-experience").value    = v.experience_required || "";
+  // cv_required is a boolean in the API — map it to the select's "yes"/"no" IDs
+  document.getElementById("edit-cv").value            = v.cv_required === true ? "yes" : v.cv_required === false ? "no" : "";
+  document.getElementById("edit-description").value   = v.job_description || "";
+  document.getElementById("edit-err").style.display   = "none";
   document.getElementById("submit-edit-btn").disabled = false;
   document.getElementById("submit-edit-btn").innerHTML = '<i class="bi bi-send me-1"></i>Submit for Review';
   document.getElementById("edit-overlay").classList.add("open");
@@ -551,12 +633,22 @@ document.getElementById("edit-overlay").addEventListener("click", e => {
 });
 
 document.getElementById("submit-edit-btn").addEventListener("click", async () => {
-  const title    = document.getElementById("edit-title").value.trim();
-  const location = document.getElementById("edit-location").value.trim();
-  const errEl    = document.getElementById("edit-err");
+  const category   = document.getElementById("edit-category").value;
+  const title      = document.getElementById("edit-title").value.trim();
+  const district   = document.getElementById("edit-district").value;
+  const location   = document.getElementById("edit-location").value.trim();
+  const mode       = document.getElementById("edit-mode").value;
+  const salary     = document.getElementById("edit-salary").value;
+  const experience = document.getElementById("edit-experience").value;
+  const cvSel      = document.getElementById("edit-cv").value;
+  const errEl      = document.getElementById("edit-err");
 
-  if (!title)    { errEl.textContent = "Job title is required.";    errEl.style.display = "block"; return; }
-  if (!location) { errEl.textContent = "Location is required.";     errEl.style.display = "block"; return; }
+  // Client-side validation for required fields
+  if (!category)  { errEl.textContent = "Please select a job category.";  errEl.style.display = "block"; return; }
+  if (!title)     { errEl.textContent = "Job title is required.";          errEl.style.display = "block"; return; }
+  if (!district)  { errEl.textContent = "Please select a district.";       errEl.style.display = "block"; return; }
+  if (!location)  { errEl.textContent = "Exact location is required.";     errEl.style.display = "block"; return; }
+  if (!mode)      { errEl.textContent = "Please select a job mode.";       errEl.style.display = "block"; return; }
   errEl.style.display = "none";
 
   const btn = document.getElementById("submit-edit-btn");
@@ -567,29 +659,35 @@ document.getElementById("submit-edit-btn").addEventListener("click", async () =>
       wa_number:           verifiedWa,
       session_token:       sessionToken,
       vacancy_id:          parseInt(document.getElementById("edit-vac-id").value),
-      job_category:        "General", // Default when editing via old form
-      job_mode:            "Office", // Default
-      district_region:     location,
+      job_category:        category,
+      district_region:     district,
       exact_location:      location,
       job_title:           title,
       job_description:     document.getElementById("edit-description").value.trim() || null,
-      salary_range:        document.getElementById("edit-salary").value.trim() || null,
-      experience_required: document.getElementById("edit-experience").value.trim() || null,
+      job_mode:            mode,
+      salary_range:        salary || null,
+      experience_required: experience || null,
+      cv_required:         cvSel === "yes" ? true : cvSel === "no" ? false : null,
     });
     const d = await r.json();
+
+    // 409 = race condition: admin approved the vacancy while recruiter was editing
+    if (r.status === 409) {
+      errEl.textContent = d.detail || "This vacancy was just approved. Refresh the page to see the latest status.";
+      errEl.style.display = "block";
+      return;
+    }
     if (!r.ok) { errEl.textContent = d.detail || "Submission failed."; errEl.style.display = "block"; return; }
 
     closeEditModal();
-    // Reload dashboard to reflect status change (rejected → pending)
+    // Reload dashboard to reflect updated fields
     await loadDashboard();
-    // Snap to pending filter so recruiter sees the resubmitted vacancy
-    document.querySelectorAll(".tab-btn").forEach(b => b.classList.toggle("active", b.dataset.filter === "pending"));
-    renderVacancyTable("pending");
+    renderVacancyTable(currentVacFilter);
 
     // Show brief success toast
     const toast = document.createElement("div");
     toast.style.cssText = "position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#25d366;color:#fff;padding:12px 24px;border-radius:12px;font-weight:600;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,.2);font-size:.9rem;";
-    toast.textContent = "✅ Vacancy resubmitted for review!";
+    toast.textContent = "✅ Vacancy updated and queued for review!";
     document.body.appendChild(toast);
     setTimeout(() => toast.remove(), 3500);
   } catch(e) {
