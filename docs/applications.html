@@ -43,6 +43,17 @@
     }
     .btn-csv:hover { background:#2c2c54; }
     .btn-csv:disabled { opacity:.6; cursor:not-allowed; }
+    
+    .btn-toggle-ad {
+      background:transparent; border:1px solid; border-radius:8px;
+      padding:7px 14px; font-size:.8rem; font-weight:600; cursor:pointer;
+      display:inline-flex; align-items:center; gap:6px; font-family:inherit;
+      transition:all .2s;
+    }
+    .btn-stop-ad { color:#c0392b; border-color:#fadbd8; }
+    .btn-stop-ad:hover { background:#fadbd8; }
+    .btn-rerun-ad { color:#1e8449; border-color:#d5f5e3; }
+    .btn-rerun-ad:hover { background:#d5f5e3; }
 
     /* Row 2 — Search */
     .search-wrap {
@@ -239,6 +250,7 @@
       <button class="btn-csv" id="export-csv-btn">
         <i class="bi bi-download"></i> CSV
       </button>
+      <button class="btn-toggle-ad" id="toggle-ad-btn" style="display:none;"></button>
     </div>
   </div>
 
@@ -321,6 +333,7 @@
 let verifiedWa    = null;
 let sessionToken  = null;
 let panelVacancyId = null;   // int or "global"
+let panelVacancy  = null;
 let panelJobCode  = null;
 let panelJobTitle = "";
 let panelCompany  = "";
@@ -411,6 +424,8 @@ async function loadVacancyApps(vacId) {
     if (!r.ok) throw new Error(await r.text());
     const d = await r.json();
     allApps = d.applications;
+    panelVacancy = d.vacancy;
+    renderToggleButton();
   } catch(e) {
     console.error(e);
     allApps = [];
@@ -430,6 +445,8 @@ async function loadGlobalApps() {
     if (!r.ok) throw new Error(await r.text());
     const d = await r.json();
     allApps = d.applications;
+    panelVacancy = null;
+    renderToggleButton();
   } catch(e) {
     console.error(e);
     allApps = [];
@@ -440,6 +457,53 @@ async function loadGlobalApps() {
 }
 
 /* ── Render ─────────────────────────────────────────── */
+
+function renderToggleButton() {
+  const btn = document.getElementById("toggle-ad-btn");
+  if (panelVacancyId === "global" || !panelVacancy || panelVacancy.status !== "approved") {
+    btn.style.display = "none";
+    return;
+  }
+  btn.style.display = "inline-flex";
+  if (panelVacancy.is_active) {
+    btn.className = "btn-toggle-ad btn-stop-ad";
+    btn.innerHTML = "⏹ Stop Ad";
+  } else {
+    btn.className = "btn-toggle-ad btn-rerun-ad";
+    btn.innerHTML = "▶ Re-run Ad";
+  }
+}
+
+document.getElementById("toggle-ad-btn").addEventListener("click", async () => {
+  if (!panelVacancy) return;
+  const action = panelVacancy.is_active ? "stop" : "rerun";
+  if (!confirm(`Are you sure you want to ${action === 'stop' ? 'stop' : 're-run'} this ad?`)) return;
+
+  const btn = document.getElementById("toggle-ad-btn");
+  const origHtml = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = "…";
+
+  try {
+    const r = await post("/api/recruiters/vacancy/toggle-ad", {
+      wa_number: verifiedWa,
+      session_token: sessionToken,
+      vacancy_id: panelVacancy.id,
+      action: action
+    });
+    const d = await r.json();
+    if (!r.ok) {
+      alert(d.detail || "Failed to toggle ad.");
+      return;
+    }
+    panelVacancy.is_active = d.is_active;
+    renderToggleButton();
+  } catch (e) {
+    alert("Network error. Please try again.");
+  } finally {
+    btn.disabled = false;
+  }
+});
 
 function renderApps() {
   const list  = document.getElementById("apps-list");

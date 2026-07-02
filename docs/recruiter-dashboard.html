@@ -82,6 +82,7 @@
     .vc-badge.approved { background:#d5f5e3;color:#1e8449; }
     .vc-badge.pending  { background:#fef9e7;color:#b7770d; }
     .vc-badge.rejected { background:#fadbd8;color:#922b21; }
+    .vc-badge.stopped  { background:#fdebd0;color:#d35400; }
 
     .vc-jc-pill { display:inline-block;background:#f0f2f5;color:#555;padding:3px 12px;border-radius:20px;font-size:.72rem;font-weight:700;font-family:monospace;margin-bottom:14px; }
 
@@ -500,7 +501,14 @@ function renderVacancyTable(filter) {
   };
 
   rows.forEach(v => {
-    const st = statusMap[v.status] || { cls: "", label: v.status };
+    let st = statusMap[v.status] || { cls: "", label: v.status };
+    if (v.status === "approved") {
+      if (v.is_active) {
+        st = { cls: "approved", label: "✓ Ad Running" };
+      } else {
+        st = { cls: "stopped", label: "⏸ Ad Stopped" };
+      }
+    }
     const posted = v.created_at ? new Date(v.created_at).toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"}) : "—";
 
     const rejBlock = (v.status === "rejected" && v.rejection_reason)
@@ -516,7 +524,7 @@ function renderVacancyTable(filter) {
          </button>`;
 
     const footerMeta = v.status !== "rejected"
-      ? `<span class="app-count-inline">${v.application_count} application ${v.application_count !== 1 ? 's' : ''}</span>  ·  ${posted}`
+      ? `<span class="app-count-inline">${v.application_count} application${v.application_count !== 1 ? 's' : ''}</span>  ·  ${posted}`
       : posted;
 
     list.insertAdjacentHTML("beforeend", `
@@ -694,6 +702,17 @@ document.getElementById("submit-edit-btn").addEventListener("click", async () =>
     errEl.textContent = "Network error. Please try again."; errEl.style.display = "block";
   } finally {
     btn.disabled = false; btn.innerHTML = '<i class="bi bi-send me-1"></i>Submit for Review';
+  }
+});
+
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "visible" && sessionToken && document.getElementById("dashboard").style.display === "block") {
+    post("/api/recruiters/dashboard", { wa_number: verifiedWa, session_token: sessionToken })
+      .then(r => r.ok ? r.json() : Promise.reject())
+      .then(d => {
+        allVacancies = d.vacancies;
+        renderVacancyTable(currentVacFilter);
+      }).catch(() => {});
   }
 });
 
