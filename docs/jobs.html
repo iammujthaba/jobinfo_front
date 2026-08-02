@@ -5,7 +5,8 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <title>Browse Jobs – JobInfo Kerala</title>
-  <meta name="description" content="Browse verified job openings in Kerala. Apply instantly via WhatsApp – no app download needed.">
+  <meta name="description"
+    content="Browse verified job openings in Kerala. Apply instantly via WhatsApp – no app download needed.">
   <meta name="keywords" content="Kerala jobs, WhatsApp jobs, Job vacancies Kerala, JobInfo">
 
   <!-- Favicons -->
@@ -15,7 +16,9 @@
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Raleway:wght@400;600;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Raleway:wght@400;600;700&display=swap"
+    rel="stylesheet">
 
   <!-- Vendor CSS -->
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -34,11 +37,13 @@
       z-index: 10;
       overflow: visible;
     }
+
     .search-input-group {
       display: flex;
       gap: 10px;
       flex-wrap: wrap;
     }
+
     .search-input-group input {
       flex: 1;
       min-width: 180px;
@@ -47,11 +52,13 @@
       padding: 10px 16px;
       font-size: .95rem;
     }
+
     .search-input-group input:focus {
       outline: none;
       border-color: #25d366;
-      box-shadow: 0 0 0 3px rgba(37,211,102,.15);
+      box-shadow: 0 0 0 3px rgba(37, 211, 102, .15);
     }
+
     #search-btn {
       background: #25d366;
       color: #fff;
@@ -62,17 +69,22 @@
       cursor: pointer;
       transition: background .2s;
     }
-    #search-btn:hover { background: #1ebe5d; }
+
+    #search-btn:hover {
+      background: #1ebe5d;
+    }
 
     /* ── Job card ────────────────────────────────────── */
     .job-card {
       border: 1px solid #eef0f4;
       transition: transform .2s, box-shadow .2s;
     }
+
     .job-card:hover {
       transform: translateY(-3px);
-      box-shadow: 0 8px 24px rgba(0,0,0,.09) !important;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, .09) !important;
     }
+
     .job-code-badge {
       display: inline-block;
       background: #e8f5e9;
@@ -83,13 +95,23 @@
       font-weight: 700;
       letter-spacing: .04em;
     }
-    .job-title { font-size: 1rem; font-weight: 600; color: #1a1a2e; }
+
+    .job-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #1a1a2e;
+    }
+
     .apply-wa-btn {
       background: #25d366;
       border-color: #25d366;
       font-weight: 600;
     }
-    .apply-wa-btn:hover { background: #1ebe5d; border-color: #1ebe5d; }
+
+    .apply-wa-btn:hover {
+      background: #1ebe5d;
+      border-color: #1ebe5d;
+    }
 
     /* ── Load more ───────────────────────────────────── */
     #load-more-btn {
@@ -103,18 +125,27 @@
       cursor: pointer;
       transition: all .2s;
     }
-    #load-more-btn:hover { background: #25d366; color: #fff; }
+
+    #load-more-btn:hover {
+      background: #25d366;
+      color: #fff;
+    }
 
     /* ── Autocomplete Dropdown ───────────────────────── */
-    .location-wrapper, .title-wrapper {
+    .location-wrapper,
+    .title-wrapper {
       position: relative;
       flex: 1;
       min-width: 180px;
     }
-    .location-wrapper input, .title-wrapper input {
+
+    .location-wrapper input,
+    .title-wrapper input {
       width: 100%;
     }
-    #location-suggestions, #title-suggestions {
+
+    #location-suggestions,
+    #title-suggestions {
       display: none;
       position: absolute;
       top: 100%;
@@ -124,28 +155,37 @@
       border: 1px solid #dde1e7;
       border-radius: 8px;
       margin-top: 4px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       z-index: 1000;
       max-height: 200px;
       overflow-y: auto;
       list-style: none;
       padding: 0;
     }
-    #location-suggestions li, #title-suggestions li {
+
+    #location-suggestions li,
+    #title-suggestions li {
       padding: 10px 16px;
       font-size: .95rem;
       cursor: pointer;
       border-bottom: 1px solid #f0f2f5;
     }
-    #location-suggestions li:last-child, #title-suggestions li:last-child {
+
+    #location-suggestions li:last-child,
+    #title-suggestions li:last-child {
       border-bottom: none;
     }
-    #location-suggestions li:hover, #title-suggestions li:hover {
+
+    #location-suggestions li:hover,
+    #title-suggestions li:hover {
       background: #e8f5e9;
     }
 
     /* ── Count label ──────────────────── */
-    #jobs-count { font-size:.85rem; color:#888; }
+    #jobs-count {
+      font-size: .85rem;
+      color: #888;
+    }
 
     /* Outlined pill button for navbar } */
     .btn-nav-outline {
@@ -163,6 +203,7 @@
       transition: background 0.3s, color 0.3s;
       white-space: nowrap;
     }
+
     .btn-nav-outline:hover {
       background: #10bc69;
       color: #fff;
@@ -192,14 +233,17 @@
           <li><a href="index.html#call-to-action">Join Now</a></li>
           <li><a href="index.html#faq">FAQ</a></li>
           <li class="d-xl-none text-center" style="padding: 10px 20px;">
-            <a id="login-nav-btn-mobile" class="btn-nav-outline w-100 justify-content-center" href="#" data-bs-toggle="modal" data-bs-target="#seekerLoginModal"><i class="bi bi-box-arrow-in-right"></i>Login</a>
+            <a id="login-nav-btn-mobile" class="btn-nav-outline w-100 justify-content-center" href="#"
+              data-bs-toggle="modal" data-bs-target="#seekerLoginModal"><i
+                class="bi bi-box-arrow-in-right"></i>Login</a>
           </li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
 
       <a class="btn-getstarted" href="recruiter.html">Post Vacancies</a>
-      <a class="btn-nav-outline d-none d-xl-flex" id="login-nav-btn" href="#" data-bs-toggle="modal" data-bs-target="#seekerLoginModal" style="margin-left: 10px;"><i class="bi bi-box-arrow-in-right"></i>Login</a>
+      <a class="btn-nav-outline d-none d-xl-flex" id="login-nav-btn" href="#" data-bs-toggle="modal"
+        data-bs-target="#seekerLoginModal" style="margin-left: 10px;"><i class="bi bi-box-arrow-in-right"></i>Login</a>
 
     </div>
   </header>
@@ -225,7 +269,8 @@
           </div>
           <button id="search-btn"><i class="bi bi-search me-1"></i>Search</button>
         </div>
-        <div class="mt-2"><span id="jobs-count" class="text-muted small"></span></div>
+        <!-- show job counts -->
+        <!-- <div class="mt-2"><span id="jobs-count" class="text-muted small"></span></div> -->
       </div>
     </section>
 
@@ -250,7 +295,8 @@
           <div class="col-xl-10 text-center">
             <h3>Don't miss new vacancies!</h3>
             <p>Join our WhatsApp Channel and get notified the moment a new job is posted.</p>
-            <a class="cta-btn" href="https://whatsapp.com/channel/0029VbBrkDB8fewxd9QIMA2k" target="_blank" rel="noopener">
+            <a class="cta-btn" href="https://whatsapp.com/channel/0029VbBrkDB8fewxd9QIMA2k" target="_blank"
+              rel="noopener">
               <i class="bi bi-whatsapp me-2"></i>Join the Channel
             </a>
           </div>
@@ -321,7 +367,7 @@
   <script>
     (function () {
       const token = sessionStorage.getItem("ji_r_token");
-      const wa    = sessionStorage.getItem("ji_r_wa");
+      const wa = sessionStorage.getItem("ji_r_wa");
       if (token && wa) {
         const btn = document.getElementById("login-nav-btn");
         if (btn) {
@@ -374,11 +420,13 @@
 
           <div class="mb-4">
             <h5 class="fw-bold mb-2">Job Description</h5>
-            <div class="text-muted" style="white-space:pre-wrap; font-size:0.95rem; line-height:1.6;" id="jd-description"></div>
+            <div class="text-muted" style="white-space:pre-wrap; font-size:0.95rem; line-height:1.6;"
+              id="jd-description"></div>
           </div>
 
           <div class="d-grid gap-2 mt-4">
-            <a href="#" id="jd-apply-btn" target="_blank" class="btn btn-success py-3 fw-bold rounded-pill shadow-sm" style="font-size:1.05rem;">
+            <a href="#" id="jd-apply-btn" target="_blank" class="btn btn-success py-3 fw-bold rounded-pill shadow-sm"
+              style="font-size:1.05rem;">
               <i class="bi bi-whatsapp me-2"></i> Apply via WhatsApp
             </a>
           </div>
@@ -388,4 +436,5 @@
   </div>
 
 </body>
+
 </html>
