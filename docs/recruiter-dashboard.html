@@ -1,541 +1,1150 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My Dashboard – JobInfo Recruiter</title>
   <meta name="description" content="Recruiter dashboard – manage vacancies and applications on JobInfo.">
   <meta name="robots" content="noindex, nofollow">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Raleway:wght@500;600;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Raleway:wght@500;600;700&display=swap"
+    rel="stylesheet">
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
   <link href="assets/css/main.css" rel="stylesheet">
 
   <style>
-    :root { --ji-green:#25d366; --ji-dark:#1a1a2e; --ji-bg:#f4f6fb; }
-    body { background:var(--ji-bg); font-family:Roboto,sans-serif; }
+    :root {
+      --ji-green: #25d366;
+      --ji-dark: #1a1a2e;
+      --ji-bg: #f4f6fb;
+    }
+
+    body {
+      background: var(--ji-bg);
+      font-family: Roboto, sans-serif;
+    }
 
     /* ── Auth ─────────────────────────────────────── */
-    #auth-screen { position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:1050; display:flex; align-items:center; justify-content:center; padding:20px; }
-    .auth-card { background:#fff;border-radius:16px;padding:40px 36px;width:420px;max-width:100%;box-shadow:0 12px 40px rgba(0,0,0,.1); }
-    .auth-card h2 { font-size:1.4rem;font-weight:700; }
-    .step-dots { display:flex;gap:8px;margin-bottom:22px;justify-content: center; }
-    .step-dot { width:32px;height:6px;border-radius:4px;background:#e0e0e0;transition:background .3s; }
-    .step-dot.active { background:var(--ji-green); }
-    .field-label { font-size:.78rem;font-weight:600;color:#555;margin-bottom:5px;display:block; }
-    .wa-wrap { display:flex;border:1px solid #dde1e7;border-radius:10px;overflow:hidden; }
-    .wa-wrap .prefix { background:#f5f5f5;padding:11px 14px;font-size:.9rem;color:#555;border-right:1px solid #dde1e7;white-space:nowrap; }
-    .wa-wrap input { border:none;border-radius:0;padding:11px 14px;width:100%;font-size:.95rem;outline:none; }
-    .btn-ji { width:100%;padding:12px;border:none;border-radius:10px;background:var(--ji-green);color:#fff;font-size:1rem;font-weight:700;cursor:pointer;transition:background .2s; }
-    .btn-ji:hover { background:#1ebe5d; }
-    .btn-ji:disabled { background:#aaa;cursor:not-allowed; }
-    .otp-field { font-size:2rem;letter-spacing:.6rem;text-align:center;font-weight:700;width:100%;padding:11px;border:1px solid #dde1e7;border-radius:10px;outline:none; }
-    .otp-field:focus { border-color:var(--ji-green);box-shadow:0 0 0 3px rgba(37,211,102,.15); }
-    .auth-err { color:#e74c3c;font-size:.82rem;margin-top:6px;display:none; }
-    .resend-row { text-align:center;margin-top:10px; }
-    .btn-resend { background:none;border:none;color:#888;font-size:.82rem;cursor:pointer; }
-    .btn-resend:disabled { color:#ccc;cursor:default; }
+    #auth-screen {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1050;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .auth-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 40px 36px;
+      width: 420px;
+      max-width: 100%;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, .1);
+    }
+
+    .auth-card h2 {
+      font-size: 1.4rem;
+      font-weight: 700;
+    }
+
+    .step-dots {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 22px;
+      justify-content: center;
+    }
+
+    .step-dot {
+      width: 32px;
+      height: 6px;
+      border-radius: 4px;
+      background: #e0e0e0;
+      transition: background .3s;
+    }
+
+    .step-dot.active {
+      background: var(--ji-green);
+    }
+
+    .field-label {
+      font-size: .78rem;
+      font-weight: 600;
+      color: #555;
+      margin-bottom: 5px;
+      display: block;
+    }
+
+    .wa-wrap {
+      display: flex;
+      border: 1px solid #dde1e7;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .wa-wrap .prefix {
+      background: #f5f5f5;
+      padding: 11px 14px;
+      font-size: .9rem;
+      color: #555;
+      border-right: 1px solid #dde1e7;
+      white-space: nowrap;
+    }
+
+    .wa-wrap input {
+      border: none;
+      border-radius: 0;
+      padding: 11px 14px;
+      width: 100%;
+      font-size: .95rem;
+      outline: none;
+    }
+
+    .btn-ji {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      background: var(--ji-green);
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background .2s;
+    }
+
+    .btn-ji:hover {
+      background: #1ebe5d;
+    }
+
+    .btn-ji:disabled {
+      background: #aaa;
+      cursor: not-allowed;
+    }
+
+    .otp-field {
+      font-size: 2rem;
+      letter-spacing: .6rem;
+      text-align: center;
+      font-weight: 700;
+      width: 100%;
+      padding: 11px;
+      border: 1px solid #dde1e7;
+      border-radius: 10px;
+      outline: none;
+    }
+
+    .otp-field:focus {
+      border-color: var(--ji-green);
+      box-shadow: 0 0 0 3px rgba(37, 211, 102, .15);
+    }
+
+    .auth-err {
+      color: #e74c3c;
+      font-size: .82rem;
+      margin-top: 6px;
+      display: none;
+    }
+
+    .resend-row {
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .btn-resend {
+      background: none;
+      border: none;
+      color: #888;
+      font-size: .82rem;
+      cursor: pointer;
+    }
+
+    .btn-resend:disabled {
+      color: #ccc;
+      cursor: default;
+    }
 
     /* ── Dashboard shell ──────────────────────────── */
-    #dashboard { display:block; }
-    .top-bar { background:var(--ji-dark);color:#fff;padding:14px 24px;display:flex;align-items:center;justify-content:space-between; }
-    .top-bar .brand { font-size:1.1rem;font-weight:700; }
-    .top-bar .brand span { color:var(--ji-green); }
-    .sub-label { font-size:.8rem;color:#cdd5f3; }
-    .btn-logout { background:none;border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:8px;padding:5px 14px;font-size:.78rem;cursor:pointer;transition:all .2s; }
-    .btn-logout:hover { background:rgba(255,255,255,.1); }
+    #dashboard {
+      display: block;
+    }
+
+    .top-bar {
+      background: var(--ji-dark);
+      color: #fff;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .top-bar .brand {
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    .top-bar .brand span {
+      color: var(--ji-green);
+    }
+
+    .sub-label {
+      font-size: .8rem;
+      color: #cdd5f3;
+    }
+
+    .btn-logout {
+      background: none;
+      border: 1px solid rgba(255, 255, 255, .25);
+      color: #fff;
+      border-radius: 8px;
+      padding: 5px 14px;
+      font-size: .78rem;
+      cursor: pointer;
+      transition: all .2s;
+    }
+
+    .btn-logout:hover {
+      background: rgba(255, 255, 255, .1);
+    }
 
     /* ── Profile ──────────────────────────────────── */
-    .profile-card { background:#fff;border-radius:16px;padding:20px 24px;margin-bottom:22px;display:flex;gap:18px;align-items:center;flex-wrap:wrap;box-shadow:0 2px 8px rgba(0,0,0,.06); }
-    .avatar { width:54px;height:54px;border-radius:50%;background:var(--ji-green);color:#fff;font-size:1.4rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:3px solid #e8e8e8; }
-    .profile-info h4 { font-size:1.05rem;font-weight:700;margin-bottom:2px;color:#222; }
-    .profile-info p { font-size:.82rem;color:#666;margin:0;line-height:1.7; }
+    .profile-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 20px 24px;
+      margin-bottom: 22px;
+      display: flex;
+      gap: 18px;
+      align-items: center;
+      flex-wrap: wrap;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, .06);
+    }
+
+    .avatar {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      background: var(--ji-green);
+      color: #fff;
+      font-size: 1.4rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      border: 3px solid #e8e8e8;
+    }
+
+    .profile-info h4 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 2px;
+      color: #222;
+    }
+
+    .profile-info p {
+      font-size: .82rem;
+      color: #666;
+      margin: 0;
+      line-height: 1.7;
+    }
 
     /* ── Stat cards ───────────────────────────────── */
-    .stat-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:22px; }
-    .stat-card { background:#fff;border-radius:14px;padding:18px 12px;text-align:center;cursor:pointer;transition:transform .15s,box-shadow .15s;border:2px solid transparent;box-shadow:0 2px 8px rgba(0,0,0,.06); }
-    .stat-card:hover { transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.1); }
-    .stat-card .val { font-size:2rem;font-weight:700;line-height:1;color:#222; }
-    .stat-card .lbl { font-size:.68rem;color:#888;font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-top:6px; }
-    .stat-card.approved .val { color:#27ae60; }
-    .stat-card.pending  .val { color:#e67e22; }
-    .stat-card.rejected .val { color:#e74c3c; }
-    .stat-card.apps     .val { color:#2980b9; }
-    .stat-card.shortlisted .val { color:#8e44ad; }
-    .stat-card.active { border-color:var(--ji-green);transform:translateY(-2px);box-shadow:0 6px 20px rgba(37,211,102,.15); }
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+
+    .stat-card {
+      background: #fff;
+      border-radius: 14px;
+      padding: 18px 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: transform .15s, box-shadow .15s;
+      border: 2px solid transparent;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, .06);
+    }
+
+    .stat-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, .1);
+    }
+
+    .stat-card .val {
+      font-size: 2rem;
+      font-weight: 700;
+      line-height: 1;
+      color: #222;
+    }
+
+    .stat-card .lbl {
+      font-size: .68rem;
+      color: #888;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      margin-top: 6px;
+    }
+
+    .stat-card.approved .val {
+      color: #27ae60;
+    }
+
+    .stat-card.pending .val {
+      color: #e67e22;
+    }
+
+    .stat-card.rejected .val {
+      color: #e74c3c;
+    }
+
+    .stat-card.apps .val {
+      color: #2980b9;
+    }
+
+    .stat-card.shortlisted .val {
+      color: #8e44ad;
+    }
+
+    .stat-card.active {
+      border-color: var(--ji-green);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(37, 211, 102, .15);
+    }
 
     /* ── Filter / action bar ──────────────────────── */
-    .top-actions { display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px;align-items:center; }
-    .btn-post { background:var(--ji-green);color:#fff;border:none;border-radius:10px;padding:9px 20px;font-weight:700;font-size:.88rem;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:background .2s; }
-    .btn-post:hover { background:#1ebe5d;color:#fff; }
+    .top-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+      align-items: center;
+    }
+
+    .btn-post {
+      background: var(--ji-green);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 9px 20px;
+      font-weight: 700;
+      font-size: .88rem;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background .2s;
+    }
+
+    .btn-post:hover {
+      background: #1ebe5d;
+      color: #fff;
+    }
 
     /* ── Vacancy list & cards ─────────────────────── */
-    .vacancy-list { display:flex;flex-direction:column;gap:16px; }
-    .vac-section-title { font-size:.75rem;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;padding-left:4px; }
+    .vacancy-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
 
-    .vacancy-card { background:#fff;border-radius:16px;padding:20px;transition:box-shadow .2s;box-shadow:0 2px 8px rgba(0,0,0,.06); }
-    .vacancy-card:hover { box-shadow:0 8px 28px rgba(0,0,0,.1); }
+    .vac-section-title {
+      font-size: .75rem;
+      font-weight: 700;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: 4px;
+      padding-left: 4px;
+    }
 
-    .vc-header { display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:8px; }
-    .vc-title { font-size:1.1rem;font-weight:700;color:#222;line-height:1.3; }
-    .vc-badge { padding:4px 12px;border-radius:20px;font-size:.72rem;font-weight:700;white-space:nowrap;flex-shrink:0; }
-    .vc-badge.approved { background:#d5f5e3;color:#1e8449; }
-    .vc-badge.pending  { background:#fef9e7;color:#b7770d; }
-    .vc-badge.rejected { background:#fadbd8;color:#922b21; }
-    .vc-badge.stopped  { background:#fdebd0;color:#d35400; }
+    .vacancy-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 20px;
+      transition: box-shadow .2s;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, .06);
+    }
 
-    .vc-jc-pill { display:inline-block;background:#f0f2f5;color:#555;padding:3px 12px;border-radius:20px;font-size:.72rem;font-weight:700;font-family:monospace;margin-bottom:14px; }
+    .vacancy-card:hover {
+      box-shadow: 0 8px 28px rgba(0, 0, 0, .1);
+    }
 
-    .vc-details { display:grid;grid-template-columns:1fr 1fr;gap:12px 20px;margin-bottom:16px; }
-    .vc-detail-label { font-size:.7rem;font-weight:700;color:#aaa;text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px; }
-    .vc-detail-value { font-size:.88rem;color:#333;font-weight:500; }
-    .vc-detail-value i { margin-right:3px; }
+    .vc-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
 
-    .vc-reject-block { background:#fff5f5;border-radius:10px;padding:10px 14px;margin-bottom:14px;font-size:.82rem;color:#c0392b;font-style:italic;border:1px solid #fadbd8; }
+    .vc-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #222;
+      line-height: 1.3;
+    }
 
-    .vc-footer { display:flex;align-items:center;justify-content:space-between;gap:12px;padding-top:14px;border-top:1px solid #eef0f4; }
-    .vc-footer-meta { font-size:.78rem;color:#888; }
-    .vc-footer-meta .app-count-inline { color:#2980b9;font-weight:600; }
+    .vc-badge {
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: .72rem;
+      font-weight: 700;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
 
-    .btn-apps { background:var(--ji-dark);color:#fff;border:none;border-radius:8px;padding:7px 16px;font-size:.78rem;font-weight:600;cursor:pointer;white-space:nowrap;transition:background .2s; }
-    .btn-apps:hover { background:#2c2c54; }
-    .btn-edit-vac { background:transparent;color:#b7770d;border:1px solid #fde68a;border-radius:8px;padding:7px 16px;font-size:.78rem;font-weight:600;cursor:pointer;white-space:nowrap;transition:all .2s; }
-    .btn-edit-vac:hover { background:#fffbeb;border-color:#f59e0b; }
+    .vc-badge.approved {
+      background: #d5f5e3;
+      color: #1e8449;
+    }
+
+    .vc-badge.pending {
+      background: #fef9e7;
+      color: #b7770d;
+    }
+
+    .vc-badge.rejected {
+      background: #fadbd8;
+      color: #922b21;
+    }
+
+    .vc-badge.stopped {
+      background: #fdebd0;
+      color: #d35400;
+    }
+
+    .vc-jc-pill {
+      display: inline-block;
+      background: #f0f2f5;
+      color: #555;
+      padding: 3px 12px;
+      border-radius: 20px;
+      font-size: .72rem;
+      font-weight: 700;
+      font-family: monospace;
+      margin-bottom: 14px;
+    }
+
+    .vc-details {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px 20px;
+      margin-bottom: 16px;
+    }
+
+    .vc-detail-label {
+      font-size: .7rem;
+      font-weight: 700;
+      color: #aaa;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      margin-bottom: 2px;
+    }
+
+    .vc-detail-value {
+      font-size: .88rem;
+      color: #333;
+      font-weight: 500;
+    }
+
+    .vc-detail-value i {
+      margin-right: 3px;
+    }
+
+    .vc-reject-block {
+      background: #fff5f5;
+      border-radius: 10px;
+      padding: 10px 14px;
+      margin-bottom: 14px;
+      font-size: .82rem;
+      color: #c0392b;
+      font-style: italic;
+      border: 1px solid #fadbd8;
+    }
+
+    .vc-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding-top: 14px;
+      border-top: 1px solid #eef0f4;
+    }
+
+    .vc-footer-meta {
+      font-size: .78rem;
+      color: #888;
+    }
+
+    .vc-footer-meta .app-count-inline {
+      color: #2980b9;
+      font-weight: 600;
+    }
+
+    .btn-apps {
+      background: var(--ji-dark);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 7px 16px;
+      font-size: .78rem;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background .2s;
+    }
+
+    .btn-apps:hover {
+      background: #2c2c54;
+    }
+
+    .btn-edit-vac {
+      background: transparent;
+      color: #b7770d;
+      border: 1px solid #fde68a;
+      border-radius: 8px;
+      padding: 7px 16px;
+      font-size: .78rem;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all .2s;
+    }
+
+    .btn-edit-vac:hover {
+      background: #fffbeb;
+      border-color: #f59e0b;
+    }
 
     /* ── Edit modal ───────────────────────────────── */
-    .edit-overlay { display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:950;align-items:center;justify-content:center; }
-    .edit-overlay.open { display:flex; }
-    .edit-modal { background:#fff;border-radius:16px;padding:28px 30px;width:540px;max-width:96%;max-height:90vh;overflow-y:auto;box-shadow:0 24px 60px rgba(0,0,0,.2); }
-    .edit-modal h3 { font-size:1.1rem;font-weight:700;margin-bottom:16px; }
-    .edit-modal label { font-size:.78rem;font-weight:600;color:#555;display:block;margin-bottom:4px;margin-top:14px; }
-    .edit-modal input, .edit-modal select, .edit-modal textarea { width:100%;padding:10px 13px;border:1px solid #dde1e7;border-radius:9px;font-size:.9rem;outline:none;font-family:inherit;resize:vertical;background:#fff; }
-    .edit-modal select { appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 13px center;padding-right:36px;cursor:pointer; }
-    .edit-modal input:focus, .edit-modal select:focus, .edit-modal textarea:focus { border-color:#7b2d8b;box-shadow:0 0 0 3px rgba(123,45,139,.12); }
-    .edit-modal .required { color:#e74c3c; }
-    .edit-modal-actions { display:flex;gap:10px;justify-content:flex-end;margin-top:20px; }
-    .btn-cancel-edit { background:#ecf0f1;color:#555;border:none;border-radius:9px;padding:10px 20px;font-weight:600;cursor:pointer; }
-    .btn-submit-edit { background:#7b2d8b;color:#fff;border:none;border-radius:9px;padding:10px 22px;font-weight:700;cursor:pointer;transition:background .2s; }
-    .btn-submit-edit:hover { background:#6a2578; }
-    .btn-submit-edit:disabled { background:#aaa;cursor:not-allowed; }
-    .edit-note { background:#f0ebff;border:1px solid #d4b8f0;border-radius:9px;padding:10px 14px;font-size:.82rem;color:#5b21b6;margin-bottom:4px; }
+    .edit-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .5);
+      z-index: 950;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .edit-overlay.open {
+      display: flex;
+    }
+
+    .edit-modal {
+      background: #fff;
+      border-radius: 16px;
+      padding: 28px 30px;
+      width: 540px;
+      max-width: 96%;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, .2);
+    }
+
+    .edit-modal h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    .edit-modal label {
+      font-size: .78rem;
+      font-weight: 600;
+      color: #555;
+      display: block;
+      margin-bottom: 4px;
+      margin-top: 14px;
+    }
+
+    .edit-modal input,
+    .edit-modal select,
+    .edit-modal textarea {
+      width: 100%;
+      padding: 10px 13px;
+      border: 1px solid #dde1e7;
+      border-radius: 9px;
+      font-size: .9rem;
+      outline: none;
+      font-family: inherit;
+      resize: vertical;
+      background: #fff;
+    }
+
+    .edit-modal select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 13px center;
+      padding-right: 36px;
+      cursor: pointer;
+    }
+
+    .edit-modal input:focus,
+    .edit-modal select:focus,
+    .edit-modal textarea:focus {
+      border-color: #7b2d8b;
+      box-shadow: 0 0 0 3px rgba(123, 45, 139, .12);
+    }
+
+    .edit-modal .required {
+      color: #e74c3c;
+    }
+
+    .edit-modal-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+      margin-top: 20px;
+    }
+
+    .btn-cancel-edit {
+      background: #ecf0f1;
+      color: #555;
+      border: none;
+      border-radius: 9px;
+      padding: 10px 20px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .btn-submit-edit {
+      background: #7b2d8b;
+      color: #fff;
+      border: none;
+      border-radius: 9px;
+      padding: 10px 22px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background .2s;
+    }
+
+    .btn-submit-edit:hover {
+      background: #6a2578;
+    }
+
+    .btn-submit-edit:disabled {
+      background: #aaa;
+      cursor: not-allowed;
+    }
+
+    .edit-note {
+      background: #f0ebff;
+      border: 1px solid #d4b8f0;
+      border-radius: 9px;
+      padding: 10px 14px;
+      font-size: .82rem;
+      color: #5b21b6;
+      margin-bottom: 4px;
+    }
 
     /* ── Spinner / empty / loading ────────────────── */
-    .spinner-wrap { padding:40px;text-align:center; }
-    .empty-state { padding:46px;text-align:center;color:#aaa; }
-    .empty-state i { font-size:2.5rem;display:block;margin-bottom:10px; }
+    .spinner-wrap {
+      padding: 40px;
+      text-align: center;
+    }
+
+    .empty-state {
+      padding: 46px;
+      text-align: center;
+      color: #aaa;
+    }
+
+    .empty-state i {
+      font-size: 2.5rem;
+      display: block;
+      margin-bottom: 10px;
+    }
 
     /* ── Responsive ───────────────────────────────── */
 
     @media(max-width:640px) {
-      .auth-card { padding:28px 18px; }
-      .profile-card { flex-direction:column;gap:10px; text-align: center; }
-      .profile-card .ms-auto { margin-left: auto !important; margin-right: auto !important; width: 100%; justify-content: center; }
-      .stat-grid { grid-template-columns:repeat(3,1fr); gap: 10px; }
-      .stat-card { padding: 14px 10px; }
-      .stat-card .val { font-size: 1.6rem; }
+      .auth-card {
+        padding: 28px 18px;
+      }
+
+      .profile-card {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+      }
+
+      .profile-card .ms-auto {
+        margin-left: auto !important;
+        margin-right: auto !important;
+        width: 100%;
+        justify-content: center;
+      }
+
+      .stat-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+      }
+
+      .stat-card {
+        padding: 14px 10px;
+      }
+
+      .stat-card .val {
+        font-size: 1.6rem;
+      }
     }
 
     @media(max-width:400px) {
-      .stat-grid { grid-template-columns:repeat(3,1fr); gap:8px; }
-      .stat-card .val { font-size:1.4rem; }
-      .stat-card .lbl { font-size:.6rem; }
-      .vacancy-card { padding:16px; }
-      .vc-title { font-size:1rem; }
-      .vc-details { gap:10px 14px; }
+      .stat-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+      }
+
+      .stat-card .val {
+        font-size: 1.4rem;
+      }
+
+      .stat-card .lbl {
+        font-size: .6rem;
+      }
+
+      .vacancy-card {
+        padding: 16px;
+      }
+
+      .vc-title {
+        font-size: 1rem;
+      }
+
+      .vc-details {
+        gap: 10px 14px;
+      }
     }
   </style>
 </head>
+
 <body>
 
-<!-- ════════════════════ AUTH SCREEN ════════════════════ -->
-<div id="auth-screen">
-  <div class="auth-card" style="position: relative;">
-    <button type="button" class="btn-close position-absolute" aria-label="Close" style="top: 15px; right: 15px; background-color: #f5f5f5; border-radius: 50%; opacity: 0.8; padding: 10px;" onclick="handleRecruiterClose()"></button>
-    <div style="text-align:center;margin-bottom:20px">
-      <span style="font-size:1.6rem;font-weight:800">
-        <span style="color:#e74c3c">Job</span><span style="color:#1a1a2e">info</span>
-      </span>
-      <p style="margin:4px 0 0;color:#888;font-size:.82rem">Recruiter Dashboard</p>
+  <!-- ════════════════════ AUTH SCREEN ════════════════════ -->
+  <div id="auth-screen">
+    <div class="auth-card" style="position: relative;">
+      <button type="button" class="btn-close position-absolute" aria-label="Close"
+        style="top: 15px; right: 15px; background-color: #f5f5f5; border-radius: 50%; opacity: 0.8; padding: 10px;"
+        onclick="handleRecruiterClose()"></button>
+      <div style="text-align:center;margin-bottom:20px">
+        <span style="font-size:1.6rem;font-weight:800">
+          <span style="color:#e74c3c">Job</span><span style="color:#1a1a2e">info</span>
+        </span>
+        <p style="margin:4px 0 0;color:#888;font-size:.82rem">Recruiter Dashboard</p>
+      </div>
+      <div class="step-dots">
+        <div class="step-dot active" id="dot1"></div>
+        <div class="step-dot" id="dot2"></div>
+      </div>
+
+      <!-- Step 1 -->
+      <div id="auth-step1">
+        <h2>Verify your WhatsApp</h2>
+        <p class="text-muted mb-4" style="font-size:.88rem">Enter the number you registered with.</p>
+        <div class="mb-3">
+          <label class="field-label">WhatsApp Number</label>
+          <div class="wa-wrap">
+            <span class="prefix"><i class="bi bi-whatsapp" style="color:#25d366"></i> +91</span>
+            <input type="tel" id="wa-input" placeholder="10-digit number" maxlength="10">
+          </div>
+        </div>
+        <button class="btn-ji" id="send-otp-btn"><i class="bi bi-send me-2"></i>Send OTP</button>
+        <div class="auth-err" id="err1"></div>
+      </div>
+
+      <!-- Step 2 -->
+      <div id="auth-step2" style="display:none">
+        <h2>Enter OTP</h2>
+        <p class="text-muted mb-4" style="font-size:.88rem">A 6-digit code was sent to your WhatsApp.</p>
+        <div class="mb-3">
+          <label class="field-label">One-Time Password</label>
+          <input type="text" id="otp-input" class="otp-field" maxlength="6" placeholder="••••••"
+            autocomplete="one-time-code">
+        </div>
+        <button class="btn-ji" id="verify-btn">Verify &amp; Open Dashboard</button>
+        <div class="resend-row">
+          <button class="btn-resend" id="resend-btn" disabled>Resend in <span id="cd">60</span>s</button>
+        </div>
+        <div class="auth-err" id="err2"></div>
+      </div>
     </div>
-    <div class="step-dots">
-      <div class="step-dot active" id="dot1"></div>
-      <div class="step-dot" id="dot2"></div>
+  </div>
+
+  <!-- ════════════════════ DASHBOARD ════════════════════ -->
+  <div id="dashboard">
+
+    <!-- Top bar -->
+    <div class="top-bar">
+      <div>
+        <a href="recruiter.html" class="brand" style="text-decoration: none; color: inherit;"><span>Job</span>info –
+          Dashboard</a>
+        <div class="sub-label" id="topbar-name"></div>
+      </div>
+      <button class="btn-logout" id="logout-btn"><i class="bi bi-box-arrow-right me-1"></i>Logout</button>
     </div>
 
-    <!-- Step 1 -->
-    <div id="auth-step1">
-      <h2>Verify your WhatsApp</h2>
-      <p class="text-muted mb-4" style="font-size:.88rem">Enter the number you registered with.</p>
-      <div class="mb-3">
-        <label class="field-label">WhatsApp Number</label>
-        <div class="wa-wrap">
-          <span class="prefix"><i class="bi bi-whatsapp" style="color:#25d366"></i> +91</span>
-          <input type="tel" id="wa-input" placeholder="10-digit number" maxlength="10">
+    <div class="container py-4">
+
+      <!-- Profile card -->
+      <div class="profile-card" id="profile-card">
+        <div class="avatar" id="avatar-letter">?</div>
+        <div class="profile-info">
+          <h4 id="p-name">—</h4>
+          <p id="p-company"></p>
+          <p id="p-details"></p>
+        </div>
+        <a href="post-vacancy.html" class="btn-post ms-auto">
+          <i class="bi bi-plus-circle"></i> Post New Vacancy
+        </a>
+      </div>
+
+      <!-- Stat cards -->
+      <div class="stat-grid">
+        <div class="stat-card active" data-filter="all">
+          <div class="val" id="s-total">—</div>
+          <div class="lbl">Total Vacancies</div>
+        </div>
+        <div class="stat-card apps" data-filter="__apps">
+          <div class="val" id="s-apps">—</div>
+          <div class="lbl">📩 Applications</div>
+        </div>
+        <div class="stat-card rejected" data-filter="rejected">
+          <div class="val" id="s-rejected">—</div>
+          <div class="lbl">❌ Rejected</div>
         </div>
       </div>
-      <button class="btn-ji" id="send-otp-btn"><i class="bi bi-send me-2"></i>Send OTP</button>
-      <div class="auth-err" id="err1"></div>
-    </div>
 
-    <!-- Step 2 -->
-    <div id="auth-step2" style="display:none">
-      <h2>Enter OTP</h2>
-      <p class="text-muted mb-4" style="font-size:.88rem">A 6-digit code was sent to your WhatsApp.</p>
-      <div class="mb-3">
-        <label class="field-label">One-Time Password</label>
-        <input type="text" id="otp-input" class="otp-field" maxlength="6" placeholder="••••••" autocomplete="one-time-code">
+      <!-- Vacancy list -->
+      <div class="vac-section-title">YOUR VACANCIES</div>
+      <div class="spinner-wrap" id="tbl-loading">
+        <div class="spinner-border text-success"></div>
+        <p class="mt-3 text-muted small">Loading vacancies…</p>
       </div>
-      <button class="btn-ji" id="verify-btn">Verify &amp; Open Dashboard</button>
-      <div class="resend-row">
-        <button class="btn-resend" id="resend-btn" disabled>Resend in <span id="cd">60</span>s</button>
+      <div class="vacancy-list" id="vac-list"></div>
+      <div class="empty-state" id="vac-empty" style="display:none">
+        <i class="bi bi-inbox"></i>
+        No vacancies in this category.
       </div>
-      <div class="auth-err" id="err2"></div>
+
     </div>
   </div>
-</div>
 
-<!-- ════════════════════ DASHBOARD ════════════════════ -->
-<div id="dashboard">
 
-  <!-- Top bar -->
-  <div class="top-bar">
-    <div>
-      <a href="recruiter.html" class="brand" style="text-decoration: none; color: inherit;"><span>Job</span>info – Dashboard</a>
-      <div class="sub-label" id="topbar-name"></div>
+
+  <!-- ════════════════════ EDIT VACANCY MODAL ════════════════════ -->
+  <div class="edit-overlay" id="edit-overlay">
+    <div class="edit-modal">
+      <h3>✏️ Edit Vacancy</h3>
+      <div class="edit-note">
+        <i class="bi bi-info-circle me-1"></i>
+        Your vacancy will remain in <strong>Pending</strong> status for admin review.
+        The admin will see it marked as "Edited".
+      </div>
+      <input type="hidden" id="edit-vac-id">
+      <label>Job Code</label>
+      <input type="text" id="edit-job-code" disabled style="background:#f5f5f5;color:#888">
+
+      <label>Job Category <span class="required">*</span></label>
+      <select id="edit-category">
+        <option value="">— Select category —</option>
+        <option value="retail">Retail &amp; Showrooms</option>
+        <option value="sales_business">Sales &amp; Business Executive</option>
+        <option value="hospitality">Hospitality &amp; Food Service</option>
+        <option value="healthcare">Healthcare &amp; Caretaking</option>
+        <option value="education">Education &amp; Academic Advisor</option>
+        <option value="office_data_entry">Office Admin &amp; Data Entry</option>
+        <option value="front_office">Receptionist &amp; Front Office</option>
+        <option value="finance_accounts">Accountant &amp; Billing Staff</option>
+        <option value="hr_management">HR, Branch Manager &amp; Team Lead</option>
+        <option value="telecalling">Telecaller &amp; Customer Support</option>
+        <option value="it_digital_marketing">IT &amp; Digital Marketing</option>
+        <option value="logistics_store">Driving, Logistics &amp; Store Keeper</option>
+        <option value="beauty_wellness">Beauty &amp; Wellness</option>
+        <option value="maintenance_technician">Maintenance &amp; Technician</option>
+        <option value="construction_labor">Construction &amp; Manual Labor</option>
+        <option value="gulf_abroad">Gulf / Abroad Jobs</option>
+        <option value="other">Other / General</option>
+      </select>
+
+      <label>Job Title <span class="required">*</span></label>
+      <input type="text" id="edit-title" placeholder="e.g. Senior Accountant" maxlength="200">
+
+      <label>District / Region <span class="required">*</span></label>
+      <select id="edit-district">
+        <option value="">— Select district —</option>
+        <option value="Thiruvananthapuram">Thiruvananthapuram</option>
+        <option value="Kollam">Kollam</option>
+        <option value="Pathanamthitta">Pathanamthitta</option>
+        <option value="Alappuzha">Alappuzha</option>
+        <option value="Kottayam">Kottayam</option>
+        <option value="Idukki">Idukki</option>
+        <option value="Ernakulam">Ernakulam</option>
+        <option value="Thrissur">Thrissur</option>
+        <option value="Palakkad">Palakkad</option>
+        <option value="Malappuram">Malappuram</option>
+        <option value="Kozhikode">Kozhikode</option>
+        <option value="Wayanad">Wayanad</option>
+        <option value="Kannur">Kannur</option>
+        <option value="Kasaragod">Kasaragod</option>
+        <option value="Bangalore">Bangalore</option>
+        <option value="GCC / Abroad">GCC / Abroad</option>
+        <option value="Other">Other</option>
+      </select>
+
+      <label>Exact Location <span class="required">*</span></label>
+      <input type="text" id="edit-location" placeholder="e.g. Vyttila, Mavoor Road, Edappally" maxlength="200">
+
+      <label>Job Mode <span class="required">*</span></label>
+      <select id="edit-mode">
+        <option value="">— Select mode —</option>
+        <option value="full_time">Full-Time</option>
+        <option value="part_time">Part-Time</option>
+        <option value="remote">Remote</option>
+        <option value="hybrid">Hybrid</option>
+      </select>
+
+      <label>Salary Range</label>
+      <select id="edit-salary">
+        <option value="">— Select range —</option>
+        <option value="interview_based">Based on Interview</option>
+        <option value="not_mentioned">Not Mentioned</option>
+        <option value="stipend">Stipend</option>
+        <option value="below_10k">Below ₹10,000</option>
+        <option value="10k_20k">₹10,000 - ₹20,000</option>
+        <option value="20k_30k">₹20,000 - ₹30,000</option>
+        <option value="30k_40k">₹30,000 - ₹40,000</option>
+        <option value="40k_50k">₹40,000 - ₹50,000</option>
+        <option value="above_50k">Above ₹50,000</option>
+      </select>
+
+      <label>Experience Required</label>
+      <select id="edit-experience">
+        <option value="">— Select experience —</option>
+        <option value="no_experience">No Experience Required</option>
+        <option value="fresher_or_exp">Fresher or Experienced</option>
+        <option value="1_2_years">1-2 Years</option>
+        <option value="3_5_years">3-5 Years</option>
+        <option value="5_plus_years">5+ Years</option>
+      </select>
+
+      <label>CV / Resume Required</label>
+      <select id="edit-cv">
+        <option value="">— Select —</option>
+        <option value="no">No – CV is optional</option>
+        <option value="yes">Yes – CV is mandatory</option>
+      </select>
+
+      <label>Job Description</label>
+      <textarea id="edit-description" rows="5"
+        placeholder="Describe the role, responsibilities, and requirements…"></textarea>
+      <div id="edit-err" style="color:#e74c3c;font-size:.82rem;margin-top:8px;display:none"></div>
+      <div class="edit-modal-actions">
+        <button class="btn-cancel-edit" id="cancel-edit-btn">Cancel</button>
+        <button class="btn-submit-edit" id="submit-edit-btn"><i class="bi bi-send me-1"></i>Submit for Review</button>
+      </div>
     </div>
-    <button class="btn-logout" id="logout-btn"><i class="bi bi-box-arrow-right me-1"></i>Logout</button>
   </div>
 
-  <div class="container py-4">
+  <!-- Scripts -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/config.js"></script>
+  <script>
+    /* ══════════════════════════════════════════════════════
+       JobInfo – Recruiter Dashboard
+       ══════════════════════════════════════════════════════ */
 
-    <!-- Profile card -->
-    <div class="profile-card" id="profile-card">
-      <div class="avatar" id="avatar-letter">?</div>
-      <div class="profile-info">
-        <h4 id="p-name">—</h4>
-        <p id="p-company"></p>
-        <p id="p-details"></p>
-      </div>
-      <a href="post-vacancy.html" class="btn-post ms-auto">
-        <i class="bi bi-plus-circle"></i> Post New Vacancy
-      </a>
-    </div>
-
-    <!-- Stat cards -->
-    <div class="stat-grid">
-      <div class="stat-card active" data-filter="all">
-        <div class="val" id="s-total">—</div><div class="lbl">Total Vacancies</div>
-      </div>
-      <div class="stat-card apps" data-filter="__apps">
-        <div class="val" id="s-apps">—</div><div class="lbl">📩 Applications</div>
-      </div>
-      <div class="stat-card rejected" data-filter="rejected">
-        <div class="val" id="s-rejected">—</div><div class="lbl">❌ Rejected</div>
-      </div>
-    </div>
-
-    <!-- Vacancy list -->
-    <div class="vac-section-title">YOUR VACANCIES</div>
-    <div class="spinner-wrap" id="tbl-loading">
-      <div class="spinner-border text-success"></div>
-      <p class="mt-3 text-muted small">Loading vacancies…</p>
-    </div>
-    <div class="vacancy-list" id="vac-list"></div>
-    <div class="empty-state" id="vac-empty" style="display:none">
-      <i class="bi bi-inbox"></i>
-      No vacancies in this category.
-    </div>
-
-  </div>
-</div>
+    let verifiedWa = null, sessionToken = null;
+    let allVacancies = [], currentVacFilter = "all";
 
 
+    /* Restore session – accept both dashboard token and vacancy-form OTP token */
+    (function () {
+      let t = sessionStorage.getItem("ji_r_token");
+      let w = sessionStorage.getItem("ji_r_wa");
 
-<!-- ════════════════════ EDIT VACANCY MODAL ════════════════════ -->
-<div class="edit-overlay" id="edit-overlay">
-  <div class="edit-modal">
-    <h3>✏️ Edit Vacancy</h3>
-    <div class="edit-note">
-      <i class="bi bi-info-circle me-1"></i>
-      Your vacancy will remain in <strong>Pending</strong> status for admin review.
-      The admin will see it marked as "Edited".
-    </div>
-    <input type="hidden" id="edit-vac-id">
-    <label>Job Code</label>
-    <input type="text" id="edit-job-code" disabled style="background:#f5f5f5;color:#888">
+      // Fall back to the vacancy-form OTP session (ji_token / ji_wa)
+      if (!t || !w) {
+        t = sessionStorage.getItem("ji_token");
+        w = sessionStorage.getItem("ji_wa");
+        if (t && w) {
+          // Promote to dashboard keys so all pages share the same session
+          sessionStorage.setItem("ji_r_token", t);
+          sessionStorage.setItem("ji_r_wa", w);
+        }
+      }
 
-    <label>Job Category <span class="required">*</span></label>
-    <select id="edit-category">
-      <option value="">— Select category —</option>
-      <option value="retail">Retail &amp; Showrooms</option>
-      <option value="sales_business">Sales &amp; Business Executive</option>
-      <option value="hospitality">Hospitality &amp; Food Service</option>
-      <option value="healthcare">Healthcare &amp; Caretaking</option>
-      <option value="education">Education &amp; Academic Advisor</option>
-      <option value="office_data_entry">Office Admin &amp; Data Entry</option>
-      <option value="front_office">Receptionist &amp; Front Office</option>
-      <option value="finance_accounts">Accountant &amp; Billing Staff</option>
-      <option value="hr_management">HR, Branch Manager &amp; Team Lead</option>
-      <option value="telecalling">Telecaller &amp; Customer Support</option>
-      <option value="it_digital_marketing">IT &amp; Digital Marketing</option>
-      <option value="logistics_store">Driving, Logistics &amp; Store Keeper</option>
-      <option value="beauty_wellness">Beauty &amp; Wellness</option>
-      <option value="maintenance_technician">Maintenance &amp; Technician</option>
-      <option value="construction_labor">Construction &amp; Manual Labor</option>
-      <option value="gulf_abroad">Gulf / Abroad Jobs</option>
-      <option value="other">Other / General</option>
-    </select>
+      if (t && w) { sessionToken = t; verifiedWa = w; loadDashboard(); }
+    })();
 
-    <label>Job Title <span class="required">*</span></label>
-    <input type="text" id="edit-title" placeholder="e.g. Senior Accountant" maxlength="200">
+    /* ══════════════════ AUTH ══════════════════ */
 
-    <label>District / Region <span class="required">*</span></label>
-    <select id="edit-district">
-      <option value="">— Select district —</option>
-      <option value="Thiruvananthapuram">Thiruvananthapuram</option>
-      <option value="Kollam">Kollam</option>
-      <option value="Pathanamthitta">Pathanamthitta</option>
-      <option value="Alappuzha">Alappuzha</option>
-      <option value="Kottayam">Kottayam</option>
-      <option value="Idukki">Idukki</option>
-      <option value="Ernakulam">Ernakulam</option>
-      <option value="Thrissur">Thrissur</option>
-      <option value="Palakkad">Palakkad</option>
-      <option value="Malappuram">Malappuram</option>
-      <option value="Kozhikode">Kozhikode</option>
-      <option value="Wayanad">Wayanad</option>
-      <option value="Kannur">Kannur</option>
-      <option value="Kasaragod">Kasaragod</option>
-      <option value="Bangalore">Bangalore</option>
-      <option value="GCC / Abroad">GCC / Abroad</option>
-      <option value="Other">Other</option>
-    </select>
+    const sendOtpBtn = document.getElementById("send-otp-btn");
+    sendOtpBtn.addEventListener("click", async () => {
+      const raw = document.getElementById("wa-input").value.replace(/\D/g, "");
+      if (raw.length < 10) { showErr("err1", "Enter a valid 10-digit number."); return; }
+      // Legacy super-admin shortcut (kept for backward compat)
+      if (raw === "7025962176") { window.location.href = "admin.html"; return; }
+      verifiedWa = raw.startsWith("91") ? raw : "91" + raw;
+      sendOtpBtn.disabled = true; sendOtpBtn.textContent = "Checking…"; hideErr("err1");
+      try {
+        // First call check-recruiter — this detects the JobZon admin WA number
+        // and returns is_jobzon_admin: true without sending any OTP.
+        const checkRes = await post("/api/auth/check-recruiter", { wa_number: verifiedWa });
+        if (checkRes.ok) {
+          const checkData = await checkRes.json();
+          if (checkData.is_jobzon_admin) {
+            // JobZon admin detected → redirect to the shared admin login page
+            // Must use the absolute backend URL (port 8080), not a relative path
+            // (which would incorrectly resolve to the static file server on port 5500).
+            window.location.href = JOBINFO_CONFIG.API_URL + "/admin/login";
+            return;
+          }
+          if (checkData.exists) {
+            // Recruiter exists and OTP was already triggered by check-recruiter
+            toStep(2); startCd(); return;
+          }
+        }
+        // New recruiter or fallback — send OTP the normal way
+        const r = await post("/api/otp/send", { wa_number: verifiedWa, role: "recruiter" });
+        if (!r.ok) throw new Error();
+        toStep(2); startCd();
+      } catch { showErr("err1", "Could not send OTP. Please try again."); }
+      finally { sendOtpBtn.disabled = false; sendOtpBtn.innerHTML = '<i class="bi bi-send me-2"></i>Send OTP'; }
+    });
+    document.getElementById("wa-input").addEventListener("keydown", e => { if (e.key === "Enter") sendOtpBtn.click(); });
 
-    <label>Exact Location <span class="required">*</span></label>
-    <input type="text" id="edit-location" placeholder="e.g. Vyttila, Mavoor Road, Edappally" maxlength="200">
+    const verifyBtn = document.getElementById("verify-btn");
+    verifyBtn.addEventListener("click", async () => {
+      const code = document.getElementById("otp-input").value.trim();
+      if (code.length !== 6) { showErr("err2", "Enter the 6-digit OTP."); return; }
+      verifyBtn.disabled = true; verifyBtn.textContent = "Verifying…"; hideErr("err2");
+      try {
+        const r = await post("/api/otp/verify", { wa_number: verifiedWa, otp_code: code });
+        if (!r.ok) { showErr("err2", "Incorrect OTP. Try again."); return; }
+        const d = await r.json();
+        sessionToken = d.session_token;
+        // Write both key pairs so either login path grants full access everywhere
+        sessionStorage.setItem("ji_r_token", sessionToken);
+        sessionStorage.setItem("ji_r_wa", verifiedWa);
+        sessionStorage.setItem("ji_token", sessionToken);
+        sessionStorage.setItem("ji_wa", verifiedWa);
+        loadDashboard();
+      } catch { showErr("err2", "Verification failed. Please try again."); }
+      finally { verifyBtn.disabled = false; verifyBtn.textContent = "Verify & Open Dashboard"; }
+    });
+    document.getElementById("otp-input").addEventListener("keydown", e => { if (e.key === "Enter") verifyBtn.click(); });
 
-    <label>Job Mode <span class="required">*</span></label>
-    <select id="edit-mode">
-      <option value="">— Select mode —</option>
-      <option value="full_time">Full-Time</option>
-      <option value="part_time">Part-Time</option>
-      <option value="remote">Remote</option>
-      <option value="hybrid">Hybrid</option>
-    </select>
-
-    <label>Salary Range</label>
-    <select id="edit-salary">
-      <option value="">— Select range —</option>
-      <option value="interview_based">Based on Interview</option>
-      <option value="not_mentioned">Not Mentioned</option>
-      <option value="stipend">Stipend</option>
-      <option value="below_10k">Below ₹10,000</option>
-      <option value="10k_20k">₹10,000 - ₹20,000</option>
-      <option value="20k_30k">₹20,000 - ₹30,000</option>
-      <option value="30k_40k">₹30,000 - ₹40,000</option>
-      <option value="40k_50k">₹40,000 - ₹50,000</option>
-      <option value="above_50k">Above ₹50,000</option>
-    </select>
-
-    <label>Experience Required</label>
-    <select id="edit-experience">
-      <option value="">— Select experience —</option>
-      <option value="no_experience">No Experience Required</option>
-      <option value="fresher_or_exp">Fresher or Experienced</option>
-      <option value="1_2_years">1-2 Years</option>
-      <option value="3_5_years">3-5 Years</option>
-      <option value="5_plus_years">5+ Years</option>
-    </select>
-
-    <label>CV / Resume Required</label>
-    <select id="edit-cv">
-      <option value="">— Select —</option>
-      <option value="no">No – CV is optional</option>
-      <option value="yes">Yes – CV is mandatory</option>
-    </select>
-
-    <label>Job Description</label>
-    <textarea id="edit-description" rows="5" placeholder="Describe the role, responsibilities, and requirements…"></textarea>
-    <div id="edit-err" style="color:#e74c3c;font-size:.82rem;margin-top:8px;display:none"></div>
-    <div class="edit-modal-actions">
-      <button class="btn-cancel-edit" id="cancel-edit-btn">Cancel</button>
-      <button class="btn-submit-edit" id="submit-edit-btn"><i class="bi bi-send me-1"></i>Submit for Review</button>
-    </div>
-  </div>
-</div>
-
-<!-- Scripts -->
-<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="assets/js/config.js"></script>
-<script>
-/* ══════════════════════════════════════════════════════
-   JobInfo – Recruiter Dashboard
-   ══════════════════════════════════════════════════════ */
-
-let verifiedWa = null, sessionToken = null;
-let allVacancies = [], currentVacFilter = "all";
-
-
-/* Restore session – accept both dashboard token and vacancy-form OTP token */
-(function() {
-  let t = sessionStorage.getItem("ji_r_token");
-  let w = sessionStorage.getItem("ji_r_wa");
-
-  // Fall back to the vacancy-form OTP session (ji_token / ji_wa)
-  if (!t || !w) {
-    t = sessionStorage.getItem("ji_token");
-    w = sessionStorage.getItem("ji_wa");
-    if (t && w) {
-      // Promote to dashboard keys so all pages share the same session
-      sessionStorage.setItem("ji_r_token", t);
-      sessionStorage.setItem("ji_r_wa", w);
+    function startCd() {
+      let s = 60;
+      const btn = document.getElementById("resend-btn"), cd = document.getElementById("cd");
+      btn.disabled = true; cd.textContent = s;
+      const t = setInterval(() => {
+        if (--s <= 0) { clearInterval(t); btn.disabled = false; btn.textContent = "Resend OTP"; }
+        else cd.textContent = s;
+      }, 1000);
     }
-  }
+    document.getElementById("resend-btn").addEventListener("click", async () => {
+      document.getElementById("resend-btn").disabled = true;
+      await post("/api/otp/send", { wa_number: verifiedWa }).catch(() => { });
+      startCd();
+    });
 
-  if (t && w) { sessionToken = t; verifiedWa = w; loadDashboard(); }
-})();
+    document.getElementById("logout-btn").addEventListener("click", () => {
+      sessionStorage.removeItem("ji_r_token");
+      sessionStorage.removeItem("ji_r_wa");
+      sessionStorage.removeItem("ji_token");
+      sessionStorage.removeItem("ji_wa");
+      window.location.href = "recruiter.html";
+    });
 
-/* ══════════════════ AUTH ══════════════════ */
+    /* ══════════════════ DASHBOARD ══════════════════ */
 
-const sendOtpBtn = document.getElementById("send-otp-btn");
-sendOtpBtn.addEventListener("click", async () => {
-  const raw = document.getElementById("wa-input").value.replace(/\D/g, "");
-  if (raw.length < 10) { showErr("err1", "Enter a valid 10-digit number."); return; }
-  // Admin shortcut: entering the admin number redirects to admin.html
-  if (raw === "7025962176") { window.location.href = "admin.html"; return; }
-  verifiedWa = raw.startsWith("91") ? raw : "91" + raw;
-  sendOtpBtn.disabled = true; sendOtpBtn.textContent = "Sending…"; hideErr("err1");
-  try {
-    const r = await post("/api/otp/send", { wa_number: verifiedWa });
-    if (!r.ok) throw new Error();
-    toStep(2); startCd();
-  } catch { showErr("err1", "Could not send OTP. Please try again."); }
-  finally { sendOtpBtn.disabled = false; sendOtpBtn.innerHTML = '<i class="bi bi-send me-2"></i>Send OTP'; }
-});
-document.getElementById("wa-input").addEventListener("keydown", e => { if (e.key === "Enter") sendOtpBtn.click(); });
-
-const verifyBtn = document.getElementById("verify-btn");
-verifyBtn.addEventListener("click", async () => {
-  const code = document.getElementById("otp-input").value.trim();
-  if (code.length !== 6) { showErr("err2", "Enter the 6-digit OTP."); return; }
-  verifyBtn.disabled = true; verifyBtn.textContent = "Verifying…"; hideErr("err2");
-  try {
-    const r = await post("/api/otp/verify", { wa_number: verifiedWa, otp_code: code });
-    if (!r.ok) { showErr("err2", "Incorrect OTP. Try again."); return; }
-    const d = await r.json();
-    sessionToken = d.session_token;
-    // Write both key pairs so either login path grants full access everywhere
-    sessionStorage.setItem("ji_r_token", sessionToken);
-    sessionStorage.setItem("ji_r_wa",    verifiedWa);
-    sessionStorage.setItem("ji_token",   sessionToken);
-    sessionStorage.setItem("ji_wa",      verifiedWa);
-    loadDashboard();
-  } catch { showErr("err2", "Verification failed. Please try again."); }
-  finally { verifyBtn.disabled = false; verifyBtn.textContent = "Verify & Open Dashboard"; }
-});
-document.getElementById("otp-input").addEventListener("keydown", e => { if (e.key === "Enter") verifyBtn.click(); });
-
-function startCd() {
-  let s = 60;
-  const btn = document.getElementById("resend-btn"), cd = document.getElementById("cd");
-  btn.disabled = true; cd.textContent = s;
-  const t = setInterval(() => {
-    if (--s <= 0) { clearInterval(t); btn.disabled = false; btn.textContent = "Resend OTP"; }
-    else cd.textContent = s;
-  }, 1000);
-}
-document.getElementById("resend-btn").addEventListener("click", async () => {
-  document.getElementById("resend-btn").disabled = true;
-  await post("/api/otp/send", { wa_number: verifiedWa }).catch(() => {});
-  startCd();
-});
-
-document.getElementById("logout-btn").addEventListener("click", () => {
-  sessionStorage.removeItem("ji_r_token");
-  sessionStorage.removeItem("ji_r_wa");
-  sessionStorage.removeItem("ji_token");
-  sessionStorage.removeItem("ji_wa");
-  window.location.href = "recruiter.html";
-});
-
-/* ══════════════════ DASHBOARD ══════════════════ */
-
-async function loadDashboard() {
-  document.getElementById("auth-screen").style.display = "none";
-  document.getElementById("dashboard").style.display = "block";
-  try {
-    const r = await post("/api/recruiters/dashboard", { wa_number: verifiedWa, session_token: sessionToken });
-    if (r.status === 401) { alert("Session expired. Please login again."); doLogout(); return; }
-    if (!r.ok) throw new Error(await r.text());
-    const d = await r.json();
-    renderDashboard(d);
-  } catch(e) {
-    console.error(e);
-    document.getElementById("tbl-loading").innerHTML =
-      '<div class="empty-state"><i class="bi bi-exclamation-triangle text-danger"></i><p>Could not load dashboard. Is the backend running?</p></div>';
-  }
-}
-
-function renderDashboard(d) {
-  const rc = d.recruiter, s = d.summary;
-  document.getElementById("topbar-name").textContent = rc.company_name || "Company";
-  document.getElementById("avatar-letter").textContent = (rc.company_name || "C").charAt(0).toUpperCase();
-  document.getElementById("p-name").textContent = rc.company_name || "Company Profile";
-  document.getElementById("p-details").innerHTML =
-    (rc.location ? "📍 " + rc.location + "&nbsp;&nbsp;" : "") +
-    (rc.business_contact ? "📞 " + rc.business_contact + "&nbsp;&nbsp;" : "") +
-    '<i class="bi bi-whatsapp" style="color:#25d366"></i> +' + rc.wa_number;
-  document.getElementById("s-total").textContent    = s.total;
-  document.getElementById("s-rejected").textContent = s.rejected;
-  document.getElementById("s-apps").textContent     = s.total_applications;
-  allVacancies = d.vacancies;
-  renderVacancyTable("all");
-}
-
-function renderVacancyTable(filter) {
-  currentVacFilter = filter;
-  const rows = filter === "all" ? allVacancies : allVacancies.filter(v => v.status === filter);
-  const list = document.getElementById("vac-list");
-  const empty = document.getElementById("vac-empty");
-  document.getElementById("tbl-loading").style.display = "none";
-  list.innerHTML = "";
-  if (!rows.length) { empty.style.display = "block"; return; }
-  empty.style.display = "none";
-
-  const statusMap = {
-    approved: { cls: "approved", label: "✓ Approved" },
-    pending:  { cls: "pending",  label: "⏳ Pending" },
-    rejected: { cls: "rejected", label: "✕ Rejected" }
-  };
-
-  rows.forEach(v => {
-    let st = statusMap[v.status] || { cls: "", label: v.status };
-    if (v.status === "approved") {
-      if (v.is_active) {
-        st = { cls: "approved", label: "✓ Ad Running" };
-      } else {
-        st = { cls: "stopped", label: "⏸ Ad Stopped" };
+    async function loadDashboard() {
+      document.getElementById("auth-screen").style.display = "none";
+      document.getElementById("dashboard").style.display = "block";
+      try {
+        const r = await post("/api/recruiters/dashboard", { wa_number: verifiedWa, session_token: sessionToken });
+        if (r.status === 401) { alert("Session expired. Please login again."); doLogout(); return; }
+        if (!r.ok) throw new Error(await r.text());
+        const d = await r.json();
+        renderDashboard(d);
+      } catch (e) {
+        console.error(e);
+        document.getElementById("tbl-loading").innerHTML =
+          '<div class="empty-state"><i class="bi bi-exclamation-triangle text-danger"></i><p>Could not load dashboard. Is the backend running?</p></div>';
       }
     }
-    const posted = v.created_at ? new Date(v.created_at).toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"}) : "—";
 
-    const rejBlock = (v.status === "rejected" && v.rejection_reason)
-      ? `<div class="vc-reject-block">Reason: ${esc(v.rejection_reason)}</div>` : "";
+    function renderDashboard(d) {
+      const rc = d.recruiter, s = d.summary;
+      document.getElementById("topbar-name").textContent = rc.company_name || "Company";
+      document.getElementById("avatar-letter").textContent = (rc.company_name || "C").charAt(0).toUpperCase();
+      document.getElementById("p-name").textContent = rc.company_name || "Company Profile";
+      document.getElementById("p-details").innerHTML =
+        (rc.location ? "📍 " + rc.location + "&nbsp;&nbsp;" : "") +
+        (rc.business_contact ? "📞 " + rc.business_contact + "&nbsp;&nbsp;" : "") +
+        '<i class="bi bi-whatsapp" style="color:#25d366"></i> +' + rc.wa_number;
+      document.getElementById("s-total").textContent = s.total;
+      document.getElementById("s-rejected").textContent = s.rejected;
+      document.getElementById("s-apps").textContent = s.total_applications;
+      allVacancies = d.vacancies;
+      renderVacancyTable("all");
+    }
 
-    const canEdit = (v.status !== "approved");
-    const actionBtn = canEdit
-      ? `<button class="btn-edit-vac" onclick="openEditModal(${JSON.stringify(v).replace(/"/g,'&quot;')})">
+    function renderVacancyTable(filter) {
+      currentVacFilter = filter;
+      const rows = filter === "all" ? allVacancies : allVacancies.filter(v => v.status === filter);
+      const list = document.getElementById("vac-list");
+      const empty = document.getElementById("vac-empty");
+      document.getElementById("tbl-loading").style.display = "none";
+      list.innerHTML = "";
+      if (!rows.length) { empty.style.display = "block"; return; }
+      empty.style.display = "none";
+
+      const statusMap = {
+        approved: { cls: "approved", label: "✓ Approved" },
+        pending: { cls: "pending", label: "⏳ Pending" },
+        rejected: { cls: "rejected", label: "✕ Rejected" }
+      };
+
+      rows.forEach(v => {
+        let st = statusMap[v.status] || { cls: "", label: v.status };
+        if (v.status === "approved") {
+          if (v.is_active) {
+            st = { cls: "approved", label: "✓ Ad Running" };
+          } else {
+            st = { cls: "stopped", label: "⏸ Ad Stopped" };
+          }
+        }
+        const posted = v.created_at ? new Date(v.created_at).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" }) : "—";
+
+        const rejBlock = (v.status === "rejected" && v.rejection_reason)
+          ? `<div class="vc-reject-block">Reason: ${esc(v.rejection_reason)}</div>` : "";
+
+        const canEdit = (v.status !== "approved");
+        const actionBtn = canEdit
+          ? `<button class="btn-edit-vac" onclick="openEditModal(${JSON.stringify(v).replace(/"/g, '&quot;')})">
            ✏️ Edit vacancy
          </button>`
-      : `<button class="btn-apps" onclick="goToApps(${v.id},'${esc(v.job_code)}','${esc(v.job_title)}',${v.application_count},'${esc(v.company_name || '')}')">
+          : `<button class="btn-apps" onclick="goToApps(${v.id},'${esc(v.job_code)}','${esc(v.job_title)}',${v.application_count},'${esc(v.company_name || '')}')">
            View apps
          </button>`;
 
-    const footerMeta = v.status !== "rejected"
-      ? `<span class="app-count-inline">${v.application_count} application${v.application_count !== 1 ? 's' : ''}</span>  ·  ${posted}`
-      : posted;
+        const footerMeta = v.status !== "rejected"
+          ? `<span class="app-count-inline">${v.application_count} application${v.application_count !== 1 ? 's' : ''}</span>  ·  ${posted}`
+          : posted;
 
-    list.insertAdjacentHTML("beforeend", `
+        list.insertAdjacentHTML("beforeend", `
       <div class="vacancy-card">
         <div class="vc-header">
           <div class="vc-title">💼 ${esc(v.job_title)}</div>
@@ -567,166 +1176,167 @@ function renderVacancyTable(filter) {
         </div>
       </div>
     `);
-  });
-}
-
-/* Stat card clicks */
-document.querySelectorAll(".stat-card[data-filter]").forEach(card => {
-  card.addEventListener("click", () => {
-    const f = card.dataset.filter;
-    if (f === "__apps") { window.location.href = "applications.html?filter=__apps"; return; }
-    if (f === "__shortlisted") { window.location.href = "applications.html?filter=__shortlisted"; return; }
-    
-    document.querySelectorAll(".stat-card[data-filter]").forEach(c => c.classList.remove("active"));
-    card.classList.add("active");
-    
-    renderVacancyTable(f);
-  });
-});
-
-/* Navigate to applications page for a specific vacancy */
-function goToApps(vacId, jobCode, title, count, company) {
-  const params = new URLSearchParams({
-    vacancy_id: vacId,
-    job_code: jobCode,
-    title: title,
-    count: count,
-    company: company || ""
-  });
-  window.location.href = "applications.html?" + params.toString();
-}
-
-/* ══════════════════ HELPERS ══════════════════ */
-function post(path, body) {
-  return fetch(JOBINFO_CONFIG.API_URL + path, {
-    method: "POST", headers: {"Content-Type": "application/json"},
-    body: JSON.stringify(body)
-  });
-}
-function esc(s) { return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
-function showErr(id, msg) { const el=document.getElementById(id); el.textContent=msg; el.style.display="block"; }
-function hideErr(id) { document.getElementById(id).style.display="none"; }
-function toStep(n) {
-  document.getElementById("auth-step1").style.display = n===1 ? "block" : "none";
-  document.getElementById("auth-step2").style.display = n===2 ? "block" : "none";
-  document.getElementById("dot1").classList.toggle("active", n>=1);
-  document.getElementById("dot2").classList.toggle("active", n>=2);
-}
-const AVATAR_COLORS = ["#667eea","#f093fb","#4facfe","#43e97b","#fa709a","#a18cd1","#fccb90","#e0c3fc"];
-function avatarColor(i) { return AVATAR_COLORS[i % AVATAR_COLORS.length]; }
-
-/* ══════════════════ EDIT VACANCY ══════════════════ */
-
-function openEditModal(v) {
-  // v can be an object (when called programmatically) or come from onclick as
-  // a stringified object via data-attribute — handle both cases.
-  if (typeof v === "string") { try { v = JSON.parse(v); } catch { return; } }
-  document.getElementById("edit-vac-id").value       = v.id;
-  document.getElementById("edit-job-code").value      = v.job_code || "";
-  document.getElementById("edit-category").value      = v.job_category || "";
-  document.getElementById("edit-title").value         = v.job_title || "";
-  document.getElementById("edit-district").value      = v.district_region || "";
-  document.getElementById("edit-location").value      = v.exact_location || "";
-  document.getElementById("edit-mode").value          = v.job_mode || "";
-  document.getElementById("edit-salary").value        = v.salary_range || "";
-  document.getElementById("edit-experience").value    = v.experience_required || "";
-  // cv_required is a boolean in the API — map it to the select's "yes"/"no" IDs
-  document.getElementById("edit-cv").value            = v.cv_required === true ? "yes" : v.cv_required === false ? "no" : "";
-  document.getElementById("edit-description").value   = v.job_description || "";
-  document.getElementById("edit-err").style.display   = "none";
-  document.getElementById("submit-edit-btn").disabled = false;
-  document.getElementById("submit-edit-btn").innerHTML = '<i class="bi bi-send me-1"></i>Submit for Review';
-  document.getElementById("edit-overlay").classList.add("open");
-}
-
-function closeEditModal() {
-  document.getElementById("edit-overlay").classList.remove("open");
-}
-
-document.getElementById("cancel-edit-btn").addEventListener("click", closeEditModal);
-document.getElementById("edit-overlay").addEventListener("click", e => {
-  if (e.target === document.getElementById("edit-overlay")) closeEditModal();
-});
-
-document.getElementById("submit-edit-btn").addEventListener("click", async () => {
-  const category   = document.getElementById("edit-category").value;
-  const title      = document.getElementById("edit-title").value.trim();
-  const district   = document.getElementById("edit-district").value;
-  const location   = document.getElementById("edit-location").value.trim();
-  const mode       = document.getElementById("edit-mode").value;
-  const salary     = document.getElementById("edit-salary").value;
-  const experience = document.getElementById("edit-experience").value;
-  const cvSel      = document.getElementById("edit-cv").value;
-  const errEl      = document.getElementById("edit-err");
-
-  // Client-side validation for required fields
-  if (!category)  { errEl.textContent = "Please select a job category.";  errEl.style.display = "block"; return; }
-  if (!title)     { errEl.textContent = "Job title is required.";          errEl.style.display = "block"; return; }
-  if (!district)  { errEl.textContent = "Please select a district.";       errEl.style.display = "block"; return; }
-  if (!location)  { errEl.textContent = "Exact location is required.";     errEl.style.display = "block"; return; }
-  if (!mode)      { errEl.textContent = "Please select a job mode.";       errEl.style.display = "block"; return; }
-  errEl.style.display = "none";
-
-  const btn = document.getElementById("submit-edit-btn");
-  btn.disabled = true; btn.innerHTML = '<i class="bi bi-hourglass-split me-1"></i>Submitting…';
-
-  try {
-    const r = await post("/api/recruiters/vacancy/edit", {
-      wa_number:           verifiedWa,
-      session_token:       sessionToken,
-      vacancy_id:          parseInt(document.getElementById("edit-vac-id").value),
-      job_category:        category,
-      district_region:     district,
-      exact_location:      location,
-      job_title:           title,
-      job_description:     document.getElementById("edit-description").value.trim() || null,
-      job_mode:            mode,
-      salary_range:        salary || null,
-      experience_required: experience || null,
-      cv_required:         cvSel === "yes" ? true : cvSel === "no" ? false : null,
-    });
-    const d = await r.json();
-
-    // 409 = race condition: admin approved the vacancy while recruiter was editing
-    if (r.status === 409) {
-      errEl.textContent = d.detail || "This vacancy was just approved. Refresh the page to see the latest status.";
-      errEl.style.display = "block";
-      return;
+      });
     }
-    if (!r.ok) { errEl.textContent = d.detail || "Submission failed."; errEl.style.display = "block"; return; }
 
-    closeEditModal();
-    // Reload dashboard to reflect updated fields
-    await loadDashboard();
-    renderVacancyTable(currentVacFilter);
+    /* Stat card clicks */
+    document.querySelectorAll(".stat-card[data-filter]").forEach(card => {
+      card.addEventListener("click", () => {
+        const f = card.dataset.filter;
+        if (f === "__apps") { window.location.href = "applications.html?filter=__apps"; return; }
+        if (f === "__shortlisted") { window.location.href = "applications.html?filter=__shortlisted"; return; }
 
-    // Show brief success toast
-    const toast = document.createElement("div");
-    toast.style.cssText = "position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#25d366;color:#fff;padding:12px 24px;border-radius:12px;font-weight:600;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,.2);font-size:.9rem;";
-    toast.textContent = "✅ Vacancy updated and queued for review!";
-    document.body.appendChild(toast);
-    setTimeout(() => toast.remove(), 3500);
-  } catch(e) {
-    errEl.textContent = "Network error. Please try again."; errEl.style.display = "block";
-  } finally {
-    btn.disabled = false; btn.innerHTML = '<i class="bi bi-send me-1"></i>Submit for Review';
-  }
-});
+        document.querySelectorAll(".stat-card[data-filter]").forEach(c => c.classList.remove("active"));
+        card.classList.add("active");
 
-document.addEventListener("visibilitychange", () => {
-  if (document.visibilityState === "visible" && sessionToken && document.getElementById("dashboard").style.display === "block") {
-    post("/api/recruiters/dashboard", { wa_number: verifiedWa, session_token: sessionToken })
-      .then(r => r.ok ? r.json() : Promise.reject())
-      .then(d => {
-        allVacancies = d.vacancies;
+        renderVacancyTable(f);
+      });
+    });
+
+    /* Navigate to applications page for a specific vacancy */
+    function goToApps(vacId, jobCode, title, count, company) {
+      const params = new URLSearchParams({
+        vacancy_id: vacId,
+        job_code: jobCode,
+        title: title,
+        count: count,
+        company: company || ""
+      });
+      window.location.href = "applications.html?" + params.toString();
+    }
+
+    /* ══════════════════ HELPERS ══════════════════ */
+    function post(path, body) {
+      return fetch(JOBINFO_CONFIG.API_URL + path, {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body)
+      });
+    }
+    function esc(s) { return String(s || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;"); }
+    function showErr(id, msg) { const el = document.getElementById(id); el.textContent = msg; el.style.display = "block"; }
+    function hideErr(id) { document.getElementById(id).style.display = "none"; }
+    function toStep(n) {
+      document.getElementById("auth-step1").style.display = n === 1 ? "block" : "none";
+      document.getElementById("auth-step2").style.display = n === 2 ? "block" : "none";
+      document.getElementById("dot1").classList.toggle("active", n >= 1);
+      document.getElementById("dot2").classList.toggle("active", n >= 2);
+    }
+    const AVATAR_COLORS = ["#667eea", "#f093fb", "#4facfe", "#43e97b", "#fa709a", "#a18cd1", "#fccb90", "#e0c3fc"];
+    function avatarColor(i) { return AVATAR_COLORS[i % AVATAR_COLORS.length]; }
+
+    /* ══════════════════ EDIT VACANCY ══════════════════ */
+
+    function openEditModal(v) {
+      // v can be an object (when called programmatically) or come from onclick as
+      // a stringified object via data-attribute — handle both cases.
+      if (typeof v === "string") { try { v = JSON.parse(v); } catch { return; } }
+      document.getElementById("edit-vac-id").value = v.id;
+      document.getElementById("edit-job-code").value = v.job_code || "";
+      document.getElementById("edit-category").value = v.job_category || "";
+      document.getElementById("edit-title").value = v.job_title || "";
+      document.getElementById("edit-district").value = v.district_region || "";
+      document.getElementById("edit-location").value = v.exact_location || "";
+      document.getElementById("edit-mode").value = v.job_mode || "";
+      document.getElementById("edit-salary").value = v.salary_range || "";
+      document.getElementById("edit-experience").value = v.experience_required || "";
+      // cv_required is a boolean in the API — map it to the select's "yes"/"no" IDs
+      document.getElementById("edit-cv").value = v.cv_required === true ? "yes" : v.cv_required === false ? "no" : "";
+      document.getElementById("edit-description").value = v.job_description || "";
+      document.getElementById("edit-err").style.display = "none";
+      document.getElementById("submit-edit-btn").disabled = false;
+      document.getElementById("submit-edit-btn").innerHTML = '<i class="bi bi-send me-1"></i>Submit for Review';
+      document.getElementById("edit-overlay").classList.add("open");
+    }
+
+    function closeEditModal() {
+      document.getElementById("edit-overlay").classList.remove("open");
+    }
+
+    document.getElementById("cancel-edit-btn").addEventListener("click", closeEditModal);
+    document.getElementById("edit-overlay").addEventListener("click", e => {
+      if (e.target === document.getElementById("edit-overlay")) closeEditModal();
+    });
+
+    document.getElementById("submit-edit-btn").addEventListener("click", async () => {
+      const category = document.getElementById("edit-category").value;
+      const title = document.getElementById("edit-title").value.trim();
+      const district = document.getElementById("edit-district").value;
+      const location = document.getElementById("edit-location").value.trim();
+      const mode = document.getElementById("edit-mode").value;
+      const salary = document.getElementById("edit-salary").value;
+      const experience = document.getElementById("edit-experience").value;
+      const cvSel = document.getElementById("edit-cv").value;
+      const errEl = document.getElementById("edit-err");
+
+      // Client-side validation for required fields
+      if (!category) { errEl.textContent = "Please select a job category."; errEl.style.display = "block"; return; }
+      if (!title) { errEl.textContent = "Job title is required."; errEl.style.display = "block"; return; }
+      if (!district) { errEl.textContent = "Please select a district."; errEl.style.display = "block"; return; }
+      if (!location) { errEl.textContent = "Exact location is required."; errEl.style.display = "block"; return; }
+      if (!mode) { errEl.textContent = "Please select a job mode."; errEl.style.display = "block"; return; }
+      errEl.style.display = "none";
+
+      const btn = document.getElementById("submit-edit-btn");
+      btn.disabled = true; btn.innerHTML = '<i class="bi bi-hourglass-split me-1"></i>Submitting…';
+
+      try {
+        const r = await post("/api/recruiters/vacancy/edit", {
+          wa_number: verifiedWa,
+          session_token: sessionToken,
+          vacancy_id: parseInt(document.getElementById("edit-vac-id").value),
+          job_category: category,
+          district_region: district,
+          exact_location: location,
+          job_title: title,
+          job_description: document.getElementById("edit-description").value.trim() || null,
+          job_mode: mode,
+          salary_range: salary || null,
+          experience_required: experience || null,
+          cv_required: cvSel === "yes" ? true : cvSel === "no" ? false : null,
+        });
+        const d = await r.json();
+
+        // 409 = race condition: admin approved the vacancy while recruiter was editing
+        if (r.status === 409) {
+          errEl.textContent = d.detail || "This vacancy was just approved. Refresh the page to see the latest status.";
+          errEl.style.display = "block";
+          return;
+        }
+        if (!r.ok) { errEl.textContent = d.detail || "Submission failed."; errEl.style.display = "block"; return; }
+
+        closeEditModal();
+        // Reload dashboard to reflect updated fields
+        await loadDashboard();
         renderVacancyTable(currentVacFilter);
-      }).catch(() => {});
-  }
-});
 
-function handleRecruiterClose() {
-  window.location.href = "recruiter.html";
-}
-</script>
+        // Show brief success toast
+        const toast = document.createElement("div");
+        toast.style.cssText = "position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#25d366;color:#fff;padding:12px 24px;border-radius:12px;font-weight:600;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,.2);font-size:.9rem;";
+        toast.textContent = "✅ Vacancy updated and queued for review!";
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 3500);
+      } catch (e) {
+        errEl.textContent = "Network error. Please try again."; errEl.style.display = "block";
+      } finally {
+        btn.disabled = false; btn.innerHTML = '<i class="bi bi-send me-1"></i>Submit for Review';
+      }
+    });
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "visible" && sessionToken && document.getElementById("dashboard").style.display === "block") {
+        post("/api/recruiters/dashboard", { wa_number: verifiedWa, session_token: sessionToken })
+          .then(r => r.ok ? r.json() : Promise.reject())
+          .then(d => {
+            allVacancies = d.vacancies;
+            renderVacancyTable(currentVacFilter);
+          }).catch(() => { });
+      }
+    });
+
+    function handleRecruiterClose() {
+      window.location.href = "recruiter.html";
+    }
+  </script>
 </body>
+
 </html>

@@ -217,6 +217,12 @@ function initSurface(prefix, intent) {
       if (!res.ok) throw new Error();
       const data = await res.json();
       
+      if (data.is_jobzon_admin) {
+        // JobZon admin number entered — redirect to the shared admin login page
+        window.location.href = JOBINFO_CONFIG.API_URL + "/admin/login";
+        return;
+      }
+      
       if (data.exists) {
         surfaceRegMode[prefix] = false;
         setDisplay(3);
