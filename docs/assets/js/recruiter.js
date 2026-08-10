@@ -7,7 +7,7 @@
 let sessionToken = null;
 let verifiedWaNumber = null;
 // Store whether this specific surface is in registration mode
-let surfaceRegMode = {}; 
+let surfaceRegMode = {};
 let registrationData = {};
 
 /* ── Magic Link Interception ─────────────────────────────────────────────── */
@@ -30,34 +30,34 @@ document.addEventListener("DOMContentLoaded", () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ token: magicToken })
     })
-    .then(res => {
-      if (!res.ok) throw new Error("Invalid or expired magic link");
-      return res.json();
-    })
-    .then(data => {
-      const sessionToken = data.session_token;
-      const verifiedWaNumber = data.wa_number;
+      .then(res => {
+        if (!res.ok) throw new Error("Invalid or expired magic link");
+        return res.json();
+      })
+      .then(data => {
+        const sessionToken = data.session_token;
+        const verifiedWaNumber = data.wa_number;
 
-      sessionStorage.setItem("ji_token",   sessionToken);
-      sessionStorage.setItem("ji_wa",      verifiedWaNumber);
-      sessionStorage.setItem("ji_r_token", sessionToken);
-      sessionStorage.setItem("ji_r_wa",    verifiedWaNumber);
-      
-      const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
-      window.history.replaceState({ path: newUrl }, '', newUrl);
-      
-      window.location.href = 'recruiter-dashboard.html';
-    })
-    .catch(err => {
-      console.error(err);
-      const overlay = document.getElementById('magic-auth-overlay');
-      if (overlay) overlay.remove();
-      
-      const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
-      window.history.replaceState({ path: newUrl }, '', newUrl);
+        sessionStorage.setItem("ji_token", sessionToken);
+        sessionStorage.setItem("ji_wa", verifiedWaNumber);
+        sessionStorage.setItem("ji_r_token", sessionToken);
+        sessionStorage.setItem("ji_r_wa", verifiedWaNumber);
 
-      swal("Authentication Failed", "This secure link has expired or is invalid. Please log in using OTP.", "warning");
-    });
+        const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+        window.history.replaceState({ path: newUrl }, '', newUrl);
+
+        window.location.href = 'recruiter-dashboard.html';
+      })
+      .catch(err => {
+        console.error(err);
+        const overlay = document.getElementById('magic-auth-overlay');
+        if (overlay) overlay.remove();
+
+        const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+        window.history.replaceState({ path: newUrl }, '', newUrl);
+
+        swal("Authentication Failed", "This secure link has expired or is invalid. Please log in using OTP.", "warning");
+      });
   }
 });
 
@@ -65,11 +65,24 @@ document.addEventListener("DOMContentLoaded", () => {
 document.addEventListener("DOMContentLoaded", () => {
   // Initialize WhatsApp Banner Link
   if (typeof JOBINFO_CONFIG !== 'undefined' && JOBINFO_CONFIG.BUSINESS_WA) {
-      const waBtn = document.getElementById('wa-post-btn');
-      if (waBtn) {
-          const triggerMessage = encodeURIComponent("Post Vacancy");
-          waBtn.href = `https://wa.me/${JOBINFO_CONFIG.BUSINESS_WA}?text=${triggerMessage}`;
-      }
+    const waBtn = document.getElementById('wa-post-btn');
+    if (waBtn) {
+      const triggerMessage = encodeURIComponent("Post Vacancy");
+      waBtn.href = `https://wa.me/${JOBINFO_CONFIG.BUSINESS_WA}?text=${triggerMessage}`;
+    }
+
+    // Modal WhatsApp button (components/modals.html)
+    const waModalBtn = document.getElementById('wa-modal-btn');
+    if (waModalBtn) {
+      waModalBtn.href = `https://wa.me/${JOBINFO_CONFIG.BUSINESS_WA}?text=Hi`;
+    }
+
+    // Recruiter page WhatsApp button (recruiter.html)
+    const waRecruiterBtn = document.getElementById('wa-recruiter-btn');
+    if (waRecruiterBtn) {
+      const recruiterMsg = encodeURIComponent("Hi JobInfo, I am a recruiter!");
+      waRecruiterBtn.href = `https://wa.me/${JOBINFO_CONFIG.BUSINESS_WA}?text=${recruiterMsg}`;
+    }
   }
   // Initialize the inline surfaces conditionally based on what is present
   if (document.getElementById('inline-reg-form')) {
@@ -77,7 +90,7 @@ document.addEventListener("DOMContentLoaded", () => {
   } else if (document.getElementById('pv-reg-form')) {
     initSurface('pv-', 'post-vacancy');
   }
-  
+
   // Initialize modal surface asynchronously after components.js fetches it
   const mc = document.getElementById("modals-container");
   if (mc) {
@@ -93,7 +106,7 @@ document.addEventListener("DOMContentLoaded", () => {
       observer.observe(mc, { childList: true, subtree: true });
     }
   }
-  
+
   // Job form submit
   const jobForm = document.querySelector(".job-form");
   if (jobForm) {
@@ -160,13 +173,13 @@ function initSurface(prefix, intent) {
 
   const waInputId = isModal ? 'modal-wa-input' : 'wa-number-input';
   const sendBtnId = isModal ? 'modal-send-otp-btn' : 'send-otp-btn';
-  
+
   const regFormId = prefix + 'reg-form';
   const reqCompanyId = prefix + 'company';
   const reqTypeId = prefix + 'type';
   const reqLocId = prefix + 'location';
   const reqContactId = prefix + 'contact';
-  
+
   const otpInputId = isModal ? 'modal-otp-input' : 'otp-input';
   const verifyBtnId = isModal ? 'modal-verify-btn' : 'verify-otp-btn';
   const resendBtnId = isModal ? 'modal-resend-btn' : 'resend-otp-btn';
@@ -175,9 +188,9 @@ function initSurface(prefix, intent) {
   const s2 = document.getElementById(step2Id);
   const s3 = document.getElementById(step3Id);
   const s4 = document.getElementById(step4Id);
-  
+
   if (!s1 || !s2 || !s3) return; // Surface not present on this page
-  
+
   const waInput = document.getElementById(waInputId);
   const sendBtn = document.getElementById(sendBtnId);
   const regForm = document.getElementById(regFormId);
@@ -203,12 +216,12 @@ function initSurface(prefix, intent) {
       swal("Invalid Number", "Please enter a valid WhatsApp number (10 digits minimum).", "warning"); return;
     }
     if (number === "7025962176") { window.location.href = "admin.html"; return; }
-    
+
     verifiedWaNumber = number.startsWith("91") ? number : "91" + number;
-    
+
     sendBtn.disabled = true;
     sendBtn.innerHTML = '<i class="bi bi-hourglass-split me-1"></i>Checking...';
-    
+
     try {
       const res = await fetch(`${JOBINFO_CONFIG.API_URL}/api/auth/check-recruiter`, {
         method: "POST", headers: { "Content-Type": "application/json" },
@@ -216,13 +229,13 @@ function initSurface(prefix, intent) {
       });
       if (!res.ok) throw new Error();
       const data = await res.json();
-      
+
       if (data.is_jobzon_admin) {
         // JobZon admin number entered — redirect to the shared admin login page
         window.location.href = JOBINFO_CONFIG.API_URL + "/admin/login";
         return;
       }
-      
+
       if (data.exists) {
         surfaceRegMode[prefix] = false;
         setDisplay(3);
@@ -231,7 +244,7 @@ function initSurface(prefix, intent) {
         surfaceRegMode[prefix] = true;
         setDisplay(2);
       }
-    } catch(err) {
+    } catch (err) {
       swal("Error", "Could not check number. Try again.", "error");
     } finally {
       sendBtn.disabled = false;
@@ -239,8 +252,8 @@ function initSurface(prefix, intent) {
     }
   });
 
-  if (waInput) waInput.addEventListener('keydown', e => { if(e.key==='Enter') sendBtn.click(); });
-  
+  if (waInput) waInput.addEventListener('keydown', e => { if (e.key === 'Enter') sendBtn.click(); });
+
   if (regForm) {
     regForm.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -250,10 +263,10 @@ function initSurface(prefix, intent) {
         location: document.getElementById(reqLocId).value,
         business_contact: document.getElementById(reqContactId).value
       };
-      
+
       const subBtn = document.getElementById(prefix + 'reg-submit');
-      if(subBtn) { subBtn.disabled = true; subBtn.textContent = "Sending OTP..."; }
-      
+      if (subBtn) { subBtn.disabled = true; subBtn.textContent = "Sending OTP..."; }
+
       try {
         const res = await fetch(`${JOBINFO_CONFIG.API_URL}/api/otp/send`, {
           method: "POST", headers: { "Content-Type": "application/json" },
@@ -262,10 +275,10 @@ function initSurface(prefix, intent) {
         if (!res.ok) throw new Error();
         setDisplay(3);
         startResend(resendBtn, isModal ? 'modal-cd' : null);
-      } catch(e) {
+      } catch (e) {
         swal("Error", "Could not send OTP.", "error");
       } finally {
-        if(subBtn) { subBtn.disabled = false; subBtn.innerHTML = `<i class="bi bi-person-check me-1"></i>Register & Send OTP`; }
+        if (subBtn) { subBtn.disabled = false; subBtn.innerHTML = `<i class="bi bi-person-check me-1"></i>Register & Send OTP`; }
       }
     });
   }
@@ -275,10 +288,10 @@ function initSurface(prefix, intent) {
     if (code.length !== 6) {
       swal("Invalid OTP", "Please enter the 6-digit OTP.", "warning"); return;
     }
-    
+
     verifyBtn.disabled = true;
     verifyBtn.textContent = "Verifying...";
-    
+
     try {
       let url, bodyData;
       if (surfaceRegMode[prefix]) {
@@ -288,22 +301,22 @@ function initSurface(prefix, intent) {
         url = `${JOBINFO_CONFIG.API_URL}/api/otp/verify`;
         bodyData = { wa_number: verifiedWaNumber, otp_code: code };
       }
-      
+
       const res = await fetch(url, {
         method: "POST", headers: { "Content-Type": "application/json" },
         body: JSON.stringify(bodyData)
       });
       if (!res.ok) throw new Error("Verification failed.");
-      
+
       const data = await res.json();
       sessionToken = data.session_token;
       sessionStorage.setItem("ji_token", sessionToken);
       sessionStorage.setItem("ji_wa", verifiedWaNumber);
       sessionStorage.setItem("ji_r_token", sessionToken);
       sessionStorage.setItem("ji_r_wa", verifiedWaNumber);
-      
+
       handleSuccessfulLogin(intent, setDisplay);
-    } catch(e) {
+    } catch (e) {
       swal("Error", "Incorrect OTP. Try again.", "error");
     } finally {
       verifyBtn.disabled = false;
@@ -311,8 +324,8 @@ function initSurface(prefix, intent) {
     }
   });
 
-  if (otpInput) otpInput.addEventListener('keydown', e => { if(e.key==='Enter') verifyBtn.click(); });
-  
+  if (otpInput) otpInput.addEventListener('keydown', e => { if (e.key === 'Enter') verifyBtn.click(); });
+
   if (resendBtn) {
     resendBtn.addEventListener('click', async () => {
       resendBtn.disabled = true;
@@ -334,13 +347,13 @@ function startResend(btn, cdSpanId) {
   if (!btn) return;
   let sec = 60;
   btn.disabled = true;
-  if(cdSpanId) {
+  if (cdSpanId) {
     const span = document.getElementById(cdSpanId);
-    if(span) span.textContent = sec;
+    if (span) span.textContent = sec;
   } else {
     btn.textContent = `Resend in ${sec}s`;
   }
-  
+
   const timer = setInterval(() => {
     sec--;
     if (sec <= 0) {
@@ -348,9 +361,9 @@ function startResend(btn, cdSpanId) {
       btn.disabled = false;
       btn.textContent = "Resend OTP";
     } else {
-      if(cdSpanId) {
+      if (cdSpanId) {
         const span = document.getElementById(cdSpanId);
-        if(span) span.textContent = sec;
+        if (span) span.textContent = sec;
       } else {
         btn.textContent = `Resend in ${sec}s`;
       }
@@ -362,8 +375,8 @@ function handleSuccessfulLogin(intent, setDisplay) {
   // Update nav buttons to point to dashboard
   const mb = document.getElementById("login-nav-btn-mobile");
   const db = document.getElementById("login-nav-btn");
-  if(mb) { mb.innerHTML = '<i class="bi bi-layout-text-sidebar-reverse me-1"></i>My Vacancies'; mb.href = "recruiter-dashboard.html"; mb.removeAttribute("data-bs-toggle"); mb.removeAttribute("data-bs-target"); }
-  if(db) { db.innerHTML = '<i class="bi bi-layout-text-sidebar-reverse me-1"></i>My Vacancies'; db.href = "recruiter-dashboard.html"; db.removeAttribute("data-bs-toggle"); db.removeAttribute("data-bs-target"); }
+  if (mb) { mb.innerHTML = '<i class="bi bi-layout-text-sidebar-reverse me-1"></i>My Vacancies'; mb.href = "recruiter-dashboard.html"; mb.removeAttribute("data-bs-toggle"); mb.removeAttribute("data-bs-target"); }
+  if (db) { db.innerHTML = '<i class="bi bi-layout-text-sidebar-reverse me-1"></i>My Vacancies'; db.href = "recruiter-dashboard.html"; db.removeAttribute("data-bs-toggle"); db.removeAttribute("data-bs-target"); }
 
   if (intent === 'dashboard') {
     window.location.href = 'recruiter-dashboard.html';
@@ -374,12 +387,12 @@ function handleSuccessfulLogin(intent, setDisplay) {
       const modalInstance = bootstrap.Modal.getInstance(modalEl);
       if (modalInstance) modalInstance.hide();
     }
-    
+
     // Set display for the active flow if applicable
     setDisplay(4);
 
     const jf = document.querySelector(".job-form");
-    if(jf) {
+    if (jf) {
       jf.style.display = "block";
       const hiddenWa = document.getElementById("form-wa-number");
       if (hiddenWa) hiddenWa.value = verifiedWaNumber;
@@ -416,10 +429,10 @@ document.querySelectorAll(".accordion-header").forEach((header) => {
 /* ── Auto-skip OTP ───────────────────────────────────────────────────────── */
 (function restoreDashboardSession() {
   const rToken = sessionStorage.getItem("ji_r_token") || sessionStorage.getItem("ji_token");
-  const rWa    = sessionStorage.getItem("ji_r_wa")    || sessionStorage.getItem("ji_wa");
+  const rWa = sessionStorage.getItem("ji_r_wa") || sessionStorage.getItem("ji_wa");
   if (!rToken || !rWa) return;
 
-  sessionToken     = rToken;
+  sessionToken = rToken;
   verifiedWaNumber = rWa;
 
   const hiddenWa = document.getElementById("form-wa-number");
@@ -427,13 +440,13 @@ document.querySelectorAll(".accordion-header").forEach((header) => {
 
   const mb = document.getElementById("login-nav-btn-mobile");
   const db = document.getElementById("login-nav-btn");
-  if(mb) { mb.innerHTML = '<i class="bi bi-layout-text-sidebar-reverse me-1"></i>My Vacancies'; mb.href = "recruiter-dashboard.html"; mb.removeAttribute("data-bs-toggle"); mb.removeAttribute("data-bs-target"); }
-  if(db) { db.innerHTML = '<i class="bi bi-layout-text-sidebar-reverse me-1"></i>My Vacancies'; db.href = "recruiter-dashboard.html"; db.removeAttribute("data-bs-toggle"); db.removeAttribute("data-bs-target"); }
+  if (mb) { mb.innerHTML = '<i class="bi bi-layout-text-sidebar-reverse me-1"></i>My Vacancies'; mb.href = "recruiter-dashboard.html"; mb.removeAttribute("data-bs-toggle"); mb.removeAttribute("data-bs-target"); }
+  if (db) { db.innerHTML = '<i class="bi bi-layout-text-sidebar-reverse me-1"></i>My Vacancies'; db.href = "recruiter-dashboard.html"; db.removeAttribute("data-bs-toggle"); db.removeAttribute("data-bs-target"); }
 
   if (document.getElementById("otp-step1")) document.getElementById("otp-step1").style.display = "none";
   if (document.getElementById("otp-step2")) document.getElementById("otp-step2").style.display = "none";
   if (document.getElementById("otp-step3")) document.getElementById("otp-step3").style.display = "none";
-  
+
   const step4 = document.getElementById("otp-step4");
   if (step4) {
     step4.style.display = "block";

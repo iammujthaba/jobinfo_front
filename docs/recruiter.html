@@ -5,7 +5,8 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <title>Jobinfo</title>
-  <meta name="description" content="JobInfo helps job seekers in India get verified job alerts via WhatsApp. Easy, fast, and free to use.">
+  <meta name="description"
+    content="JobInfo helps job seekers in India get verified job alerts via WhatsApp. Easy, fast, and free to use.">
   <meta name="keywords" content="WhatsApp jobs, India jobs, Job alerts, Kerala hiring, JobInfo">
 
 
@@ -16,7 +17,9 @@
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+    rel="stylesheet">
 
   <!-- Vendor CSS Files -->
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -29,131 +32,150 @@
   <link href="assets/css/main.css" rel="stylesheet">
   <style>
     /* Nav Menu Colors */
-  :root {
-    --nav-color: #5f687b;
-    --nav-hover-color: #007bff;
-    --nav-mobile-background-color: #ffffff;
-    --nav-dropdown-background-color: #ffffff;
-    --nav-dropdown-color: #5f687b;
-    --nav-dropdown-hover-color: #007bff;
-  }
-  /* Outlined pill button for navbar end */
-  .btn-nav-outline {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 8px 18px;
-    border-radius: 50px;
-    border: 2px solid #107bbc;
-    color: #107bbc;
-    background: transparent;
-    font-size: 14px;
-    font-weight: 500;
-    text-decoration: none;
-    transition: background 0.3s, color 0.3s;
-    white-space: nowrap;
-  }
-  .btn-nav-outline:hover {
-    background: #107bbc;
-    color: #fff;
-  }
-  /* On mobile the two nav buttons wrap under the hamburger — hide them; the nav menu already has the links */
-  @media (max-width: 1199px) {
-    .header-nav-btns { display: none !important; }
-  }
+    :root {
+      --nav-color: #5f687b;
+      --nav-hover-color: #007bff;
+      --nav-mobile-background-color: #ffffff;
+      --nav-dropdown-background-color: #ffffff;
+      --nav-dropdown-color: #5f687b;
+      --nav-dropdown-hover-color: #007bff;
+    }
 
-  /* Follow Channel + Browse Jobs (navbar) – outlined style on hover */
-  .hero .btn-get-started,
-  a.btn-get-started.btn-primary,
-  .header-nav-btns .btn-getstarted {
-    font-size: 15px !important;
-    border: 2px solid transparent !important;
-  }
-  .hero .btn-get-started:hover,
-  a.btn-get-started.btn-primary:hover,
-  .header-nav-btns .btn-getstarted:hover {
-    background: transparent !important;
-    color: #1a1a1a !important;
-    border: 2px solid #107bbc !important;
-    box-shadow: none !important;
-  }
-  .hero .btn-get-started:hover i,
-  a.btn-get-started.btn-primary:hover i,
-  .header-nav-btns .btn-getstarted:hover i {
-    color: #107bbc !important;
-  }
+    /* Outlined pill button for navbar end */
+    .btn-nav-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 18px;
+      border-radius: 50px;
+      border: 2px solid #107bbc;
+      color: #107bbc;
+      background: transparent;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: background 0.3s, color 0.3s;
+      white-space: nowrap;
+    }
 
-  /* Post Vacancy pill button – overrides glightbox resets */
-  .hero .btn-watch-video,
-  a.glightbox.btn-watch-video {
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 8px !important;
-    padding: 12px 28px !important;
-    border-radius: 50px !important;
-    border: 2px solid #107bbc !important;
-    color: #1a1a1a !important;
-    background: transparent !important;
-    font-size: 15px !important;
-    font-weight: 400 !important;
-    letter-spacing: 1px !important;
-    text-decoration: none !important;
-    transition: background 0.4s, color 0.4s !important;
-    margin-left: 12px;
-    white-space: nowrap;
-  }
-  .hero .btn-watch-video i,
-  a.glightbox.btn-watch-video i {
-    font-size: 18px !important;
-    color: #107bbc !important;
-    line-height: 1 !important;
-    margin: 0 !important;
-  }
-  .hero .btn-watch-video:hover {
-    background: #107bbc !important;
-    color: #fff !important;
-  }
-  .hero .btn-watch-video:hover i {
-    color: #fff !important;
-  }
-  @media (max-width: 640px) {
+    .btn-nav-outline:hover {
+      background: #107bbc;
+      color: #fff;
+    }
+
+    /* On mobile the two nav buttons wrap under the hamburger — hide them; the nav menu already has the links */
+    @media (max-width: 1199px) {
+      .header-nav-btns {
+        display: none !important;
+      }
+    }
+
+    /* Follow Channel + Browse Jobs (navbar) – outlined style on hover */
+    .hero .btn-get-started,
+    a.btn-get-started.btn-primary,
+    .header-nav-btns .btn-getstarted {
+      font-size: 15px !important;
+      border: 2px solid transparent !important;
+    }
+
+    .hero .btn-get-started:hover,
+    a.btn-get-started.btn-primary:hover,
+    .header-nav-btns .btn-getstarted:hover {
+      background: transparent !important;
+      color: #1a1a1a !important;
+      border: 2px solid #107bbc !important;
+      box-shadow: none !important;
+    }
+
+    .hero .btn-get-started:hover i,
+    a.btn-get-started.btn-primary:hover i,
+    .header-nav-btns .btn-getstarted:hover i {
+      color: #107bbc !important;
+    }
+
+    /* Post Vacancy pill button – overrides glightbox resets */
+    .hero .btn-watch-video,
     a.glightbox.btn-watch-video {
-      margin-left: 0 !important;
-      width: 48% !important;
-      padding: 12px 0 !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 8px !important;
+      padding: 12px 28px !important;
+      border-radius: 50px !important;
+      border: 2px solid #107bbc !important;
+      color: #1a1a1a !important;
+      background: transparent !important;
+      font-size: 15px !important;
+      font-weight: 400 !important;
+      letter-spacing: 1px !important;
+      text-decoration: none !important;
+      transition: background 0.4s, color 0.4s !important;
+      margin-left: 12px;
+      white-space: nowrap;
     }
-    .hero .btn-get-started {
-      width: 48% !important;
-      /* padding: 12px 0 !important; */
-    }
-  }
-  /* iPhone SE and smaller (≤375px): swap "Follow Channel" for "Follow us" */
-  @media (max-width: 425px) {
-    .hide-xs { display: none !important; }
-    .show-xs { display: inline !important; }
-  }
 
-  /* Outlined pill button for navbar } */
-  .btn-nav-outline {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 8px 18px;
-    border-radius: 50px;
-    border: 2px solid #107bbc;
-    color: #107bbc;
-    background: transparent;
-    font-size: 14px;
-    font-weight: 500;
-    text-decoration: none;
-    transition: background 0.3s, color 0.3s;
-    white-space: nowrap;
-  }
-  .btn-nav-outline:hover {
-    background: #107bbc;
-    color: #fff;
-  }
+    .hero .btn-watch-video i,
+    a.glightbox.btn-watch-video i {
+      font-size: 18px !important;
+      color: #107bbc !important;
+      line-height: 1 !important;
+      margin: 0 !important;
+    }
+
+    .hero .btn-watch-video:hover {
+      background: #107bbc !important;
+      color: #fff !important;
+    }
+
+    .hero .btn-watch-video:hover i {
+      color: #fff !important;
+    }
+
+    @media (max-width: 640px) {
+      a.glightbox.btn-watch-video {
+        margin-left: 0 !important;
+        width: 48% !important;
+        padding: 12px 0 !important;
+      }
+
+      .hero .btn-get-started {
+        width: 48% !important;
+        /* padding: 12px 0 !important; */
+      }
+    }
+
+    /* iPhone SE and smaller (≤375px): swap "Follow Channel" for "Follow us" */
+    @media (max-width: 425px) {
+      .hide-xs {
+        display: none !important;
+      }
+
+      .show-xs {
+        display: inline !important;
+      }
+    }
+
+    /* Outlined pill button for navbar } */
+    .btn-nav-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 18px;
+      border-radius: 50px;
+      border: 2px solid #107bbc;
+      color: #107bbc;
+      background: transparent;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: background 0.3s, color 0.3s;
+      white-space: nowrap;
+    }
+
+    .btn-nav-outline:hover {
+      background: #107bbc;
+      color: #fff;
+    }
   </style>
 
 </head>
@@ -180,17 +202,23 @@
           <li><a href="#join-now">Network</a></li>
           <li><a href="#faq">FAQ</a></li>
           <li class="d-xl-none text-center" style="padding: 10px 20px;">
-            <a class="btn-nav-outline w-100 justify-content-center" href="index.html"><i class="bi bi-briefcase"></i>Browse Jobs</a>
+            <a class="btn-nav-outline w-100 justify-content-center" href="index.html"><i
+                class="bi bi-briefcase"></i>Browse Jobs</a>
           </li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
 
-      <a class="btn-nav-outline d-xl-none" id="login-nav-btn-mobile" href="#" data-bs-toggle="modal" data-bs-target="#recruiterLoginModal" style="order: 2; margin: 0 15px 0 0; padding: 6px 15px; font-size: 14px;"><i class="bi bi-box-arrow-in-right"></i>Login</a>
+      <a class="btn-nav-outline d-xl-none" id="login-nav-btn-mobile" href="#" data-bs-toggle="modal"
+        data-bs-target="#recruiterLoginModal"
+        style="order: 2; margin: 0 15px 0 0; padding: 6px 15px; font-size: 14px;"><i
+          class="bi bi-box-arrow-in-right"></i>Login</a>
 
       <div class="header-nav-btns d-xl-flex align-items-center gap-2">
-        <a class="btn-getstarted btn-primary" href="index.html" style="padding:8px 18px;font-size:14px;"><i class="bi bi-briefcase me-1"></i>Browse Jobs</a>
-        <a class="btn-nav-outline" id="login-nav-btn" href="#" data-bs-toggle="modal" data-bs-target="#recruiterLoginModal"><i class="bi bi-box-arrow-in-right"></i>Login</a>
+        <a class="btn-getstarted btn-primary" href="index.html" style="padding:8px 18px;font-size:14px;"><i
+            class="bi bi-briefcase me-1"></i>Browse Jobs</a>
+        <a class="btn-nav-outline" id="login-nav-btn" href="#" data-bs-toggle="modal"
+          data-bs-target="#recruiterLoginModal"><i class="bi bi-box-arrow-in-right"></i>Login</a>
       </div>
 
     </div>
@@ -205,14 +233,20 @@
         <div class="row gy-4">
           <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center" data-aos="fade-up">
             <h1>We Make your Hiring Simple and Fast</h1>
-            <p>Say goodbye to delays and portals. Connect with active job seekers directly through WhatsApp – hiring is now just a message away!</p>
+            <p>Say goodbye to delays and portals. Connect with active job seekers directly through WhatsApp – hiring is
+              now just a message away!</p>
             <div class="d-flex flex-nowrap gap-2">
-              <a href="https://whatsapp.com/channel/0029VbBrkDB8fewxd9QIMA2k" class="btn-get-started btn-primary flex-fill text-center justify-content-center"><i class="bi bi-whatsapp icon whats"></i><span><span class="hide-xs">Follow Channel</span><span class="show-xs" style="display:none;">Jobinfo</span></span></a>
-              <a href="post-vacancy.html" class="btn-watch-video flex-fill text-center justify-content-center"><i class="bi bi-person-add"></i><span>Post Vacancy</span></a>
+              <a href="https://whatsapp.com/channel/0029VbBrkDB8fewxd9QIMA2k"
+                class="btn-get-started btn-primary flex-fill text-center justify-content-center"><i
+                  class="bi bi-whatsapp icon whats"></i><span><span class="hide-xs">Follow Channel</span><span
+                    class="show-xs" style="display:none;">Jobinfo</span></span></a>
+              <a href="post-vacancy.html" class="btn-watch-video flex-fill text-center justify-content-center"><i
+                  class="bi bi-person-add"></i><span>Post Vacancy</span></a>
             </div>
           </div>
           <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-out" data-aos-delay="100">
-            <img src="assets/img/hero-img3.png" class="img-fluid animated" alt="Young job seeker checking WhatsApp for job alerts">
+            <img src="assets/img/hero-img3.png" class="img-fluid animated"
+              alt="Young job seeker checking WhatsApp for job alerts">
           </div>
         </div>
       </div>
@@ -224,500 +258,532 @@
 
       <div class="container section-title">
 
-      <div class="container">
+        <div class="container">
 
-        <div class="row gy-4 text-center">
+          <div class="row gy-4 text-center">
 
-          <div class="col-lg-4 d-flex" data-aos="fade-up" data-aos-delay="100">
-            <div class="service-item position-relative shadow-sm">
-              <div class="icon">
-                <i class="bi bi-pencil-square fs-1 text-primary"></i>
+            <div class="col-lg-4 d-flex" data-aos="fade-up" data-aos-delay="100">
+              <div class="service-item position-relative shadow-sm">
+                <div class="icon">
+                  <i class="bi bi-pencil-square fs-1 text-primary"></i>
+                </div>
+                <h4 class="stretched-link">Easy job Posting</h4>
+                <p>Share your vacancies with the Jobinfo WhatsApp admin or just submit vacancies via website - no
+                  Registration Required.</p>
               </div>
-              <h4 class="stretched-link">Easy job Posting</h4>
-              <p>Share your vacancies with the Jobinfo WhatsApp admin or just submit vacancies via website - no Registration Required.</p>
-            </div>
-          </div><!-- End Service Item -->
+            </div><!-- End Service Item -->
 
-          <div class="col-lg-4 d-flex" data-aos="fade-up" data-aos-delay="200">
-            <div class="service-item position-relative shadow-sm">
-              <div class="icon">
-                <i class="bi bi-currency-rupee fs-1 text-primary"></i>
+            <div class="col-lg-4 d-flex" data-aos="fade-up" data-aos-delay="200">
+              <div class="service-item position-relative shadow-sm">
+                <div class="icon">
+                  <i class="bi bi-currency-rupee fs-1 text-primary"></i>
+                </div>
+                <h4 class="stretched-link">No Payment</h4>
+                <p>You can post vacancy completely free - we are aiming to make job discovery and application accessible
+                  to everyone at no cost.</p>
               </div>
-              <h4 class="stretched-link">No Payment</h4>
-              <p>You can post vacancy completely free - we are aiming to make job discovery and application accessible to everyone at no cost.</p>
-            </div>
-          </div><!-- End Service Item -->
+            </div><!-- End Service Item -->
 
-          <div class="col-lg-4 d-flex" data-aos="fade-up" data-aos-delay="300">
-            <div class="service-item position-relative shadow-sm">
-              <div class="icon">
-                <i class="bi bi-people fs-1 text-primary"></i>
+            <div class="col-lg-4 d-flex" data-aos="fade-up" data-aos-delay="300">
+              <div class="service-item position-relative shadow-sm">
+                <div class="icon">
+                  <i class="bi bi-people fs-1 text-primary"></i>
+                </div>
+                <h4 class="stretched-link">Direct Access</h4>
+                <p>We connect your job vacancies directly to Kerala's large jobseekers Channel, ensuring fast and broad
+                  visibility for your openings.</p>
               </div>
-              <h4 class="stretched-link">Direct Access</h4>
-              <p>We connect your job vacancies directly to Kerala's large jobseekers Channel, ensuring fast and broad visibility for your openings.</p>
-            </div>
-          </div><!-- End Service Item -->
+            </div><!-- End Service Item -->
+
+          </div>
 
         </div>
-
-      </div>
 
     </section><!-- /Featured Services Section -->
 
 
-  <!-- Recruiter Benefits Section -->
-  <section id="recruiter-benefits" class="features pt-5 pb-5 about section" data-aos="fade-up">
-    <div class="container">
+    <!-- Recruiter Benefits Section -->
+    <section id="recruiter-benefits" class="features pt-5 pb-5 about section" data-aos="fade-up">
+      <div class="container">
 
-      <!-- Section Title -->
-      <div class="section-title">
-        <span>Why Choose JobInfo?</span>
-        <h2>Benefits for Recruiters</h2>
-        <p>Discover why hundreds of businesses trust JobInfo to find the right candidates.</p>
-      </div>
-
-      <div class="row gy-4 align-items-center">
-
-        <div class="col-lg-6 position-relative align-self-start" data-aos="fade-up" data-aos-delay="100">
-          <img src="assets/img/benifit.jpg" class="img-fluid" alt="Recruiter Benefits Illustration">
-          <a href="https://youtu.be/Fwk7bPOUHM4?si=lMUgeWp1o3-aGlSm" class="glightbox pulsating-play-btn blu"></a>
+        <!-- Section Title -->
+        <div class="section-title">
+          <span>Why Choose JobInfo?</span>
+          <h2>Benefits for Recruiters</h2>
+          <p>Discover why hundreds of businesses trust JobInfo to find the right candidates.</p>
         </div>
 
-        <div class="col-md-6">
-          <div class="icon-box d-flex align-items-start mb-4" data-aos="fade-up" data-aos-delay="100">
-            <div class="icon flex-shrink-0 me-3">
-              <i class="bi bi-bullseye text-primary fs-3"></i>
-            </div>
-            <div>
-              <h4 class="title">Direct Access to job Seekers</h4>
-              <p class="description">Your vacancies are promoted directly to job seekers via WhatsApp and our network channels.</p>
-            </div>
+        <div class="row gy-4 align-items-center">
+
+          <div class="col-lg-6 position-relative align-self-start" data-aos="fade-up" data-aos-delay="100">
+            <img src="assets/img/benifit.jpg" class="img-fluid" alt="Recruiter Benefits Illustration">
+            <a href="https://youtu.be/Fwk7bPOUHM4?si=lMUgeWp1o3-aGlSm" class="glightbox pulsating-play-btn blu"></a>
           </div>
 
-          <div class="icon-box d-flex align-items-start mb-4" data-aos="fade-up" data-aos-delay="200">
-            <div class="icon flex-shrink-0 me-3"><i class="bi bi-clock-history text-primary fs-3"></i></div>
-            <div>
-              <h4 class="title">Post in Minutes</h4>
-              <p class="description">No logins or complex setups—just fill the form and submit your vacancy easily.</p>
+          <div class="col-md-6">
+            <div class="icon-box d-flex align-items-start mb-4" data-aos="fade-up" data-aos-delay="100">
+              <div class="icon flex-shrink-0 me-3">
+                <i class="bi bi-bullseye text-primary fs-3"></i>
+              </div>
+              <div>
+                <h4 class="title">Direct Access to job Seekers</h4>
+                <p class="description">Your vacancies are promoted directly to job seekers via WhatsApp and our network
+                  channels.</p>
+              </div>
             </div>
-          </div>
 
-          <div class="icon-box d-flex align-items-start mb-4" data-aos="fade-up" data-aos-delay="300">
-            <div class="icon flex-shrink-0 me-3"><i class="bi bi-whatsapp text-primary fs-3"></i></div>
-            <div>
-              <h4 class="title">Get Direct Applications</h4>
-              <p class="description">Receive candidate inquiries and applications straight to your WhatsApp or Email.</p>
+            <div class="icon-box d-flex align-items-start mb-4" data-aos="fade-up" data-aos-delay="200">
+              <div class="icon flex-shrink-0 me-3"><i class="bi bi-clock-history text-primary fs-3"></i></div>
+              <div>
+                <h4 class="title">Post in Minutes</h4>
+                <p class="description">No logins or complex setups—just fill the form and submit your vacancy easily.
+                </p>
+              </div>
             </div>
-          </div>
 
-          <div class="icon-box d-flex align-items-start" data-aos="fade-up" data-aos-delay="400">
-            <div class="icon flex-shrink-0 me-3"><i class="bi bi-currency-rupee text-primary fs-3"></i></div>
-            <div>
-              <h4 class="title">Completely Free</h4>
-              <p class="description">No hidden fees. Posting vacancies is 100% free for all recruiters and business owners.</p>
+            <div class="icon-box d-flex align-items-start mb-4" data-aos="fade-up" data-aos-delay="300">
+              <div class="icon flex-shrink-0 me-3"><i class="bi bi-whatsapp text-primary fs-3"></i></div>
+              <div>
+                <h4 class="title">Get Direct Applications</h4>
+                <p class="description">Receive candidate inquiries and applications straight to your WhatsApp or Email.
+                </p>
+              </div>
             </div>
+
+            <div class="icon-box d-flex align-items-start" data-aos="fade-up" data-aos-delay="400">
+              <div class="icon flex-shrink-0 me-3"><i class="bi bi-currency-rupee text-primary fs-3"></i></div>
+              <div>
+                <h4 class="title">Completely Free</h4>
+                <p class="description">No hidden fees. Posting vacancies is 100% free for all recruiters and business
+                  owners.</p>
+              </div>
+            </div>
+
           </div>
 
         </div>
-
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section id="recruiter-guidelines" class="features pt-5 pb-5 about section" data-aos="fade-up">
-    <div class="container">
-      <!-- Section Title -->
-      <div class="section-title">
-        <span>Recruiter Guidelines</span>
-        <h2>Posting Guidelines</h2>
-        <p>Please follow these rules to ensure a smooth and professional experience for everyone.</p>
-      </div>
-  
-      <div class="row gy-4">
-        <div class="col-md-6">
-          <!-- Genuine Vacancies -->
-          <div class="icon-box d-flex align-items-start mb-4">
-            <div class="icon flex-shrink-0 me-3">
-              <i class="bi bi-check-circle text-primary fs-3"></i>
+    <section id="recruiter-guidelines" class="features pt-5 pb-5 about section" data-aos="fade-up">
+      <div class="container">
+        <!-- Section Title -->
+        <div class="section-title">
+          <span>Recruiter Guidelines</span>
+          <h2>Posting Guidelines</h2>
+          <p>Please follow these rules to ensure a smooth and professional experience for everyone.</p>
+        </div>
+
+        <div class="row gy-4">
+          <div class="col-md-6">
+            <!-- Genuine Vacancies -->
+            <div class="icon-box d-flex align-items-start mb-4">
+              <div class="icon flex-shrink-0 me-3">
+                <i class="bi bi-check-circle text-primary fs-3"></i>
+              </div>
+              <div>
+                <h4 class="title">Genuine Vacancies Only</h4>
+                <p class="description">Post only real and currently available job openings. No promotional content or
+                  false leads. All vacancies are verified before publishing.</p>
+              </div>
             </div>
-            <div>
-              <h4 class="title">Genuine Vacancies Only</h4>
-              <p class="description">Post only real and currently available job openings. No promotional content or false leads. All vacancies are verified before publishing.</p>
+
+            <!-- Contact Details -->
+            <div class="icon-box d-flex align-items-start mb-4">
+              <div class="icon flex-shrink-0 me-3">
+                <i class="bi bi-person-lines-fill text-primary fs-3"></i>
+              </div>
+              <div>
+                <h4 class="title">Clear Contact Information</h4>
+                <p class="description">Provide accurate phone numbers, WhatsApp numbers, Email so Candidate can forward
+                  applicant details to you seamlessly.</p>
+              </div>
+            </div>
+
+            <!-- Additional Info -->
+            <div class="icon-box d-flex align-items-start mb-4">
+              <div class="icon flex-shrink-0 me-3">
+                <i class="bi bi-info-circle text-primary fs-3"></i>
+              </div>
+              <div>
+                <h4 class="title">Add Extra Requirements</h4>
+                <p class="description">Include optional details like age limits, language preferences, or other
+                  instructions in the "Additional Info" section of the form.</p>
+              </div>
             </div>
           </div>
-  
-          <!-- Contact Details -->
-          <div class="icon-box d-flex align-items-start mb-4">
-            <div class="icon flex-shrink-0 me-3">
-              <i class="bi bi-person-lines-fill text-primary fs-3"></i>
+
+          <div class="col-md-6">
+            <!-- No Scams -->
+            <div class="icon-box d-flex align-items-start mb-4">
+              <div class="icon flex-shrink-0 me-3">
+                <i class="bi bi-shield-x text-primary fs-3"></i>
+              </div>
+              <div>
+                <h4 class="title">Strictly No Scams</h4>
+                <p class="description">Fraudulent posts will result in a permanent ban. We actively monitor and verify
+                  postings for community safety.</p>
+              </div>
             </div>
-            <div>
-              <h4 class="title">Clear Contact Information</h4>
-              <p class="description">Provide accurate phone numbers, WhatsApp numbers, Email so Candidate can forward applicant details to you seamlessly.</p>
+
+            <!-- Multiple Vacancy Posts -->
+            <div class="icon-box d-flex align-items-start mb-4">
+              <div class="icon flex-shrink-0 me-3">
+                <i class="bi bi-files text-primary fs-3"></i>
+              </div>
+              <div>
+                <h4 class="title">Post Multiple Vacancies</h4>
+                <p class="description">If the same role has different preferences (e.g., experience levels), submit each
+                  variation as a separate vacancy.</p>
+              </div>
             </div>
-          </div>
-  
-          <!-- Additional Info -->
-          <div class="icon-box d-flex align-items-start mb-4">
-            <div class="icon flex-shrink-0 me-3">
-              <i class="bi bi-info-circle text-primary fs-3"></i>
+
+            <!-- confirmation -->
+            <div class="icon-box d-flex align-items-start mb-4">
+              <div class="icon flex-shrink-0 me-3">
+                <i class="bi bi-check2-all text-primary fs-3"></i>
+              </div>
+              <div>
+                <h4 class="title">confirmation on job post</h4>
+                <p class="description">We will notify you within 12 hours if your vacancy is approved or not. If
+                  approved, it will be posted within 24 hours.</p>
+              </div>
             </div>
-            <div>
-              <h4 class="title">Add Extra Requirements</h4>
-              <p class="description">Include optional details like age limits, language preferences, or other instructions in the "Additional Info" section of the form.</p>
-            </div>
+
           </div>
         </div>
-  
-        <div class="col-md-6">
-          <!-- No Scams -->
-          <div class="icon-box d-flex align-items-start mb-4">
-            <div class="icon flex-shrink-0 me-3">
-              <i class="bi bi-shield-x text-primary fs-3"></i>
-            </div>
-            <div>
-              <h4 class="title">Strictly No Scams</h4>
-              <p class="description">Fraudulent posts will result in a permanent ban. We actively monitor and verify postings for community safety.</p>
-            </div>
-          </div>
-  
-          <!-- Multiple Vacancy Posts -->
-          <div class="icon-box d-flex align-items-start mb-4">
-            <div class="icon flex-shrink-0 me-3">
-              <i class="bi bi-files text-primary fs-3"></i>
-            </div>
-            <div>
-              <h4 class="title">Post Multiple Vacancies</h4>
-              <p class="description">If the same role has different preferences (e.g., experience levels), submit each variation as a separate vacancy.</p>
-            </div>
-          </div>
-
-          <!-- confirmation -->
-          <div class="icon-box d-flex align-items-start mb-4">
-            <div class="icon flex-shrink-0 me-3">
-              <i class="bi bi-check2-all text-primary fs-3"></i>
-            </div>
-            <div>
-              <h4 class="title">confirmation on job post</h4>
-              <p class="description">We will notify you within 12 hours if your vacancy is approved or not. If approved, it will be posted within 24 hours.</p>
-            </div>
-          </div>
-  
-        </div>
       </div>
-    </div>
-  </section>
-    
+    </section>
+
 
     <section id="submit-job" class="container py-5" data-aos="fade-up">
 
-		<!-- Section Title -->
-		<div class="container section-title" data-aos="fade-up">
-			<span>Submit Job Vacancy<br></span>
-			<h2>Share Vacancy</h2>
-			<p>Share your job vacancy with us to reach a wider pool of candidates through JobInfo.</p>
-		</div><!-- End Section Title -->
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <span>Submit Job Vacancy<br></span>
+        <h2>Share Vacancy</h2>
+        <p>Share your job vacancy with us to reach a wider pool of candidates through JobInfo.</p>
+      </div><!-- End Section Title -->
 
-    <!-- ── Step 1: WhatsApp number ──────────────────────────── -->
-    <div id="otp-step1" class="bg-white p-4 rounded shadow mb-4" style="max-width:480px;margin:0 auto 24px">
-      <h5 class="mb-3"><i class="bi bi-whatsapp text-success me-2"></i>Verify Your WhatsApp Number</h5>
-      <p class="text-muted small mb-3">We'll send a one-time password to your WhatsApp to verify your identity before posting.</p>
-      <div class="input-group">
-        <span class="input-group-text">+91</span>
-        <input type="tel" id="wa-number-input" class="form-control" placeholder="Your WhatsApp number" maxlength="10" pattern="[0-9]{10}">
+      <!-- ── Step 1: WhatsApp number ──────────────────────────── -->
+      <div id="otp-step1" class="bg-white p-4 rounded shadow mb-4" style="max-width:480px;margin:0 auto 24px">
+        <h5 class="mb-3"><i class="bi bi-whatsapp text-success me-2"></i>Verify Your WhatsApp Number</h5>
+        <p class="text-muted small mb-3">We'll send a one-time password to your WhatsApp to verify your identity before
+          posting.</p>
+        <div class="input-group">
+          <span class="input-group-text">+91</span>
+          <input type="tel" id="wa-number-input" class="form-control" placeholder="Your WhatsApp number" maxlength="10"
+            pattern="[0-9]{10}">
+        </div>
+        <button type="button" id="send-otp-btn" class="btn btn-success w-100 mt-3 fw-bold"><i
+            class="bi bi-send me-1"></i>Send OTP</button>
       </div>
-      <button type="button" id="send-otp-btn" class="btn btn-success w-100 mt-3 fw-bold"><i class="bi bi-send me-1"></i>Send OTP</button>
-    </div>
 
-    <!-- ── Step 2: Registration Form ────────────────────────── -->
-    <div id="otp-step2" class="bg-white p-4 rounded shadow mb-4" style="display:none;max-width:480px;margin:0 auto 24px;">
-      <h5 class="mb-3"><i class="bi bi-person-lines-fill text-success me-2"></i>Complete Profile</h5>
-      <p class="text-muted small mb-3">We need a few details before you can continue.</p>
-      <form id="inline-reg-form">
-        <div class="mb-3">
-          <label class="form-label small fw-bold text-secondary mb-1">Company Name</label>
-          <input type="text" id="inline-company" class="form-control" placeholder="e.g. ABC Pvt Ltd" required>
+      <!-- ── Step 2: Registration Form ────────────────────────── -->
+      <div id="otp-step2" class="bg-white p-4 rounded shadow mb-4"
+        style="display:none;max-width:480px;margin:0 auto 24px;">
+        <h5 class="mb-3"><i class="bi bi-person-lines-fill text-success me-2"></i>Complete Profile</h5>
+        <p class="text-muted small mb-3">We need a few details before you can continue.</p>
+        <form id="inline-reg-form">
+          <div class="mb-3">
+            <label class="form-label small fw-bold text-secondary mb-1">Company Name</label>
+            <input type="text" id="inline-company" class="form-control" placeholder="e.g. ABC Pvt Ltd" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label small fw-bold text-secondary mb-1">Business Type</label>
+            <select id="inline-type" class="form-select" required>
+              <option value="">Select Type</option>
+              <option value="company">Company / Pvt Ltd</option>
+              <option value="shop_retail">Shop / Supermarket / Retail</option>
+              <option value="hotel_bakery">Hotel / Restaurant / Bakery</option>
+              <option value="contractor">Contractor / Builder</option>
+              <option value="individual">Individual / Household</option>
+              <option value="petrol_pump">Petrol Pump / Fuel Station</option>
+              <option value="workshop_garage">Workshop / Garage</option>
+              <option value="transport">Travels / Transport / Logistics</option>
+              <option value="agency">Agency / Consultancy</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label small fw-bold text-secondary mb-1">Company Location</label>
+            <select id="inline-location" class="form-select" required>
+              <option value="">Select Region</option>
+              <option value="Kerala">Kerala</option>
+              <option value="Karnataka">Karnataka</option>
+              <option value="GCC">GCC</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div class="mb-4">
+            <label class="form-label small fw-bold text-secondary mb-1">Business Contact Number</label>
+            <input type="tel" id="inline-contact" class="form-control" placeholder="Phone/Mobile" required>
+          </div>
+          <button type="submit" class="btn btn-success w-100 fw-bold" id="inline-reg-submit"><i
+              class="bi bi-person-check me-1"></i>Register &amp; Send OTP</button>
+        </form>
+      </div>
+
+      <!-- ── Step 3: Enter OTP ─────────────────────────────────── -->
+      <div id="otp-step3" class="bg-white p-4 rounded shadow mb-4"
+        style="display:none;max-width:480px;margin:0 auto 24px">
+        <h5 class="mb-2"><i class="bi bi-shield-check text-success me-2"></i>Enter OTP</h5>
+        <p class="text-muted small mb-3">A 6-digit OTP was sent to your WhatsApp. Enter it below.</p>
+        <input type="text" id="otp-input" class="form-control text-center fw-bold" maxlength="6"
+          placeholder="_ _ _ _ _ _" style="font-size:1.5rem;letter-spacing:.5rem">
+        <button type="button" id="verify-otp-btn" class="btn btn-success w-100 mt-3 fw-bold">Verify OTP</button>
+        <div class="text-center mt-2">
+          <button type="button" id="resend-otp-btn" class="btn btn-link btn-sm text-muted" disabled>Resend OTP</button>
         </div>
-        <div class="mb-3">
-          <label class="form-label small fw-bold text-secondary mb-1">Business Type</label>
-          <select id="inline-type" class="form-select" required>
-                <option value="">Select Type</option>
-                <option value="company">Company / Pvt Ltd</option>
-                <option value="shop_retail">Shop / Supermarket / Retail</option>
-                <option value="hotel_bakery">Hotel / Restaurant / Bakery</option>
-                <option value="contractor">Contractor / Builder</option>
-                <option value="individual">Individual / Household</option>
-                <option value="petrol_pump">Petrol Pump / Fuel Station</option>
-                <option value="workshop_garage">Workshop / Garage</option>
-                <option value="transport">Travels / Transport / Logistics</option>
-                <option value="agency">Agency / Consultancy</option>
-                <option value="other">Other</option>
-          </select>
+      </div>
+
+      <!-- ── Step 4: Vacancy form (hidden until OTP verified) ─── -->
+      <div id="otp-step4" style="display:none">
+        <div class="alert alert-success text-center fw-semibold" style="max-width:800px;margin:0 auto 24px;">
+          <i class="bi bi-check-circle-fill me-2"></i>WhatsApp verified! Now fill in your vacancy details.
         </div>
-        <div class="mb-3">
-          <label class="form-label small fw-bold text-secondary mb-1">Company Location</label>
-          <select id="inline-location" class="form-select" required>
-            <option value="">Select Region</option>
-            <option value="Kerala">Kerala</option>
-            <option value="Karnataka">Karnataka</option>
-            <option value="GCC">GCC</option>
-            <option value="Other">Other</option>
-          </select>
+      </div>
+
+      <form name="job-form" class="job-form bg-white p-4 rounded shadow"
+        style="display:none;max-width:800px;margin:0 auto 24px;">
+        <div class="row gy-3">
+          <div class="col-md-6">
+            <select name="job_category" class="form-select" required>
+              <option value="">Job Category?</option>
+              <option value="retail">Retail &amp; Showrooms</option>
+              <option value="sales_business">Sales &amp; Business Executive</option>
+              <option value="hospitality">Hospitality &amp; Food Service</option>
+              <option value="healthcare">Healthcare &amp; Caretaking</option>
+              <option value="education">Education &amp; Academic Advisor</option>
+              <option value="office_data_entry">Office Admin &amp; Data Entry</option>
+              <option value="front_office">Receptionist &amp; Front Office</option>
+              <option value="finance_accounts">Accountant &amp; Billing Staff</option>
+              <option value="hr_management">HR, Branch Manager &amp; Team Lead</option>
+              <option value="telecalling">Telecaller &amp; Customer Support</option>
+              <option value="it_digital_marketing">IT &amp; Digital Marketing</option>
+              <option value="logistics_store">Driving, Logistics &amp; Store Keeper</option>
+              <option value="beauty_wellness">Beauty &amp; Wellness</option>
+              <option value="maintenance_technician">Maintenance &amp; Technician</option>
+              <option value="construction_labor">Construction &amp; Manual Labor</option>
+              <option value="gulf_abroad">Gulf / Abroad Jobs</option>
+              <option value="other">Other / General</option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <input type="text" name="company_name" class="form-control" placeholder="Company / Shop Name" required>
+          </div>
+          <div class="col-md-12">
+            <input type="text" name="job_title" class="form-control" placeholder="Job Title (E.g. Sales Executive)"
+              required>
+          </div>
+          <div class="col-md-6">
+            <select name="district_region" class="form-select" required>
+              <option value="">District / Region?</option>
+              <option value="Kasaragod">Kasaragod</option>
+              <option value="Kannur">Kannur</option>
+              <option value="Wayanad">Wayanad</option>
+              <option value="Malappuram">Malappuram</option>
+              <option value="Kozhikode">Kozhikode</option>
+              <option value="Palakkad">Palakkad</option>
+              <option value="Thrissur">Thrissur</option>
+              <option value="Ernakulam">Ernakulam</option>
+              <option value="Idukki">Idukki</option>
+              <option value="Kottayam">Kottayam</option>
+              <option value="Pathanamthitta">Pathanamthitta</option>
+              <option value="Alappuzha">Alappuzha</option>
+              <option value="Kollam">Kollam</option>
+              <option value="Thiruvananthapuram">Thiruvananthapuram</option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <input type="text" name="exact_location" class="form-control" placeholder="Exact Location (E.g. Vyttila)"
+              required>
+          </div>
+          <div class="col-md-4">
+            <select name="job_mode" class="form-select" required>
+              <option value="">Job Mode?</option>
+              <option value="full_time">Full-Time</option>
+              <option value="part_time">Part-Time</option>
+              <option value="remote">Remote</option>
+              <option value="hybrid">Hybrid</option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <select name="experience_required" class="form-select" required>
+              <option value="">Experience Required?</option>
+              <option value="no_experience">No Experience Required</option>
+              <option value="fresher_or_exp">Fresher or Experienced</option>
+              <option value="1_2_years">1-2 Years</option>
+              <option value="3_5_years">3-5 Years</option>
+              <option value="5_plus_years">5+ Years</option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <select name="salary_range" class="form-select" required>
+              <option value="">Salary Range?</option>
+              <option value="interview_based">Based on Interview</option>
+              <option value="not_mentioned">Not Mentioned</option>
+              <option value="stipend">Stipend</option>
+              <option value="below_10k">Below ₹10,000</option>
+              <option value="10k_20k">₹10,000 - ₹20,000</option>
+              <option value="20k_30k">₹20,000 - ₹30,000</option>
+              <option value="30k_40k">₹30,000 - ₹40,000</option>
+              <option value="40k_50k">₹40,000 - ₹50,000</option>
+              <option value="above_50k">Above ₹50,000</option>
+            </select>
+          </div>
+          <div class="col-md-12">
+            <select id="cv_required" name="cv_required" class="form-select" required>
+              <option value="">Require CV from applicants?</option>
+              <option value="false">No (CV is optional)</option>
+              <option value="true">Yes (CV is mandatory)</option>
+            </select>
+          </div>
+          <div class="col-12">
+            <textarea name="job_description" class="form-control" rows="4"
+              placeholder="Job Description (Duties, skills, qualifications, timings, etc.)" required></textarea>
+          </div>
+          <!-- Hidden verified WA number field (set by recruiter.js after OTP) -->
+          <input type="hidden" id="form-wa-number" name="form-wa-number">
+
+          <div class="col-12 text-center mt-4">
+            <button type="submit" class="btn btn-primary px-5">Submit Job</button>
+          </div>
+
         </div>
-        <div class="mb-4">
-          <label class="form-label small fw-bold text-secondary mb-1">Business Contact Number</label>
-          <input type="tel" id="inline-contact" class="form-control" placeholder="Phone/Mobile" required>
-        </div>
-        <button type="submit" class="btn btn-success w-100 fw-bold" id="inline-reg-submit"><i class="bi bi-person-check me-1"></i>Register &amp; Send OTP</button>
       </form>
-    </div>
-
-    <!-- ── Step 3: Enter OTP ─────────────────────────────────── -->
-    <div id="otp-step3" class="bg-white p-4 rounded shadow mb-4" style="display:none;max-width:480px;margin:0 auto 24px">
-      <h5 class="mb-2"><i class="bi bi-shield-check text-success me-2"></i>Enter OTP</h5>
-      <p class="text-muted small mb-3">A 6-digit OTP was sent to your WhatsApp. Enter it below.</p>
-      <input type="text" id="otp-input" class="form-control text-center fw-bold" maxlength="6" placeholder="_ _ _ _ _ _" style="font-size:1.5rem;letter-spacing:.5rem">
-      <button type="button" id="verify-otp-btn" class="btn btn-success w-100 mt-3 fw-bold">Verify OTP</button>
-      <div class="text-center mt-2">
-        <button type="button" id="resend-otp-btn" class="btn btn-link btn-sm text-muted" disabled>Resend OTP</button>
-      </div>
-    </div>
-
-    <!-- ── Step 4: Vacancy form (hidden until OTP verified) ─── -->
-    <div id="otp-step4" style="display:none">
-      <div class="alert alert-success text-center fw-semibold" style="max-width:800px;margin:0 auto 24px;">
-        <i class="bi bi-check-circle-fill me-2"></i>WhatsApp verified! Now fill in your vacancy details.
-      </div>
-    </div>
-
-		<form name="job-form" class="job-form bg-white p-4 rounded shadow" style="display:none;max-width:800px;margin:0 auto 24px;">
-			<div class="row gy-3">
-            <div class="col-md-6">
-              <select name="job_category" class="form-select" required>
-                <option value="">Job Category?</option>
-                <option value="retail">Retail &amp; Showrooms</option>
-                <option value="sales_business">Sales &amp; Business Executive</option>
-                <option value="hospitality">Hospitality &amp; Food Service</option>
-                <option value="healthcare">Healthcare &amp; Caretaking</option>
-                <option value="education">Education &amp; Academic Advisor</option>
-                <option value="office_data_entry">Office Admin &amp; Data Entry</option>
-                <option value="front_office">Receptionist &amp; Front Office</option>
-                <option value="finance_accounts">Accountant &amp; Billing Staff</option>
-                <option value="hr_management">HR, Branch Manager &amp; Team Lead</option>
-                <option value="telecalling">Telecaller &amp; Customer Support</option>
-                <option value="it_digital_marketing">IT &amp; Digital Marketing</option>
-                <option value="logistics_store">Driving, Logistics &amp; Store Keeper</option>
-                <option value="beauty_wellness">Beauty &amp; Wellness</option>
-                <option value="maintenance_technician">Maintenance &amp; Technician</option>
-                <option value="construction_labor">Construction &amp; Manual Labor</option>
-                <option value="gulf_abroad">Gulf / Abroad Jobs</option>
-                <option value="other">Other / General</option>
-              </select>
-            </div>
-            <div class="col-md-6">
-              <input type="text" name="company_name" class="form-control" placeholder="Company / Shop Name" required>
-            </div>
-            <div class="col-md-12">
-              <input type="text" name="job_title" class="form-control" placeholder="Job Title (E.g. Sales Executive)" required>
-            </div>
-            <div class="col-md-6">
-              <select name="district_region" class="form-select" required>
-                <option value="">District / Region?</option>
-                <option value="Kasaragod">Kasaragod</option>
-                <option value="Kannur">Kannur</option>
-                <option value="Wayanad">Wayanad</option>
-                <option value="Malappuram">Malappuram</option>
-                <option value="Kozhikode">Kozhikode</option>
-                <option value="Palakkad">Palakkad</option>
-                <option value="Thrissur">Thrissur</option>
-                <option value="Ernakulam">Ernakulam</option>
-                <option value="Idukki">Idukki</option>
-                <option value="Kottayam">Kottayam</option>
-                <option value="Pathanamthitta">Pathanamthitta</option>
-                <option value="Alappuzha">Alappuzha</option>
-                <option value="Kollam">Kollam</option>
-                <option value="Thiruvananthapuram">Thiruvananthapuram</option>
-              </select>
-            </div>
-            <div class="col-md-6">
-              <input type="text" name="exact_location" class="form-control" placeholder="Exact Location (E.g. Vyttila)" required>
-            </div>
-            <div class="col-md-4">
-              <select name="job_mode" class="form-select" required>
-                <option value="">Job Mode?</option>
-                <option value="full_time">Full-Time</option>
-                <option value="part_time">Part-Time</option>
-                <option value="remote">Remote</option>
-                <option value="hybrid">Hybrid</option>
-              </select>
-            </div>
-            <div class="col-md-4">
-              <select name="experience_required" class="form-select" required>
-                <option value="">Experience Required?</option>
-                <option value="no_experience">No Experience Required</option>
-                <option value="fresher_or_exp">Fresher or Experienced</option>
-                <option value="1_2_years">1-2 Years</option>
-                <option value="3_5_years">3-5 Years</option>
-                <option value="5_plus_years">5+ Years</option>
-              </select>
-            </div>
-            <div class="col-md-4">
-              <select name="salary_range" class="form-select" required>
-                <option value="">Salary Range?</option>
-                <option value="interview_based">Based on Interview</option>
-                <option value="not_mentioned">Not Mentioned</option>
-                <option value="stipend">Stipend</option>
-                <option value="below_10k">Below ₹10,000</option>
-                <option value="10k_20k">₹10,000 - ₹20,000</option>
-                <option value="20k_30k">₹20,000 - ₹30,000</option>
-                <option value="30k_40k">₹30,000 - ₹40,000</option>
-                <option value="40k_50k">₹40,000 - ₹50,000</option>
-                <option value="above_50k">Above ₹50,000</option>
-              </select>
-            </div>
-            <div class="col-md-12">
-              <select id="cv_required" name="cv_required" class="form-select" required>
-                <option value="">Require CV from applicants?</option>
-                <option value="false">No (CV is optional)</option>
-                <option value="true">Yes (CV is mandatory)</option>
-              </select>
-            </div>
-            <div class="col-12">
-              <textarea name="job_description" class="form-control" rows="4" placeholder="Job Description (Duties, skills, qualifications, timings, etc.)" required></textarea>
-            </div>
-            <!-- Hidden verified WA number field (set by recruiter.js after OTP) -->
-            <input type="hidden" id="form-wa-number" name="form-wa-number">
-
-            <div class="col-12 text-center mt-4">
-              <button type="submit" class="btn btn-primary px-5">Submit Job</button>
-            </div>      
-
-			</div>
-		</form>
-	</section>
-  
-
-
-  
+    </section>
 
 
 
-  <!-- Join Now Call-to-Action Section -->
-  <section id="join-now" class="cta py-5 bg-light" data-aos="fade-up">
+
+
+
+
+    <!-- Join Now Call-to-Action Section -->
+    <section id="join-now" class="cta py-5 bg-light" data-aos="fade-up">
       <div class="container text-center">
         <h2 class="mb-3">Stay Connected With JobInfo</h2>
         <p class="mb-4">
           Save our WhatsApp Bot so we are just a tap away whenever you need to hire.<br>
-          You can also check out our main broadcast channel to see exactly where your job postings will reach thousands of local candidates.
+          You can also check out our main broadcast channel to see exactly where your job postings will reach thousands
+          of local candidates.
         </p>
         <p class="text-muted mb-4">
           <small>No spam, no pressure. Reach out only when you're ready to post a vacancy!</small>
         </p>
-    
+
         <div class="d-flex flex-wrap justify-content-center gap-3">
-          <a href="https://wa.me/15556392992?text=Hi%20JobInfo,%20I%20am%20a%20recruiter!" target="_blank" rel="noopener" class="btn btn-success btn-lg flex-fill" style="min-width: 140px;">
+          <a id="wa-recruiter-btn" href="#" target="_blank" rel="noopener" class="btn btn-success btn-lg flex-fill"
+            style="min-width: 140px;">
             <i class="bi bi-chat-dots me-1"></i> Message Our Bot
           </a>
-          <a href="https://whatsapp.com/channel/0029VbBrkDB8fewxd9QIMA2k" target="_blank" rel="noopener" class="btn btn-outline-success btn-lg flex-fill" style="min-width: 140px;">
+          <a href="https://whatsapp.com/channel/0029VbBrkDB8fewxd9QIMA2k" target="_blank" rel="noopener"
+            class="btn btn-outline-success btn-lg flex-fill" style="min-width: 140px;">
             <i class="bi bi-broadcast me-1"></i> View Audience Channel
           </a>
         </div>
-    
+
       </div>
     </section>
-  
 
-  <!-- Recruiter FAQ Section -->
-  <section id="faq" class="faq-section" data-aos="fade-up">
 
-    <!-- Section Title -->
-    <div class="container section-title" data-aos="fade-up">
-      <span>Asked Questions</span>
-      <h2>Recruiter FAQs</h2>
-      <p>Find answers to the most common questions recruiters ask when posting jobs.</p>
-    </div><!-- End Section Title -->
+    <!-- Recruiter FAQ Section -->
+    <section id="faq" class="faq-section" data-aos="fade-up">
 
-    <div class="accordion">
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <span>Asked Questions</span>
+        <h2>Recruiter FAQs</h2>
+        <p>Find answers to the most common questions recruiters ask when posting jobs.</p>
+      </div><!-- End Section Title -->
 
-      <div class="accordion-item">
-        <button class="accordion-header">
-          <span>How do I post a job on JobInfo?</span>
-          <i class="arrow"></i>
-        </button>
-        <div class="accordion-body">
-          <p>Fill out the job form with role details, experience, salary, and contact info. Once submitted, it goes to our team for review and posting.</p>
+      <div class="accordion">
+
+        <div class="accordion-item">
+          <button class="accordion-header">
+            <span>How do I post a job on JobInfo?</span>
+            <i class="arrow"></i>
+          </button>
+          <div class="accordion-body">
+            <p>Fill out the job form with role details, experience, salary, and contact info. Once submitted, it goes to
+              our team for review and posting.</p>
+          </div>
         </div>
+
+        <div class="accordion-item">
+          <button class="accordion-header collapsed">
+            <span>Is there any cost involved?</span>
+            <i class="arrow"></i>
+          </button>
+          <div class="accordion-body">
+            <p>No, listing job vacancies on JobInfo is 100% free. We aim to help companies and recruiters find talent
+              easily.</p>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-header collapsed">
+            <span>How will I get candidate applications?</span>
+            <i class="arrow"></i>
+          </button>
+          <div class="accordion-body">
+            <p>Once your job is published, we will start to collect all interested candidate applications, list out all
+              received applications, and share them with you as a Google Form document directly on WhatsApp.</p>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-header collapsed">
+            <span>Can I edit or remove a job later?</span>
+            <i class="arrow"></i>
+          </button>
+          <div class="accordion-body">
+            <p>Yes! Just message us on WhatsApp with the job title and your request. We'll handle the update or removal
+              for you.</p>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-header collapsed">
+            <span>How long does it take for a job to go live?</span>
+            <i class="arrow"></i>
+          </button>
+          <div class="accordion-body">
+            <p>Jobs are typically reviewed and published within 24 hours. You'll receive a confirmation once it's live
+              on our network.</p>
+          </div>
+        </div>
+
       </div>
 
-      <div class="accordion-item">
-        <button class="accordion-header collapsed">
-          <span>Is there any cost involved?</span>
-          <i class="arrow"></i>
-        </button>
-        <div class="accordion-body">
-          <p>No, listing job vacancies on JobInfo is 100% free. We aim to help companies and recruiters find talent easily.</p>
-        </div>
+      <!-- Question Submission Form (Initially Hidden) -->
+      <div id="question-form-wrapper" class="accordion" style="display: none; margin-top: 20px;">
+        <!-- <form id="submit-question-form" class="php-email-form shadow p-4 rounded" style="background: #fff;"> -->
+        <form id="submit-question-form" class="php-email-form shadow p-4 rounded" style="background: #fff;">
+          <input type="text" name="website" style="display:none" tabindex="-1" autocomplete="off">
+          <input type="hidden" name="source" value="Recruiter">
+          <div class="form-group mb-3">
+            <input type="text" name="name" class="form-control" placeholder="Your Name" required>
+          </div>
+          <div class="form-group mb-3">
+            <input type="text" name="whatsapp" class="form-control" placeholder="WhatsApp Number" required>
+          </div>
+          <div class="form-group mb-3">
+            <textarea name="question" class="form-control" rows="5" placeholder="Your Question" required></textarea>
+          </div>
+          <div class="text-center">
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+        </form>
       </div>
 
-      <div class="accordion-item">
-        <button class="accordion-header collapsed">
-          <span>How will I get candidate applications?</span>
-          <i class="arrow"></i>
-        </button>
-        <div class="accordion-body">
-          <p>Once your job is published, we will start to collect all interested candidate applications, list out all received applications, and share them with you as a Google Form document directly on WhatsApp.</p>
-        </div>
+      <div class="faq-button-wrapper">
+        <button id="toggle-question-form" class="faq-more-button">Ask Question</button>
       </div>
 
-      <div class="accordion-item">
-        <button class="accordion-header collapsed">
-          <span>Can I edit or remove a job later?</span>
-          <i class="arrow"></i>
-        </button>
-        <div class="accordion-body">
-          <p>Yes! Just message us on WhatsApp with the job title and your request. We'll handle the update or removal for you.</p>
-        </div>
-      </div>
+    </section><!-- /Recruiter FAQ Section -->
 
-      <div class="accordion-item">
-        <button class="accordion-header collapsed">
-          <span>How long does it take for a job to go live?</span>
-          <i class="arrow"></i>
-        </button>
-        <div class="accordion-body">
-          <p>Jobs are typically reviewed and published within 24 hours. You'll receive a confirmation once it's live on our network.</p>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- Question Submission Form (Initially Hidden) -->
-    <div id="question-form-wrapper" class="accordion" style="display: none; margin-top: 20px;">
-      <!-- <form id="submit-question-form" class="php-email-form shadow p-4 rounded" style="background: #fff;"> -->
-      <form id="submit-question-form" class="php-email-form shadow p-4 rounded" style="background: #fff;">
-        <input type="text" name="website" style="display:none" tabindex="-1" autocomplete="off">
-        <input type="hidden" name="source" value="Recruiter">
-        <div class="form-group mb-3">
-          <input type="text" name="name" class="form-control" placeholder="Your Name" required>
-        </div>
-        <div class="form-group mb-3">
-          <input type="text" name="whatsapp" class="form-control" placeholder="WhatsApp Number" required>
-        </div>
-        <div class="form-group mb-3">
-          <textarea name="question" class="form-control" rows="5" placeholder="Your Question" required></textarea>
-        </div>
-        <div class="text-center">
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
-      </form>
-    </div>
-
-    <div class="faq-button-wrapper">
-      <button id="toggle-question-form" class="faq-more-button">Ask Question</button>
-    </div>
-
-  </section><!-- /Recruiter FAQ Section -->
-	
 
     <div class="container">
       <hr>
@@ -765,7 +831,8 @@
 
         <div class="col-lg-4 col-md-12">
           <h4>Follow Us</h4>
-          <p>Stay connected with us on social media for daily job updates, hiring tips, and news. Join our growing community and boost your career!</p>
+          <p>Stay connected with us on social media for daily job updates, hiring tips, and news. Join our growing
+            community and boost your career!</p>
           <div class="social-links d-flex">
             <a href=""><i class="bi bi-instagram"></i></a>
             <a href=""><i class="bi bi-linkedin"></i></a>
@@ -778,7 +845,8 @@
     </div>
 
     <div class="container copyright text-center mt-4">
-      <p>© <span>Copyright 2025</span> <a href="index.html#about">Jobinfo Community</a> <span>All Rights Reserved</span></p>
+      <p>© <span>Copyright 2025</span> <a href="index.html#about">Jobinfo Community</a> <span>All Rights Reserved</span>
+      </p>
       <!-- <p>© <span>Copyright 2025</span> <a href="https://bootstrapmade.com/">Jobinfo Community</a> <span>All Rights Reserved</span></p> -->
       <div class="credits">
         <!-- All the links in the footer should remain intact. -->
@@ -792,7 +860,8 @@
   </footer>
 
   <!-- Scroll Top -->
-  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
 
   <!-- Preloader -->
   <div id="preloader"></div>
@@ -820,7 +889,7 @@
   <script>
     (function () {
       const token = sessionStorage.getItem("ji_r_token");
-      const wa    = sessionStorage.getItem("ji_r_wa");
+      const wa = sessionStorage.getItem("ji_r_wa");
       if (token && wa) {
         const btn = document.getElementById("login-nav-btn");
         if (btn) {
