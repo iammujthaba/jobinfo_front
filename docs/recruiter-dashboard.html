@@ -762,6 +762,27 @@
         <div class="auth-err" id="err1"></div>
       </div>
 
+      <!-- Step QR: Connect WhatsApp (24h Window Activation) -->
+      <div id="auth-step-qr" style="display:none; text-align:center;">
+        <h2 style="font-size:1.25rem;">Connect to WhatsApp 📱</h2>
+        <p class="text-muted mb-3" style="font-size:.85rem;line-height:1.4;">
+          To receive your instant verification OTP, please send a quick message to our WhatsApp bot.
+        </p>
+        <div class="mb-3 p-2 bg-light rounded-3 d-inline-block border shadow-sm">
+          <img id="dash-qr-img" src="" alt="WhatsApp QR Code" style="width:160px;height:160px;display:block;margin:0 auto;" />
+        </div>
+        <p class="text-muted small mb-3" style="font-size:.78rem;">Scan with your phone camera or WhatsApp</p>
+        
+        <div class="d-grid gap-2 mb-2">
+          <a id="dash-wa-chat-btn" href="#" target="_blank" class="btn btn-success fw-bold rounded-3 shadow-sm py-2">
+            <i class="bi bi-whatsapp me-2"></i>Open WhatsApp Chat
+          </a>
+          <button type="button" class="btn btn-outline-secondary btn-sm rounded-3 mt-1 py-2" id="dash-check-wa-btn">
+            <i class="bi bi-arrow-clockwise me-1"></i>I've Sent the Message — Continue
+          </button>
+        </div>
+      </div>
+
       <!-- Step 2 -->
       <div id="auth-step2" style="display:none">
         <h2>Enter OTP</h2>
@@ -1018,25 +1039,77 @@
         if (checkRes.ok) {
           const checkData = await checkRes.json();
           if (checkData.is_jobzon_admin) {
-            // JobZon admin detected → redirect to the shared admin login page
-            // Must use the absolute backend URL (port 8080), not a relative path
-            // (which would incorrectly resolve to the static file server on port 5500).
             window.location.href = JOBINFO_CONFIG.API_URL + "/admin/login";
             return;
           }
           if (checkData.exists) {
-            // Recruiter exists and OTP was already triggered by check-recruiter
-            toStep(2); startCd(); return;
+            if (checkData.within_24h) {
+              toStep(2); startCd(); return;
+            } else {
+              showDashQrStep(verifiedWa); return;
+            }
           }
         }
-        // New recruiter or fallback — send OTP the normal way
+        // New recruiter or fallback — send OTP
         const r = await post("/api/otp/send", { wa_number: verifiedWa, role: "recruiter" });
-        if (!r.ok) throw new Error();
-        toStep(2); startCd();
+        if (r.ok) {
+          const d = await r.json();
+          if (d.within_24h === false) {
+            showDashQrStep(verifiedWa);
+          } else {
+            toStep(2); startCd();
+          }
+        } else {
+          throw new Error();
+        }
       } catch { showErr("err1", "Could not send OTP. Please try again."); }
       finally { sendOtpBtn.disabled = false; sendOtpBtn.innerHTML = '<i class="bi bi-send me-2"></i>Send OTP'; }
     });
     document.getElementById("wa-input").addEventListener("keydown", e => { if (e.key === "Enter") sendOtpBtn.click(); });
+
+    let dashPollTimer = null;
+    function showDashQrStep(waNumber) {
+      document.getElementById("auth-step1").style.display = "none";
+      document.getElementById("auth-step2").style.display = "none";
+      document.getElementById("auth-step-qr").style.display = "block";
+
+      const waLink = "https://wa.me/" + JOBINFO_CONFIG.BUSINESS_WA + "?text=" + encodeURIComponent("Hi");
+      const qrUrl = "https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=" + encodeURIComponent(waLink);
+
+      document.getElementById("dash-qr-img").src = qrUrl;
+      document.getElementById("dash-wa-chat-btn").href = waLink;
+
+      if (dashPollTimer) clearInterval(dashPollTimer);
+
+      const checkStatus = async () => {
+        try {
+          const res = await post("/api/auth/check-recruiter", { wa_number: waNumber });
+          if (!res.ok) return;
+          const data = await res.json();
+          if (data.within_24h) {
+            clearInterval(dashPollTimer);
+            dashPollTimer = null;
+            document.getElementById("auth-step-qr").style.display = "none";
+            toStep(2);
+            startCd();
+          }
+        } catch(e) {}
+      };
+
+      dashPollTimer = setInterval(checkStatus, 3000);
+
+      document.getElementById("dash-check-wa-btn").onclick = () => {
+        const btn = document.getElementById("dash-check-wa-btn");
+        btn.disabled = true;
+        btn.innerHTML = '<i class="bi bi-hourglass-split me-1"></i>Checking...';
+        checkStatus().finally(() => {
+          setTimeout(() => {
+            btn.disabled = false;
+            btn.innerHTML = '<i class="bi bi-arrow-clockwise me-1"></i>I\'ve Sent the Message — Continue';
+          }, 1500);
+        });
+      };
+    }
 
     const verifyBtn = document.getElementById("verify-btn");
     verifyBtn.addEventListener("click", async () => {

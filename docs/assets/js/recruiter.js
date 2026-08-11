@@ -170,6 +170,7 @@ function initSurface(prefix, intent) {
   const step2Id = isModal ? 'modal-step2' : 'otp-step2';
   const step3Id = isModal ? 'modal-step3' : 'otp-step3';
   const step4Id = isModal ? null : 'otp-step4'; // Success banner
+  const stepQrId = isModal ? 'modal-step-qr' : 'otp-step-qr';
 
   const waInputId = isModal ? 'modal-wa-input' : 'wa-number-input';
   const sendBtnId = isModal ? 'modal-send-otp-btn' : 'send-otp-btn';
@@ -188,6 +189,7 @@ function initSurface(prefix, intent) {
   const s2 = document.getElementById(step2Id);
   const s3 = document.getElementById(step3Id);
   const s4 = document.getElementById(step4Id);
+  const sQr = document.getElementById(stepQrId);
 
   if (!s1 || !s2 || !s3) return; // Surface not present on this page
 
@@ -203,10 +205,11 @@ function initSurface(prefix, intent) {
     s2.style.display = (n === 2) ? 'block' : 'none';
     s3.style.display = (n === 3) ? 'block' : 'none';
     if (s4) s4.style.display = (n === 4) ? 'block' : 'none';
+    if (sQr) sQr.style.display = (n === 'qr') ? 'block' : 'none';
     if (isModal) {
-      document.getElementById('modal-dot1')?.classList.toggle('active', n >= 1);
-      document.getElementById('modal-dot2')?.classList.toggle('active', n >= 2);
-      document.getElementById('modal-dot3')?.classList.toggle('active', n >= 3);
+      document.getElementById('modal-dot1')?.classList.toggle('active', n === 1 || n === 'qr' || n >= 1);
+      document.getElementById('modal-dot2')?.classList.toggle('active', n === 2 || n >= 2);
+      document.getElementById('modal-dot3')?.classList.toggle('active', n === 3 || n >= 3);
     }
   };
 
@@ -238,11 +241,19 @@ function initSurface(prefix, intent) {
 
       if (data.exists) {
         surfaceRegMode[prefix] = false;
-        setDisplay(3);
-        startResend(resendBtn, isModal ? 'modal-cd' : null);
+        if (data.within_24h) {
+          setDisplay(3);
+          startResend(resendBtn, isModal ? 'modal-cd' : null);
+        } else {
+          showQrStep(prefix, verifiedWaNumber, false, setDisplay, resendBtn, isModal);
+        }
       } else {
         surfaceRegMode[prefix] = true;
-        setDisplay(2);
+        if (data.within_24h) {
+          setDisplay(2);
+        } else {
+          showQrStep(prefix, verifiedWaNumber, true, setDisplay, resendBtn, isModal);
+        }
       }
     } catch (err) {
       swal("Error", "Could not check number. Try again.", "error");
@@ -270,11 +281,16 @@ function initSurface(prefix, intent) {
       try {
         const res = await fetch(`${JOBINFO_CONFIG.API_URL}/api/otp/send`, {
           method: "POST", headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ wa_number: verifiedWaNumber })
+          body: JSON.stringify({ wa_number: verifiedWaNumber, role: "recruiter" })
         });
         if (!res.ok) throw new Error();
-        setDisplay(3);
-        startResend(resendBtn, isModal ? 'modal-cd' : null);
+        const data = await res.json();
+        if (data.within_24h === false) {
+          showQrStep(prefix, verifiedWaNumber, false, setDisplay, resendBtn, isModal);
+        } else {
+          setDisplay(3);
+          startResend(resendBtn, isModal ? 'modal-cd' : null);
+        }
       } catch (e) {
         swal("Error", "Could not send OTP.", "error");
       } finally {
@@ -459,3 +475,65 @@ document.querySelectorAll(".accordion-header").forEach((header) => {
   const jf = document.querySelector(".job-form");
   if (jf) jf.style.display = "block";
 })();
+
+let pollTimers = {};
+
+function showQrStep(prefix, waNumber, isReg, setDisplay, resendBtn, isModal) {
+  setDisplay('qr');
+
+  const isM = (prefix === 'modal-');
+  const qrImgId = isM ? 'modal-qr-img' : (prefix + 'qr-img');
+  const waChatBtnId = isM ? 'modal-wa-chat-btn' : (prefix + 'wa-chat-btn');
+  const checkBtnId = isM ? 'modal-check-wa-btn' : (prefix + 'check-wa-btn');
+
+  const waLink = "https://wa.me/" + JOBINFO_CONFIG.BUSINESS_WA + "?text=" + encodeURIComponent("Hi");
+  const qrUrl = "https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=" + encodeURIComponent(waLink);
+
+  const qrImg = document.getElementById(qrImgId);
+  if (qrImg) qrImg.src = qrUrl;
+
+  const waChatBtn = document.getElementById(waChatBtnId);
+  if (waChatBtn) waChatBtn.href = waLink;
+
+  if (pollTimers[prefix]) clearInterval(pollTimers[prefix]);
+
+  const checkStatus = async () => {
+    try {
+      const res = await fetch(`${JOBINFO_CONFIG.API_URL}/api/auth/check-recruiter`, {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ wa_number: waNumber })
+      });
+      if (!res.ok) return;
+      const data = await res.json();
+      if (data.within_24h) {
+        clearInterval(pollTimers[prefix]);
+        delete pollTimers[prefix];
+
+        swal("WhatsApp Connected! 🎉", "Instant OTP delivery is active. Check your WhatsApp for the code.", "success");
+
+        if (isReg) {
+          setDisplay(2);
+        } else {
+          setDisplay(3);
+          startResend(resendBtn, isM ? 'modal-cd' : null);
+        }
+      }
+    } catch(e) { console.error(e); }
+  };
+
+  pollTimers[prefix] = setInterval(checkStatus, 3000);
+
+  const checkBtn = document.getElementById(checkBtnId);
+  if (checkBtn) {
+    checkBtn.onclick = () => {
+      checkBtn.disabled = true;
+      checkBtn.innerHTML = '<i class="bi bi-hourglass-split me-1"></i>Checking...';
+      checkStatus().finally(() => {
+        setTimeout(() => {
+          checkBtn.disabled = false;
+          checkBtn.innerHTML = '<i class="bi bi-arrow-clockwise me-1"></i>I\'ve Sent the Message — Continue';
+        }, 1500);
+      });
+    };
+  }
+}

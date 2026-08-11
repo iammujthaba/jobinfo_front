@@ -274,6 +274,27 @@
           </form>
         </div>
 
+        <!-- Step QR: Connect WhatsApp (24h Window Activation) -->
+        <div id="modal-step-qr" style="display:none; text-align:center;">
+          <h2 style="font-size:1.25rem;">Connect to WhatsApp 📱</h2>
+          <p class="text-muted mb-3" style="font-size:.85rem;line-height:1.4;">
+            To receive your instant verification OTP, please send a quick message to our WhatsApp bot.
+          </p>
+          <div class="mb-3 p-2 bg-light rounded-3 d-inline-block border shadow-sm">
+            <img id="modal-qr-img" src="" alt="WhatsApp QR Code" style="width:160px;height:160px;display:block;margin:0 auto;" />
+          </div>
+          <p class="text-muted small mb-3" style="font-size:.78rem;">Scan with your phone camera or WhatsApp</p>
+          
+          <div class="d-grid gap-2 mb-2">
+            <a id="modal-wa-chat-btn" href="#" target="_blank" class="btn btn-success fw-bold rounded-3 shadow-sm py-2">
+              <i class="bi bi-whatsapp me-2"></i>Open WhatsApp Chat
+            </a>
+            <button type="button" class="btn btn-outline-secondary btn-sm rounded-3 mt-1 py-2" id="modal-check-wa-btn">
+              <i class="bi bi-arrow-clockwise me-1"></i>I've Sent the Message — Continue
+            </button>
+          </div>
+        </div>
+
         <!-- Step 3: OTP Entry -->
         <div id="modal-step3" style="display:none; text-align:center;">
           <h2>Enter OTP</h2>

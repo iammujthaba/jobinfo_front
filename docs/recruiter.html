@@ -479,6 +479,27 @@
             class="bi bi-send me-1"></i>Send OTP</button>
       </div>
 
+      <!-- ── Step QR: Connect WhatsApp (24h Window Activation) ── -->
+      <div id="otp-step-qr" class="bg-white p-4 rounded shadow mb-4 text-center"
+        style="display:none;max-width:480px;margin:0 auto 24px;">
+        <h5 class="mb-2"><i class="bi bi-whatsapp text-success me-2"></i>Connect to WhatsApp</h5>
+        <p class="text-muted small mb-3">To receive your instant verification code, please send a quick message to our
+          Jobinfo bot.</p>
+        <div class="mb-3 p-2 bg-light rounded-3 d-inline-block border shadow-sm">
+          <img id="inline-qr-img" src="" alt="WhatsApp QR Code"
+            style="width:160px;height:160px;display:block;margin:0 auto;" />
+        </div>
+        <p class="text-muted small mb-3" style="font-size:.78rem;">Scan with your phone camera or WhatsApp</p>
+        <div class="d-grid gap-2">
+          <a id="inline-wa-chat-btn" href="#" target="_blank" class="btn btn-success fw-bold rounded-3 shadow-sm py-2">
+            <i class="bi bi-whatsapp me-2"></i>Open WhatsApp Chat
+          </a>
+          <button type="button" class="btn btn-outline-secondary btn-sm rounded-3 mt-1 py-2" id="inline-check-wa-btn">
+            <i class="bi bi-arrow-clockwise me-1"></i>I've Sent the Message — Continue
+          </button>
+        </div>
+      </div>
+
       <!-- ── Step 2: Registration Form ────────────────────────── -->
       <div id="otp-step2" class="bg-white p-4 rounded shadow mb-4"
         style="display:none;max-width:480px;margin:0 auto 24px;">
