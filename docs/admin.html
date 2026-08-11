@@ -827,7 +827,19 @@
 <div class="modal-overlay" id="reject-modal">
   <div class="modal-box">
     <h3>❌ Revoke Vacancy</h3>
-    <textarea id="reject-reason" placeholder="e.g. Incomplete job description, missing contact info…"></textarea>
+    <label style="font-size:.82rem;font-weight:600;color:#555;margin-bottom:4px;display:block;">Select Common Reason:</label>
+    <select id="reject-reason-preset" style="width:100%;padding:9px 12px;border:1px solid #dde1e7;border-radius:8px;font-size:.85rem;margin-bottom:10px;outline:none;" onchange="onRejectPresetChange(this.value)">
+      <option value="">-- Choose a standard reason or enter custom text below --</option>
+      <option value="Incomplete or unclear job description. Please provide clear details about responsibilities and requirements.">Incomplete/Vague Job Description</option>
+      <option value="Invalid or unrealistic salary range. Please select a valid salary range.">Invalid/Unrealistic Salary Range</option>
+      <option value="Suspicious, misleading, or fraudulent posting.">Suspicious or misleading posting</option>
+      <option value="Prohibited or unlawful content. Posting violates safety guidelines.">Prohibited or unlawful content</option>
+      <option value="Contact or business details invalid. Please update your profile information.">Invalid contact/business details</option>
+      <option value="Duplicate vacancy posting. This position has already been submitted.">Duplicate vacancy posting</option>
+      <option value="custom">Other / Write custom reason in own words...</option>
+    </select>
+    <label style="font-size:.82rem;font-weight:600;color:#555;margin-bottom:4px;display:block;">Rejection Reason Details (in your own words):</label>
+    <textarea id="reject-reason" rows="3" placeholder="Select from dropdown above or write your custom rejection reason..."></textarea>
     <div class="modal-actions">
       <button class="btn-cancel" id="cancel-reject">Cancel</button>
       <button class="btn-reject" id="confirm-reject">Revoke &amp; Notify</button>
@@ -835,7 +847,7 @@
   </div>
 </div>
 
-<!-- ── Verify Modal ──────────────────────────────────────────────────────────── -->
+<!-- ── Verify Flow Modal ────────────────────────────────────────────────────── -->
 <div class="modal-overlay" id="verify-modal">
   <div class="modal-box">
     <h3>🔍 Verify Vacancy</h3>
@@ -864,17 +876,19 @@
         </div>
       </div>
     </div>
-    
-    <div class="v-reason-box" id="vm-reason-box">
-      <label style="font-size:.85rem;font-weight:600;color:#e74c3c">Select Rejection Reason:</label>
-      <select id="vm-reject-reason">
-        <option value="" disabled selected>-- Choose a reason --</option>
-        <option value="Incomplete or Vague Job Description">Incomplete/Vague Job Description</option>
-        <option value="Suspicious or Fraudulent Activity">Suspicious/Fraudulent Activity</option>
-        <option value="Mismatched Company Details">Mismatched Company Details</option>
-        <option value="Duplicate Posting">Duplicate Posting</option>
-        <option value="Other Policy Violation">Other Policy Violation</option>
+    <div class="v-reason-box" id="vm-reason-box" style="display:none;margin-top:16px;">
+      <label style="font-size:.85rem;font-weight:600;color:#e74c3c;margin-bottom:6px;display:block;">Select Common Rejection Reason:</label>
+      <select id="vm-reject-reason-preset" style="width:100%;padding:9px 12px;border:1px solid #dde1e7;border-radius:8px;font-size:.85rem;margin-bottom:8px;outline:none;" onchange="onVmRejectPresetChange(this.value)">
+        <option value="">-- Choose a standard reason or enter custom text below --</option>
+        <option value="Incomplete or unclear job description. Please provide clear details about responsibilities and requirements.">Incomplete/Vague Job Description</option>
+        <option value="Invalid or unrealistic salary range. Please select a valid salary range.">Invalid/Unrealistic Salary Range</option>
+        <option value="Suspicious, misleading, or fraudulent posting.">Suspicious or misleading posting</option>
+        <option value="Mismatched company details or invalid contact info.">Mismatched Company Details</option>
+        <option value="Duplicate vacancy posting. This position has already been submitted.">Duplicate Posting</option>
+        <option value="custom">Other / Write custom reason in own words...</option>
       </select>
+      <label style="font-size:.82rem;font-weight:600;color:#555;margin-top:6px;display:block;">Rejection Reason Details (in your own words):</label>
+      <textarea id="vm-reject-reason" rows="3" style="width:100%;padding:8px 12px;border:1px solid #dde1e7;border-radius:8px;font-size:.85rem;outline:none;resize:vertical;" placeholder="Select from dropdown above or write custom rejection reason..."></textarea>
     </div>
 
     <div class="modal-actions mt-4">
@@ -1498,6 +1512,28 @@ function attachRowListeners() {
 let currentVerifyVacancy = null;
 let verifyRejectMode = false;
 
+function onRejectPresetChange(val) {
+  const txt = document.getElementById("reject-reason");
+  if (!txt) return;
+  if (val && val !== 'custom') {
+    txt.value = val;
+  } else if (val === 'custom') {
+    txt.value = '';
+    txt.focus();
+  }
+}
+
+function onVmRejectPresetChange(val) {
+  const txt = document.getElementById("vm-reject-reason");
+  if (!txt) return;
+  if (val && val !== 'custom') {
+    txt.value = val;
+  } else if (val === 'custom') {
+    txt.value = '';
+    txt.focus();
+  }
+}
+
 function openVerifyModal(v) {
   currentVerifyVacancy = v;
   verifyRejectMode = false;
@@ -1505,10 +1541,11 @@ function openVerifyModal(v) {
   const r = v.recruiter || {};
   
   // Reset UI
-  document.getElementById("vm-reason-box").style.display = "none";
-  document.getElementById("vm-reject-reason").value = "";
-  document.getElementById("vm-btn-approve").style.display = "inline-block";
-  document.getElementById("vm-btn-reject").textContent = "Reject Job";
+  if (document.getElementById("vm-reason-box")) document.getElementById("vm-reason-box").style.display = "none";
+  if (document.getElementById("vm-reject-reason")) document.getElementById("vm-reject-reason").value = "";
+  if (document.getElementById("vm-reject-reason-preset")) document.getElementById("vm-reject-reason-preset").value = "";
+  if (document.getElementById("vm-btn-approve")) document.getElementById("vm-btn-approve").style.display = "inline-block";
+  if (document.getElementById("vm-btn-reject")) document.getElementById("vm-btn-reject").textContent = "Reject Job";
   
   // Fill Recruiter info
   const wa = r.wa_number || "—";
