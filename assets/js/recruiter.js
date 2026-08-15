@@ -178,6 +178,7 @@ function initSurface(prefix, intent) {
   const regFormId = prefix + 'reg-form';
   const reqCompanyId = prefix + 'company';
   const reqTypeId = prefix + 'type';
+  const reqRoleId = prefix + 'role';
   const reqLocId = prefix + 'location';
   const reqContactId = prefix + 'contact';
 
@@ -271,6 +272,7 @@ function initSurface(prefix, intent) {
       registrationData[prefix] = {
         company_name: document.getElementById(reqCompanyId).value,
         business_type: document.getElementById(reqTypeId).value,
+        registrant_role: document.getElementById(reqRoleId) ? document.getElementById(reqRoleId).value : "other",
         location: document.getElementById(reqLocId).value,
         business_contact: document.getElementById(reqContactId).value
       };

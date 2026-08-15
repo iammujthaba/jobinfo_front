@@ -26,5 +26,13 @@ const JOBINFO_CONFIG = {
     "agency": "Agency / Consultancy",
     "company": "Company / Pvt Ltd",
     "other": "Other"
+  },
+
+  REGISTRANT_ROLES: {
+    "founder": "Founder / Owner",
+    "hr": "HR / Recruiter",
+    "manager": "Manager",
+    "employee": "Employee",
+    "other": "Other"
   }
 };

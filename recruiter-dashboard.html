@@ -1178,7 +1178,18 @@
       document.getElementById("topbar-name").textContent = rc.company_name || "Company";
       document.getElementById("avatar-letter").textContent = (rc.company_name || "C").charAt(0).toUpperCase();
       document.getElementById("p-name").textContent = rc.company_name || "Company Profile";
+      
+      const roleMap = {
+        founder: "Founder / Owner",
+        hr: "HR / Recruiter",
+        manager: "Manager",
+        employee: "Employee",
+        other: "Other"
+      };
+      const roleLabel = roleMap[rc.registrant_role] || (rc.registrant_role && rc.registrant_role !== 'other' ? rc.registrant_role : "");
+
       document.getElementById("p-details").innerHTML =
+        (roleLabel ? "👤 " + roleLabel + "&nbsp;&nbsp;·&nbsp;&nbsp;" : "") +
         (rc.location ? "📍 " + rc.location + "&nbsp;&nbsp;" : "") +
         (rc.business_contact ? "📞 " + rc.business_contact + "&nbsp;&nbsp;" : "") +
         '<i class="bi bi-whatsapp" style="color:#25d366"></i> +' + rc.wa_number;
