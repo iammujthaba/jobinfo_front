@@ -6,4 +6,4 @@ Thumbs.db
 .DS_Store
 
 # other files
-serve.py
+#serve.py  --this is not a frile part of production code, its mainly used for local dev, but still i gonna push this to GitHub, Becous that will help AI assistent to know what is going one and assist correctly with development while i giveing the Github repo link to gemini
