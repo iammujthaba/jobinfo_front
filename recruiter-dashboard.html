@@ -240,6 +240,11 @@
       border: 3px solid #e8e8e8;
     }
 
+    .profile-info {
+      flex: 1;
+      min-width: 0;
+    }
+
     .profile-info h4 {
       font-size: 1.05rem;
       font-weight: 700;
@@ -252,6 +257,15 @@
       color: #666;
       margin: 0;
       line-height: 1.7;
+    }
+
+    /* Action buttons container inside profile card */
+    .profile-actions {
+      display: flex;
+      flex-direction: row;
+      gap: 8px;
+      align-items: center;
+      flex-shrink: 0;
     }
 
     /* ── Stat cards ───────────────────────────────── */
@@ -648,6 +662,171 @@
       margin-bottom: 4px;
     }
 
+    /* ── Edit Profile Modal ───────────────────────────────────── */
+    .profile-edit-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .5);
+      z-index: 960;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .profile-edit-overlay.open {
+      display: flex;
+    }
+
+    .profile-edit-modal {
+      background: #fff;
+      border-radius: 18px;
+      padding: 28px 28px 24px;
+      width: 460px;
+      max-width: 100%;
+      max-height: 92vh;
+      overflow-y: auto;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, .22);
+      animation: modalSlideIn .2s ease;
+    }
+
+    @keyframes modalSlideIn {
+      from { transform: translateY(18px); opacity: 0; }
+      to   { transform: translateY(0);   opacity: 1; }
+    }
+
+    .profile-edit-modal h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+      color: #1a1a2e;
+    }
+
+    .profile-edit-modal .pe-subtitle {
+      font-size: .8rem;
+      color: #888;
+      margin-bottom: 18px;
+    }
+
+    .profile-edit-modal label {
+      font-size: .78rem;
+      font-weight: 600;
+      color: #555;
+      display: block;
+      margin-bottom: 4px;
+      margin-top: 14px;
+    }
+
+    .profile-edit-modal input,
+    .profile-edit-modal select {
+      width: 100%;
+      padding: 10px 13px;
+      border: 1px solid #dde1e7;
+      border-radius: 9px;
+      font-size: .9rem;
+      outline: none;
+      font-family: inherit;
+      background: #fff;
+      box-sizing: border-box;
+    }
+
+    .profile-edit-modal select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 13px center;
+      padding-right: 36px;
+      cursor: pointer;
+    }
+
+    .profile-edit-modal input:focus,
+    .profile-edit-modal select:focus {
+      border-color: var(--ji-green);
+      box-shadow: 0 0 0 3px rgba(37, 211, 102, .15);
+    }
+
+    .profile-edit-modal .locked-field {
+      background: #f5f6fa;
+      color: #999;
+      cursor: not-allowed;
+    }
+
+    .pe-locked-note {
+      font-size: .72rem;
+      color: #aaa;
+      margin-top: 3px;
+    }
+
+    .pe-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+      margin-top: 22px;
+    }
+
+    .btn-pe-cancel {
+      background: #ecf0f1;
+      color: #555;
+      border: none;
+      border-radius: 9px;
+      padding: 10px 20px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .15s;
+    }
+
+    .btn-pe-cancel:hover {
+      background: #dfe6e9;
+    }
+
+    .btn-pe-save {
+      background: var(--ji-green);
+      color: #fff;
+      border: none;
+      border-radius: 9px;
+      padding: 10px 22px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background .2s;
+    }
+
+    .btn-pe-save:hover {
+      background: #1ebe5d;
+    }
+
+    .btn-pe-save:disabled {
+      background: #aaa;
+      cursor: not-allowed;
+    }
+
+    .pe-err {
+      color: #e74c3c;
+      font-size: .82rem;
+      margin-top: 10px;
+      display: none;
+    }
+
+    .btn-edit-profile {
+      background: none;
+      border: 1px solid #dde1e7;
+      color: #555;
+      border-radius: 8px;
+      padding: 6px 14px;
+      font-size: .78rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: all .2s;
+      white-space: nowrap;
+    }
+
+    .btn-edit-profile:hover {
+      background: #f5f6fa;
+      border-color: #bbb;
+    }
+
     /* ── Spinner / empty / loading ────────────────── */
     .spinner-wrap {
       padding: 40px;
@@ -675,15 +854,30 @@
 
       .profile-card {
         flex-direction: column;
-        gap: 10px;
+        align-items: stretch;
+        gap: 12px;
         text-align: center;
       }
 
-      .profile-card .ms-auto {
-        margin-left: auto !important;
-        margin-right: auto !important;
+      .profile-card .avatar {
+        align-self: center;
+      }
+
+      .profile-info {
+        text-align: center;
+      }
+
+      .profile-actions {
+        flex-direction: column;
+        width: 100%;
+        gap: 8px;
+      }
+
+      .profile-actions .btn-edit-profile,
+      .profile-actions .btn-post {
         width: 100%;
         justify-content: center;
+        text-align: center;
       }
 
       .stat-grid {
@@ -825,9 +1019,14 @@
           <p id="p-company"></p>
           <p id="p-details"></p>
         </div>
-        <a href="post-vacancy.html" class="btn-post ms-auto">
-          <i class="bi bi-plus-circle"></i> Post New Vacancy
-        </a>
+        <div class="profile-actions">
+          <button class="btn-edit-profile" id="open-profile-edit-btn" title="Edit your profile">
+            <i class="bi bi-pencil-square"></i> Edit Profile
+          </button>
+          <a href="post-vacancy.html" class="btn-post">
+            <i class="bi bi-plus-circle"></i> Post New Vacancy
+          </a>
+        </div>
       </div>
 
       <!-- Stat cards -->
@@ -861,6 +1060,50 @@
     </div>
   </div>
 
+
+
+  <!-- ════════════════════ EDIT PROFILE MODAL ════════════════════ -->
+  <div class="profile-edit-overlay" id="profile-edit-overlay">
+    <div class="profile-edit-modal">
+      <h3>✏️ Edit Profile</h3>
+      <p class="pe-subtitle">Update your role, region, and contact number. Company name &amp; WhatsApp number are locked.</p>
+
+      <label>Company Name</label>
+      <input type="text" id="pe-company" class="locked-field" disabled>
+      <div class="pe-locked-note">🔒 Company name cannot be changed here</div>
+
+      <label>WhatsApp Number (Account ID)</label>
+      <input type="text" id="pe-wa" class="locked-field" disabled>
+      <div class="pe-locked-note">🔒 WhatsApp number is your unique ID and cannot be changed</div>
+
+      <label>Your Role / Relationship <span style="color:#e74c3c">*</span></label>
+      <select id="pe-role">
+        <option value="founder">Founder / Owner</option>
+        <option value="hr">HR / Recruiter</option>
+        <option value="manager">Manager</option>
+        <option value="employee">Employee</option>
+        <option value="other">Other</option>
+      </select>
+
+      <label>Location (Region) <span style="color:#e74c3c">*</span></label>
+      <select id="pe-location">
+        <option value="Kerala">Kerala</option>
+        <option value="Karnataka">Karnataka</option>
+        <option value="GCC">GCC (Gulf Countries)</option>
+        <option value="Other">Other</option>
+      </select>
+
+      <label>Business Contact Number <span style="color:#e74c3c">*</span></label>
+      <input type="tel" id="pe-contact" placeholder="e.g. 0484-2xxxxxx or 9876543210" maxlength="20">
+
+      <div class="pe-err" id="pe-err"></div>
+
+      <div class="pe-actions">
+        <button class="btn-pe-cancel" id="pe-cancel-btn">Cancel</button>
+        <button class="btn-pe-save" id="pe-save-btn"><i class="bi bi-check2-circle me-1"></i>Save Changes</button>
+      </div>
+    </div>
+  </div>
 
 
   <!-- ════════════════════ EDIT VACANCY MODAL ════════════════════ -->
@@ -1176,10 +1419,19 @@
 
     function renderDashboard(d) {
       const rc = d.recruiter, s = d.summary;
+      currentRecruiterProfile = rc;  // store for edit modal pre-fill
       document.getElementById("topbar-name").textContent = rc.company_name || "Company";
       document.getElementById("avatar-letter").textContent = (rc.company_name || "C").charAt(0).toUpperCase();
       document.getElementById("p-name").textContent = rc.company_name || "Company Profile";
-      
+      renderProfileCard(rc);
+      document.getElementById("s-total").textContent = s.total;
+      document.getElementById("s-rejected").textContent = s.rejected;
+      document.getElementById("s-apps").textContent = s.total_applications;
+      allVacancies = d.vacancies;
+      renderVacancyTable("all");
+    }
+
+    function renderProfileCard(rc) {
       const roleMap = {
         founder: "Founder / Owner",
         hr: "HR / Recruiter",
@@ -1190,15 +1442,10 @@
       const roleLabel = roleMap[rc.registrant_role] || (rc.registrant_role && rc.registrant_role !== 'other' ? rc.registrant_role : "");
 
       document.getElementById("p-details").innerHTML =
-        (roleLabel ? "👤 " + roleLabel + "&nbsp;&nbsp;·&nbsp;&nbsp;" : "") +
-        (rc.location ? "📍 " + rc.location + "&nbsp;&nbsp;" : "") +
-        (rc.business_contact ? "📞 " + rc.business_contact + "&nbsp;&nbsp;" : "") +
+        (roleLabel ? "\uD83D\uDC64 " + roleLabel + "&nbsp;&nbsp;·&nbsp;&nbsp;" : "") +
+        (rc.location ? "\uD83D\uDCCD " + rc.location + "&nbsp;&nbsp;" : "") +
+        (rc.business_contact ? "\uD83D\uDCDE " + rc.business_contact + "&nbsp;&nbsp;" : "") +
         '<i class="bi bi-whatsapp" style="color:#25d366"></i> +' + rc.wa_number;
-      document.getElementById("s-total").textContent = s.total;
-      document.getElementById("s-rejected").textContent = s.rejected;
-      document.getElementById("s-apps").textContent = s.total_applications;
-      allVacancies = d.vacancies;
-      renderVacancyTable("all");
     }
 
     function renderVacancyTable(filter) {
@@ -1444,6 +1691,88 @@
     function handleRecruiterClose() {
       window.location.href = "recruiter.html";
     }
+
+    /* ══════════════════ EDIT PROFILE ══════════════════ */
+
+    // Keep a local copy of the current recruiter profile for pre-filling
+    let currentRecruiterProfile = {};
+
+    function openProfileEditModal() {
+      const rc = currentRecruiterProfile;
+      document.getElementById("pe-company").value = rc.company_name || "";
+      document.getElementById("pe-wa").value = rc.wa_number ? "+91 " + rc.wa_number.replace(/^91/, "") : "";
+      document.getElementById("pe-role").value = rc.registrant_role || "other";
+      document.getElementById("pe-location").value = rc.location || "Kerala";
+      document.getElementById("pe-contact").value = rc.business_contact || "";
+      document.getElementById("pe-err").style.display = "none";
+      document.getElementById("pe-save-btn").disabled = false;
+      document.getElementById("pe-save-btn").innerHTML = '<i class="bi bi-check2-circle me-1"></i>Save Changes';
+      document.getElementById("profile-edit-overlay").classList.add("open");
+    }
+
+    function closeProfileEditModal() {
+      document.getElementById("profile-edit-overlay").classList.remove("open");
+    }
+
+    document.getElementById("open-profile-edit-btn").addEventListener("click", openProfileEditModal);
+    document.getElementById("pe-cancel-btn").addEventListener("click", closeProfileEditModal);
+    document.getElementById("profile-edit-overlay").addEventListener("click", e => {
+      if (e.target === document.getElementById("profile-edit-overlay")) closeProfileEditModal();
+    });
+
+    document.getElementById("pe-save-btn").addEventListener("click", async () => {
+      const role    = document.getElementById("pe-role").value;
+      const location = document.getElementById("pe-location").value;
+      const contact  = document.getElementById("pe-contact").value.trim();
+      const errEl    = document.getElementById("pe-err");
+
+      if (!contact) {
+        errEl.textContent = "Business contact number is required.";
+        errEl.style.display = "block";
+        return;
+      }
+
+      const btn = document.getElementById("pe-save-btn");
+      btn.disabled = true;
+      btn.innerHTML = '<i class="bi bi-hourglass-split me-1"></i>Saving…';
+      errEl.style.display = "none";
+
+      try {
+        const r = await post("/api/recruiters/profile/edit", {
+          wa_number: verifiedWa,
+          session_token: sessionToken,
+          registrant_role: role,
+          location: location,
+          business_contact: contact,
+        });
+        const d = await r.json();
+        if (!r.ok) {
+          errEl.textContent = d.detail || "Update failed. Please try again.";
+          errEl.style.display = "block";
+          return;
+        }
+
+        // Update local profile cache and re-render profile section
+        currentRecruiterProfile.registrant_role = d.registrant_role;
+        currentRecruiterProfile.location        = d.location;
+        currentRecruiterProfile.business_contact = d.business_contact;
+        renderProfileCard(currentRecruiterProfile);
+
+        closeProfileEditModal();
+
+        const toast = document.createElement("div");
+        toast.style.cssText = "position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#25d366;color:#fff;padding:12px 24px;border-radius:12px;font-weight:600;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,.2);font-size:.9rem;";
+        toast.textContent = "✅ Profile updated successfully!";
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 3000);
+      } catch {
+        errEl.textContent = "Network error. Please try again.";
+        errEl.style.display = "block";
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="bi bi-check2-circle me-1"></i>Save Changes';
+      }
+    });
   </script>
 </body>
 
