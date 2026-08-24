@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
         window.history.replaceState({ path: newUrl }, '', newUrl);
 
-        swal("Authentication Failed", "This secure link has expired or is invalid. Please log in using OTP.", "warning");
+        swal("Authentication Failed", "This session has expired or No-longer available. Please log in using OTP.", "warning");
       });
   }
 });
@@ -520,7 +520,7 @@ function showQrStep(prefix, waNumber, isReg, setDisplay, resendBtn, isModal) {
           startResend(resendBtn, isM ? 'modal-cd' : null);
         }
       }
-    } catch(e) { console.error(e); }
+    } catch (e) { console.error(e); }
   };
 
   pollTimers[prefix] = setInterval(checkStatus, 3000);

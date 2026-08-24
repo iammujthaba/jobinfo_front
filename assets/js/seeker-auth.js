@@ -12,10 +12,10 @@ async function sendSeekerOtp(isResend = false) {
     }
     currentSeekerPhone = "91" + phoneInput;
   }
-  
+
   const btn = document.getElementById("btnSendOtp");
   const resendBtn = document.getElementById("btnResendOtp");
-  
+
   if (!isResend) {
     btn.disabled = true;
     btn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" style="margin-right:8px;"></span> Sending...';
@@ -30,7 +30,7 @@ async function sendSeekerOtp(isResend = false) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ wa_number: currentSeekerPhone, role: "seeker" })
     });
-    
+
     if (res.ok) {
       if (!isResend) {
         document.getElementById("loginStepPhone").style.display = "none";
@@ -73,12 +73,12 @@ function startSeekerResendTimer() {
   resendBtn.innerHTML = `Resend in <span id="s-cd">${timeLeft}</span>s`;
 
   if (seekerResendTimer) clearInterval(seekerResendTimer);
-  
+
   seekerResendTimer = setInterval(() => {
     timeLeft--;
     const currentCd = document.getElementById("s-cd");
     if (currentCd) currentCd.textContent = timeLeft;
-    
+
     if (timeLeft <= 0) {
       clearInterval(seekerResendTimer);
       resendBtn.disabled = false;
@@ -101,23 +101,23 @@ async function verifySeekerOtp() {
     const res = await fetch(`${JOBINFO_CONFIG.API_URL}/api/otp/verify`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ 
-        wa_number: currentSeekerPhone, 
+      body: JSON.stringify({
+        wa_number: currentSeekerPhone,
         otp_code: otpInput,
         role: "seeker"
       })
     });
-    
+
     if (res.ok) {
       const data = await res.json();
       localStorage.setItem("seeker_session_token", data.session_token);
       localStorage.setItem("seeker_wa_number", data.wa_number);
-      
+
       // Route based on newly returned flag
       if (data.is_new_user) {
-         window.location.href = "register.html";
+        window.location.href = "register.html";
       } else {
-         window.location.href = "dashboard.html"; 
+        window.location.href = "dashboard.html";
       }
     } else {
       alert("Invalid or Expired OTP. Please try again.");
@@ -165,39 +165,39 @@ document.addEventListener("DOMContentLoaded", () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ token: magicToken })
     })
-    .then(res => {
-      if (!res.ok) throw new Error("Invalid or expired magic link");
-      return res.json();
-    })
-    .then(data => {
-      localStorage.setItem("seeker_session_token", data.session_token);
-      localStorage.setItem("seeker_wa_number", data.wa_number);
-      
-      const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
-      window.history.replaceState({ path: newUrl }, '', newUrl);
+      .then(res => {
+        if (!res.ok) throw new Error("Invalid or expired magic link");
+        return res.json();
+      })
+      .then(data => {
+        localStorage.setItem("seeker_session_token", data.session_token);
+        localStorage.setItem("seeker_wa_number", data.wa_number);
 
-      if (data.is_new_user) {
-         window.location.href = "register.html";
-      } else {
-         window.location.href = "dashboard.html"; 
-      }
-    })
-    .catch(err => {
-      console.error(err);
-      document.getElementById('magic-auth-overlay').remove();
-      
-      const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
-      window.history.replaceState({ path: newUrl }, '', newUrl);
+        const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+        window.history.replaceState({ path: newUrl }, '', newUrl);
 
-      swal("Authentication Failed", "This secure link has expired or is invalid. Please log in using OTP.", "warning")
-      .then(() => {
-        const seekerModal = document.getElementById('seekerLoginModal');
-        if (seekerModal) {
-          const modalInstance = new bootstrap.Modal(seekerModal);
-          modalInstance.show();
+        if (data.is_new_user) {
+          window.location.href = "register.html";
+        } else {
+          window.location.href = "dashboard.html";
         }
+      })
+      .catch(err => {
+        console.error(err);
+        document.getElementById('magic-auth-overlay').remove();
+
+        const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+        window.history.replaceState({ path: newUrl }, '', newUrl);
+
+        swal("Authentication Failed", "This session has expired or No-longer available. Please log in using OTP.", "warning")
+          .then(() => {
+            const seekerModal = document.getElementById('seekerLoginModal');
+            if (seekerModal) {
+              const modalInstance = new bootstrap.Modal(seekerModal);
+              modalInstance.show();
+            }
+          });
       });
-    });
 
     return; // Stop further initialized of DOM elements behind the overlay
   }
