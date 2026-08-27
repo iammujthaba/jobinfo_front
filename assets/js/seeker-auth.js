@@ -1,5 +1,6 @@
 let currentSeekerPhone = "";
 let seekerResendTimer = null;
+let seekerPinPollTimer = null;
 
 async function sendSeekerOtp(isResend = false) {
   let phoneInput = document.getElementById("loginPhone").value.trim();
@@ -32,6 +33,23 @@ async function sendSeekerOtp(isResend = false) {
     });
 
     if (res.ok) {
+      const data = await res.json();
+
+      // ── Outside 24h window — switch to Reverse OTP PIN flow ──────────────
+      if (data.within_24h === false) {
+        if (!isResend) {
+          document.getElementById("loginStepPhone").style.display = "none";
+          document.getElementById("loginStepUnregistered").style.display = "none";
+          document.getElementById("loginStepOtp").style.display = "none";
+          document.getElementById("loginStepPin").style.display = "block";
+          document.getElementById("s-dot1").classList.add("active");
+          document.getElementById("s-dot2").classList.add("active");
+          await showSeekerPinQrStep();
+        }
+        return;
+      }
+
+      // ── Within 24h window — normal OTP flow ──────────────────────────────
       if (!isResend) {
         document.getElementById("loginStepPhone").style.display = "none";
         document.getElementById("loginStepUnregistered").style.display = "none";
@@ -61,6 +79,110 @@ async function sendSeekerOtp(isResend = false) {
       btn.innerHTML = '<i class="bi bi-send me-2"></i>Send OTP';
     }
   }
+}
+
+async function showSeekerPinQrStep() {
+  // ── 1. Create OTP session — wa_number stored server-side ──────────────
+  let sessionId, otp;
+  try {
+    const res = await fetch(`${JOBINFO_CONFIG.API_URL}/api/auth/pin/create`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ role: "seeker", wa_number: currentSeekerPhone }),
+    });
+    if (!res.ok) throw new Error("OTP create failed");
+    const data = await res.json();
+    sessionId = data.session_id;
+    otp = data.otp;
+  } catch (e) {
+    alert("Could not generate a verification code. Please try again.");
+    return;
+  }
+
+  // ── 2. Display OTP — QR / deep link pre-fills just the 6 digits ───────
+  const pinDisplay = document.getElementById("seeker-pin-display");
+  if (pinDisplay) pinDisplay.textContent = otp;
+
+  // Pre-fill only the 6-digit OTP — user just taps Send, like any standard OTP
+  const waLink = "https://wa.me/" + JOBINFO_CONFIG.BUSINESS_WA + "?text=" + encodeURIComponent(otp);
+  const qrUrl = "https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=" + encodeURIComponent(waLink);
+
+  const qrImg = document.getElementById("seeker-pin-qr-img");
+  if (qrImg) qrImg.src = qrUrl;
+
+  const waBtn = document.getElementById("seeker-pin-wa-btn");
+  if (waBtn) waBtn.href = waLink;
+
+  // ── 3. Poll every 5s — hard stop at 5 min (matches backend TTL) ───────
+  if (seekerPinPollTimer) clearInterval(seekerPinPollTimer);
+  const MAX_POLLS = 60; // 60 × 5s = 300s = 5 min
+  let pollCount = 0;
+
+  const handleExpiry = () => {
+    if (seekerPinPollTimer) {
+      clearInterval(seekerPinPollTimer);
+      seekerPinPollTimer = null;
+    }
+    const statusWrap = document.getElementById("seeker-pin-status-wrap")
+      || (document.getElementById("seeker-pin-status-text") ? document.getElementById("seeker-pin-status-text").parentNode : null);
+    if (statusWrap) {
+      statusWrap.innerHTML = `
+        <div style="text-align:center;padding:4px 0;">
+          <p class="text-danger small mb-2 fw-semibold" style="font-size:.82rem;">
+            <i class="bi bi-exclamation-circle me-1"></i>OTP Expired (5 min time out). Generate a new code to continue.
+          </p>
+          <button type="button" class="btn btn-outline-success btn-sm rounded-pill px-3 py-1 fw-bold" id="seeker-refresh-otp-btn">
+            <i class="bi bi-arrow-clockwise me-1"></i>Generate New OTP
+          </button>
+        </div>
+      `;
+      const refreshBtn = document.getElementById("seeker-refresh-otp-btn");
+      if (refreshBtn) {
+        refreshBtn.addEventListener("click", () => {
+          statusWrap.innerHTML = `
+            <div class="spinner-border spinner-border-sm text-success" role="status"></div>
+            <span id="seeker-pin-status-text" style="font-size:.8rem;color:#888;">Waiting for your OTP…</span>
+          `;
+          showSeekerPinQrStep();
+        });
+      }
+    }
+  };
+
+  const checkStatus = async () => {
+    pollCount++;
+    if (pollCount > MAX_POLLS) {
+      handleExpiry();
+      return;
+    }
+
+    try {
+      const res = await fetch(`${JOBINFO_CONFIG.API_URL}/api/auth/pin/status/${sessionId}`);
+      if (!res.ok) return;
+      const data = await res.json();
+
+      if (data.status === "expired") {
+        handleExpiry();
+        return;
+      }
+
+      if (data.status === "verified") {
+        clearInterval(seekerPinPollTimer);
+        seekerPinPollTimer = null;
+
+        localStorage.setItem("seeker_session_token", data.session_token);
+        localStorage.setItem("seeker_wa_number", data.wa_number);
+
+        if (data.is_new_user) {
+          window.location.href = "register.html";
+        } else {
+          window.location.href = "dashboard.html";
+        }
+      }
+    } catch (e) { console.error(e); }
+  };
+
+  seekerPinPollTimer = setInterval(checkStatus, 5000);
 }
 
 function startSeekerResendTimer() {

@@ -9,6 +9,8 @@ let verifiedWaNumber = null;
 // Store whether this specific surface is in registration mode
 let surfaceRegMode = {};
 let registrationData = {};
+// Set when the user was pre-verified via Reverse OTP — allows skipping OTP in reg form
+let qrVerifiedForReg = null;  // { session_token, wa_number } | null
 
 /* ── Magic Link Interception ─────────────────────────────────────────────── */
 document.addEventListener("DOMContentLoaded", () => {
@@ -278,8 +280,40 @@ function initSurface(prefix, intent) {
       };
 
       const subBtn = document.getElementById(prefix + 'reg-submit');
-      if (subBtn) { subBtn.disabled = true; subBtn.textContent = "Sending OTP..."; }
 
+      // ── Path A: number already verified via Reverse OTP ────────────────────
+      if (qrVerifiedForReg) {
+        if (subBtn) { subBtn.disabled = true; subBtn.textContent = "Registering..."; }
+        try {
+          const res = await fetch(`${JOBINFO_CONFIG.API_URL}/api/auth/recruiter/register-verified`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              session_token: qrVerifiedForReg.session_token,
+              wa_number: qrVerifiedForReg.wa_number,
+              ...registrationData[prefix]
+            })
+          });
+          if (!res.ok) throw new Error();
+          const data = await res.json();
+          sessionToken = data.session_token;
+          verifiedWaNumber = data.wa_number;
+          sessionStorage.setItem("ji_token", data.session_token);
+          sessionStorage.setItem("ji_wa", data.wa_number);
+          sessionStorage.setItem("ji_r_token", data.session_token);
+          sessionStorage.setItem("ji_r_wa", data.wa_number);
+          qrVerifiedForReg = null;  // clear flag
+          handleSuccessfulLogin(intent, setDisplay);
+        } catch (e) {
+          swal("Error", "Could not complete registration. Please try again.", "error");
+        } finally {
+          if (subBtn) { subBtn.disabled = false; subBtn.innerHTML = '<i class="bi bi-person-check me-1"></i>Complete Registration'; }
+        }
+        return;
+      }
+
+      // ── Path B: normal flow — send OTP, then step 3 ────────────────────────
+      if (subBtn) { subBtn.disabled = true; subBtn.textContent = "Sending OTP..."; }
       try {
         const res = await fetch(`${JOBINFO_CONFIG.API_URL}/api/otp/send`, {
           method: "POST", headers: { "Content-Type": "application/json" },
@@ -288,7 +322,7 @@ function initSurface(prefix, intent) {
         if (!res.ok) throw new Error();
         const data = await res.json();
         if (data.within_24h === false) {
-          showQrStep(prefix, verifiedWaNumber, false, setDisplay, resendBtn, isModal);
+          showQrStep(prefix, verifiedWaNumber, true, setDisplay, resendBtn, isModal);
         } else {
           setDisplay(3);
           startResend(resendBtn, isModal ? 'modal-cd' : null);
@@ -480,16 +514,39 @@ document.querySelectorAll(".accordion-header").forEach((header) => {
 
 let pollTimers = {};
 
-function showQrStep(prefix, waNumber, isReg, setDisplay, resendBtn, isModal) {
+async function showQrStep(prefix, waNumber, isReg, setDisplay, resendBtn, isModal) {
   setDisplay('qr');
 
   const isM = (prefix === 'modal-');
+  const pinDisplayId = isM ? 'modal-pin-display' : (prefix + 'pin-display');
   const qrImgId = isM ? 'modal-qr-img' : (prefix + 'qr-img');
   const waChatBtnId = isM ? 'modal-wa-chat-btn' : (prefix + 'wa-chat-btn');
-  const checkBtnId = isM ? 'modal-check-wa-btn' : (prefix + 'check-wa-btn');
+  const statusTxtId = isM ? 'modal-pin-status-text' : (prefix + 'pin-status-text');
 
-  const waLink = "https://wa.me/" + JOBINFO_CONFIG.BUSINESS_WA + "?text=" + encodeURIComponent("Hi");
-  const qrUrl = "https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=" + encodeURIComponent(waLink);
+  // ── 1. Create OTP session — wa_number stored server-side ─────────────────
+  let sessionId, otp;
+  try {
+    const res = await fetch(`${JOBINFO_CONFIG.API_URL}/api/auth/pin/create`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ role: 'recruiter', wa_number: waNumber }),
+    });
+    if (!res.ok) throw new Error('Failed to create OTP session');
+    const data = await res.json();
+    sessionId = data.session_id;
+    otp = data.otp;
+  } catch (e) {
+    swal('Error', 'Could not generate a verification code. Please try again.', 'error');
+    return;
+  }
+
+  // ── 2. Display OTP — QR / deep link pre-fills just the 6 digits ──────────
+  const pinDisplay = document.getElementById(pinDisplayId);
+  if (pinDisplay) pinDisplay.textContent = otp;
+
+  // Pre-fill only the 6-digit OTP — user just taps Send, like any standard OTP
+  const waLink = 'https://wa.me/' + JOBINFO_CONFIG.BUSINESS_WA + '?text=' + encodeURIComponent(otp);
+  const qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=' + encodeURIComponent(waLink);
 
   const qrImg = document.getElementById(qrImgId);
   if (qrImg) qrImg.src = qrUrl;
@@ -497,45 +554,90 @@ function showQrStep(prefix, waNumber, isReg, setDisplay, resendBtn, isModal) {
   const waChatBtn = document.getElementById(waChatBtnId);
   if (waChatBtn) waChatBtn.href = waLink;
 
+  // ── 3. Poll every 5s — hard stop at 5 min (matches backend TTL) ──────────
   if (pollTimers[prefix]) clearInterval(pollTimers[prefix]);
+  const MAX_POLLS = 60;  // 60 × 5s = 300s = 5 minutes
+  let pollCount = 0;
+
+  const handleExpiry = () => {
+    if (pollTimers[prefix]) {
+      clearInterval(pollTimers[prefix]);
+      delete pollTimers[prefix];
+    }
+    const statusWrapId = isM ? 'modal-pin-status-wrap' : (prefix + 'pin-status-wrap');
+    const statusWrap = document.getElementById(statusWrapId)
+      || (document.getElementById(statusTxtId) ? document.getElementById(statusTxtId).parentNode : null);
+    if (statusWrap) {
+      statusWrap.innerHTML = `
+        <div style="text-align:center;padding:4px 0;">
+          <p class="text-danger small mb-2 fw-semibold" style="font-size:.82rem;">
+            <i class="bi bi-exclamation-circle me-1"></i>OTP Expired (5 min time out). Generate a new code to continue.
+          </p>
+          <button type="button" class="btn btn-outline-success btn-sm rounded-pill px-3 py-1 fw-bold" id="${prefix}refresh-otp-btn">
+            <i class="bi bi-arrow-clockwise me-1"></i>Generate New OTP
+          </button>
+        </div>
+      `;
+      const refreshBtn = document.getElementById(`${prefix}refresh-otp-btn`);
+      if (refreshBtn) {
+        refreshBtn.addEventListener('click', () => {
+          statusWrap.innerHTML = `
+            <div class="spinner-border spinner-border-sm text-success" role="status"></div>
+            <span id="${statusTxtId}" style="font-size:.8rem;color:#888;">Waiting for your OTP…</span>
+          `;
+          showQrStep(prefix, waNumber, isReg, setDisplay, resendBtn, isModal);
+        });
+      }
+    }
+  };
 
   const checkStatus = async () => {
+    pollCount++;
+
+    if (pollCount > MAX_POLLS) {
+      handleExpiry();
+      return;
+    }
+
     try {
-      const res = await fetch(`${JOBINFO_CONFIG.API_URL}/api/auth/check-recruiter`, {
-        method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ wa_number: waNumber })
-      });
+      const res = await fetch(`${JOBINFO_CONFIG.API_URL}/api/auth/pin/status/${sessionId}`);
       if (!res.ok) return;
       const data = await res.json();
-      if (data.within_24h) {
+
+      if (data.status === 'expired') {
+        handleExpiry();
+        return;
+      }
+
+      if (data.status === 'verified') {
         clearInterval(pollTimers[prefix]);
         delete pollTimers[prefix];
 
-        swal("WhatsApp Connected! 🎉", "Instant OTP delivery is active. Check your WhatsApp for the code.", "success");
-
-        if (isReg) {
+        if (data.is_new_user) {
+          // ── New user: keep session in memory ONLY until registration completes ──
+          // Do NOT write sessionStorage here — restoreDashboardSession() would
+          // activate "My Vacancies" on refresh before the profile exists.
+          sessionToken = data.session_token;
+          verifiedWaNumber = data.wa_number;
+          qrVerifiedForReg = { session_token: data.session_token, wa_number: data.wa_number };
+          const regBtn = document.getElementById(isM ? 'modal-reg-submit' : (prefix + 'reg-submit'));
+          if (regBtn) regBtn.innerHTML = '<i class="bi bi-person-check me-1"></i>Complete Registration';
+          swal('WhatsApp Verified! ✅', 'Your number is confirmed. Please complete your profile to continue.', 'success');
           setDisplay(2);
         } else {
-          setDisplay(3);
-          startResend(resendBtn, isM ? 'modal-cd' : null);
+          // ── Existing recruiter: store session fully and redirect ──────────────
+          sessionToken = data.session_token;
+          sessionStorage.setItem('ji_token', data.session_token);
+          sessionStorage.setItem('ji_wa', data.wa_number);
+          sessionStorage.setItem('ji_r_token', data.session_token);
+          sessionStorage.setItem('ji_r_wa', data.wa_number);
+          verifiedWaNumber = data.wa_number;
+          swal('You\'re logged in! 🎉', 'WhatsApp verified. Tap OK to go to your dashboard.', 'success')
+            .then(() => handleSuccessfulLogin(isM ? 'dashboard' : 'post-vacancy', setDisplay));
         }
       }
     } catch (e) { console.error(e); }
   };
 
-  pollTimers[prefix] = setInterval(checkStatus, 3000);
-
-  const checkBtn = document.getElementById(checkBtnId);
-  if (checkBtn) {
-    checkBtn.onclick = () => {
-      checkBtn.disabled = true;
-      checkBtn.innerHTML = '<i class="bi bi-hourglass-split me-1"></i>Checking...';
-      checkStatus().finally(() => {
-        setTimeout(() => {
-          checkBtn.disabled = false;
-          checkBtn.innerHTML = '<i class="bi bi-arrow-clockwise me-1"></i>I\'ve Sent the Message — Continue';
-        }, 1500);
-      });
-    };
-  }
+  pollTimers[prefix] = setInterval(checkStatus, 5000);
 }

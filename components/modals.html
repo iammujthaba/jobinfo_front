@@ -143,7 +143,7 @@
         <!-- Step 1: Phone Entry -->
         <div id="loginStepPhone">
           <h2>Verify your WhatsApp</h2>
-          <p class="text-muted mb-4" style="font-size:.88rem">Enter the number you registered with.</p>
+          <p class="text-muted mb-4" style="font-size:.88rem">Enter your WhatsApp Number to verify.</p>
           <div class="mb-3">
             <label class="field-label">WhatsApp Number</label>
             <div class="wa-wrap mb-4">
@@ -183,6 +183,57 @@
                 id="s-cd">60</span>s</button>
           </div>
         </div>
+
+        <!-- Step OTP QR: Reverse OTP for seekers outside 24h window -->
+        <div id="loginStepPin" style="display:none; text-align:center;">
+          <h2 style="font-size:1.2rem;">WhatsApp OTP Verification 📱</h2>
+          <p class="text-muted mb-3" style="font-size:.85rem;">
+            Open WhatsApp and verify OTP with <strong>JobInfo</strong> bot.
+          </p>
+
+          <!-- OTP display -->
+          <div
+            style="background:#f0fdf4;border:1.5px dashed #25d366;border-radius:10px;padding:10px 8px;margin-bottom:12px;">
+            <p style="font-size:.72rem;font-weight:600;color:#555;margin:0 0 4px;">Send this OTP to <strong>+91
+                7025962176</strong> WhatsApp
+              number</p>
+            <div id="seeker-pin-display"
+              style="font-size:1.6rem;font-weight:800;letter-spacing:.25rem;color:#1a1a2e;font-family:monospace;">——————
+            </div>
+            <p style="font-size:.68rem;color:#888;margin:4px 0 0;">Expires in 5 minutes &nbsp;·&nbsp; Single use</p>
+          </div>
+
+          <!-- OR Divider -->
+          <div style="display:flex;align-items:center;margin:10px 0;color:#888;font-size:.75rem;font-weight:600;">
+            <div style="flex:1;border-bottom:1px dashed #ccc;"></div>
+            <span style="padding:0 10px;">OR</span>
+            <div style="flex:1;border-bottom:1px dashed #ccc;"></div>
+          </div>
+
+          <!-- QR code -->
+          <div class="mb-2 p-2 bg-light rounded-3 d-inline-block border shadow-sm">
+            <img id="seeker-pin-qr-img" src="" alt="WhatsApp QR Code"
+              style="width:130px;height:130px;display:block;margin:0 auto;" />
+          </div>
+
+          <!-- OR Divider -->
+          <div style="display:flex;align-items:center;margin:10px 0;color:#888;font-size:.75rem;font-weight:600;">
+            <div style="flex:1;border-bottom:1px dashed #ccc;"></div>
+            <span style="padding:0 10px;">OR</span>
+            <div style="flex:1;border-bottom:1px dashed #ccc;"></div>
+          </div>
+
+          <div class="d-grid mb-2">
+            <a id="seeker-pin-wa-btn" href="#" target="_blank" class="btn btn-success fw-bold rounded-3 shadow-sm py-2">
+              <i class="bi bi-whatsapp me-2"></i>Open WhatsApp &amp; Send OTP
+            </a>
+          </div>
+
+          <div id="seeker-pin-status-wrap" style="margin-top:10px;display:flex;align-items:center;justify-content:center;gap:8px;">
+            <div class="spinner-border spinner-border-sm text-success" role="status"></div>
+            <span id="seeker-pin-status-text" style="font-size:.8rem;color:#888;">Waiting for your OTP…</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -215,7 +266,8 @@
         <!-- Step 1: Phone Entry -->
         <div id="modal-step1">
           <h2 style="text-align:center;">Verify your WhatsApp</h2>
-          <p class="text-muted mb-4" style="text-align:center;font-size:.88rem">Enter the number you registered with.
+          <p class="text-muted mb-4" style="text-align:center;font-size:.88rem">Enter your WhatsApp Number to
+            verify.
           </p>
           <div class="mb-3">
             <label class="field-label">WhatsApp Number</label>
@@ -285,24 +337,54 @@
           </form>
         </div>
 
-        <!-- Step QR: Connect WhatsApp (24h Window Activation) -->
+        <!-- Step OTP QR: Reverse OTP — Send OTP via WhatsApp -->
         <div id="modal-step-qr" style="display:none; text-align:center;">
-          <h2 style="font-size:1.25rem;">Connect to WhatsApp 📱</h2>
-          <p class="text-muted mb-3" style="font-size:.85rem;line-height:1.4;">
-            To receive your instant verification OTP, please send a quick message to our WhatsApp bot.
+          <h2 style="font-size:1.2rem;">WhatsApp OTP Verification 📱</h2>
+          <p class="text-muted mb-3" style="font-size:.85rem;">
+            Open WhatsApp and verify OTP with <strong>JobInfo</strong> bot.
           </p>
-          <div class="mb-3 p-2 bg-light rounded-3 d-inline-block border shadow-sm">
-            <img id="modal-qr-img" src="" alt="WhatsApp QR Code" style="width:160px;height:160px;display:block;margin:0 auto;" />
+
+          <!-- OTP display -->
+          <div
+            style="background:#f0fdf4;border:1.5px dashed #25d366;border-radius:10px;padding:10px 8px;margin-bottom:12px;">
+            <p style="font-size:.72rem;font-weight:600;color:#555;margin:0 0 4px;">Send this OTP to <strong>+91
+                7025962176</strong> WhatsApp
+              number</p>
+            <div id="modal-pin-display"
+              style="font-size:1.6rem;font-weight:800;letter-spacing:.25rem;color:#1a1a2e;font-family:monospace;">——————
+            </div>
+            <p style="font-size:.68rem;color:#888;margin:4px 0 0;">Expires in 5 minutes &nbsp;·&nbsp; Single use</p>
           </div>
-          <p class="text-muted small mb-3" style="font-size:.78rem;">Scan with your phone camera or WhatsApp</p>
-          
-          <div class="d-grid gap-2 mb-2">
+
+          <!-- OR Divider -->
+          <div style="display:flex;align-items:center;margin:10px 0;color:#888;font-size:.75rem;font-weight:600;">
+            <div style="flex:1;border-bottom:1px dashed #ccc;"></div>
+            <span style="padding:0 10px;">OR</span>
+            <div style="flex:1;border-bottom:1px dashed #ccc;"></div>
+          </div>
+
+          <!-- QR code -->
+          <div class="mb-2 p-2 bg-light rounded-3 d-inline-block border shadow-sm">
+            <img id="modal-qr-img" src="" alt="WhatsApp QR Code"
+              style="width:130px;height:130px;display:block;margin:0 auto;" />
+          </div>
+
+          <!-- OR Divider -->
+          <div style="display:flex;align-items:center;margin:10px 0;color:#888;font-size:.75rem;font-weight:600;">
+            <div style="flex:1;border-bottom:1px dashed #ccc;"></div>
+            <span style="padding:0 10px;">OR</span>
+            <div style="flex:1;border-bottom:1px dashed #ccc;"></div>
+          </div>
+
+          <div class="d-grid mb-2">
             <a id="modal-wa-chat-btn" href="#" target="_blank" class="btn btn-success fw-bold rounded-3 shadow-sm py-2">
-              <i class="bi bi-whatsapp me-2"></i>Open WhatsApp Chat
+              <i class="bi bi-whatsapp me-2"></i>Open WhatsApp &amp; Send OTP
             </a>
-            <button type="button" class="btn btn-outline-secondary btn-sm rounded-3 mt-1 py-2" id="modal-check-wa-btn">
-              <i class="bi bi-arrow-clockwise me-1"></i>I've Sent the Message — Continue
-            </button>
+          </div>
+
+          <div id="modal-pin-status-wrap" style="margin-top:10px;display:flex;align-items:center;justify-content:center;gap:8px;">
+            <div class="spinner-border spinner-border-sm text-success" role="status"></div>
+            <span id="modal-pin-status-text" style="font-size:.8rem;color:#888;">Waiting for your OTP…</span>
           </div>
         </div>
 
