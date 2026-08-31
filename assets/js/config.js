@@ -3,7 +3,22 @@
  * Change JOBINFO_API_URL to your deployed backend URL before going live.
  * During local development use: http://localhost:8080
  */
-const isLocal = (window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost");
+const _hostname = window.location.hostname || "";
+const isLocal = (
+  _hostname === "127.0.0.1" ||
+  _hostname === "localhost" ||
+  _hostname === "::1" ||
+  _hostname === "[::1]" ||
+  _hostname === "" ||
+  window.location.protocol === "file:" ||
+  _hostname.startsWith("192.168.") ||
+  _hostname.startsWith("10.") ||
+  _hostname.endsWith(".ngrok-free.app") ||
+  _hostname.endsWith(".ngrok.io") ||
+  window.location.port === "5500" ||
+  window.location.port === "5501" ||
+  window.location.port === "3000"
+);
 
 const JOBINFO_CONFIG = {
   // Local testing URL (Don't forget to change back before pushing to GitHub!)

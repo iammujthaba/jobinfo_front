@@ -17,6 +17,23 @@ let isSubmittingReg = false;
 let isVerifyingOtp = false;
 let isResendingOtp = false;
 
+function handleSeekerPostLoginRedirect() {
+  const pendingJobCode = sessionStorage.getItem("pending_apply_job_code");
+  if (pendingJobCode) {
+    sessionStorage.removeItem("pending_apply_job_code");
+    const seekerModalEl = document.getElementById("seekerLoginModal");
+    if (seekerModalEl && typeof bootstrap !== "undefined") {
+      const modal = bootstrap.Modal.getInstance(seekerModalEl);
+      if (modal) modal.hide();
+    }
+    if (typeof window.triggerWebApply === "function") {
+      window.triggerWebApply(pendingJobCode);
+      return;
+    }
+  }
+  window.location.href = "dashboard.html";
+}
+
 // ─── Category → Sub-Category Data Mapping ───────────────────────────────────
 const SEEKER_CATEGORY_SUBCATEGORIES = {
   "retail": [
@@ -536,8 +553,8 @@ async function handleSeekerRegistration(e) {
         await uploadSeekerCvIfPresent(data.wa_number, data.session_token, cvFile);
       }
 
-      swal("Profile Created! 🎉", "Welcome to JobInfo! Tap OK to view your dashboard.", "success").then(() => {
-        window.location.href = "dashboard.html";
+      swal("Profile Created! 🎉", "Welcome to JobInfo!", "success").then(() => {
+        handleSeekerPostLoginRedirect();
       });
     } else {
       // ── Standard 24h window registration — send OTP & go to Step 3 ──────────
@@ -631,8 +648,8 @@ async function verifySeekerOtp() {
         await uploadSeekerCvIfPresent(data.wa_number, data.session_token, pendingSeekerCvFile);
       }
 
-      swal("Profile Created! 🎉", "Welcome to JobInfo! Tap OK to view your dashboard.", "success").then(() => {
-        window.location.href = "dashboard.html";
+      swal("Profile Created! 🎉", "Welcome to JobInfo!", "success").then(() => {
+        handleSeekerPostLoginRedirect();
       });
     } else {
       // Existing seeker logging in
@@ -656,7 +673,7 @@ async function verifySeekerOtp() {
       localStorage.setItem("seeker_wa_number", data.wa_number);
 
       swal("You're logged in! 🎉", "Welcome back.", "success").then(() => {
-        window.location.href = "dashboard.html";
+        handleSeekerPostLoginRedirect();
       });
     }
   } catch (err) {
@@ -881,7 +898,7 @@ document.addEventListener("DOMContentLoaded", () => {
         } else {
           localStorage.setItem("seeker_session_token", data.session_token);
           localStorage.setItem("seeker_wa_number", data.wa_number);
-          window.location.href = "dashboard.html";
+          handleSeekerPostLoginRedirect();
         }
       })
       .catch((err) => {

@@ -265,7 +265,14 @@ window.showJobDetailsModal = function(jobCode) {
   document.getElementById('jd-code').textContent = job.job_code || '';
   document.getElementById('jd-title').textContent = job.job_title || 'Job Title';
   document.getElementById('jd-company').querySelector('span').textContent = job.company_name || '—';
-  document.getElementById('jd-location').textContent = job.district_region || '—';
+  const locParts = [];
+  if (job.exact_location && job.exact_location.trim()) {
+    locParts.push(job.exact_location.trim());
+  }
+  if (job.district_region && job.district_region.trim() && (!job.exact_location || job.district_region.trim().toLowerCase() !== job.exact_location.trim().toLowerCase())) {
+    locParts.push(job.district_region.trim());
+  }
+  document.getElementById('jd-location').textContent = locParts.length > 0 ? locParts.join(", ") : (job.district_region || '—');
   
   const salaryMap = {
     "interview_based": "Based on Interview",
@@ -317,7 +324,23 @@ window.showJobDetailsModal = function(jobCode) {
 
   // Apply button URL
   const applyUrl = `https://wa.me/${JOBINFO_CONFIG.BUSINESS_WA}?text=Apply%20${encodeURIComponent(job.job_code)}`;
-  document.getElementById('jd-apply-btn').href = applyUrl;
+  const waBtn = document.getElementById('jd-apply-btn');
+  if (waBtn) waBtn.href = applyUrl;
+
+  // Wire Web Apply button
+  const webApplyBtn = document.getElementById('jd-web-apply-btn');
+  if (webApplyBtn) {
+    webApplyBtn.onclick = function() {
+      const modalEl = document.getElementById('jobDetailsModal');
+      if (modalEl && typeof bootstrap !== "undefined") {
+        const modal = bootstrap.Modal.getInstance(modalEl);
+        if (modal) modal.hide();
+      }
+      if (window.triggerWebApply) {
+        window.triggerWebApply(jobCode);
+      }
+    };
+  }
 
   // Show Modal
   const modalEl = document.getElementById('jobDetailsModal');
@@ -326,3 +349,92 @@ window.showJobDetailsModal = function(jobCode) {
     modal.show();
   }
 };
+
+window.escHtml = function(str) {
+  return String(str || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+};
+
+window.buildJobCard = function(job) {
+  window.loadedJobs = window.loadedJobs || {};
+  window.loadedJobs[job.job_code] = job;
+  const businessWa = (typeof JOBINFO_CONFIG !== "undefined" && JOBINFO_CONFIG.BUSINESS_WA) ? JOBINFO_CONFIG.BUSINESS_WA : "919847178170";
+  const applyUrl = `https://wa.me/${businessWa}?text=Apply%20${encodeURIComponent(job.job_code)}`;
+  const salaryMap = {
+    "interview_based": "Based on Interview",
+    "not_mentioned": "Not Mentioned",
+    "stipend": "Stipend",
+    "below_10k": "Below ₹10,000",
+    "10k_15k": "₹10,000 - ₹14,999",
+    "15k_20k": "₹15,000 - ₹19,999",
+    "20k_25k": "₹20,000 - ₹24,999",
+    "25k_30k": "₹25,000 - ₹29,999",
+    "30k_35k": "₹30,000 - ₹34,999",
+    "35k_40k": "₹35,000 - ₹39,999",
+    "40k_45k": "₹40,000 - ₹44,999",
+    "45k_50k": "₹45,000 - ₹49,999",
+    "50k_60k": "₹50,000 - ₹59,999",
+    "60k_70k": "₹60,000 - ₹69,999",
+    "70k_80k": "₹70,000 - ₹79,999",
+    "80k_90k": "₹80,000 - ₹89,999",
+    "90k_100k": "₹90,000 - ₹99,999",
+    "100k_125k": "₹1,00,000 - ₹1,24,999",
+    "125k_150k": "₹1,25,000 - ₹1,49,999",
+    "150k_175k": "₹1,50,000 - ₹1,74,999",
+    "175k_200k": "₹1,75,000 - ₹1,99,999",
+    "above_200k": "Above ₹2,00,000",
+    "above_250k": "Above ₹2,50,000",
+    "above_300k": "Above ₹3,00,000",
+    "10k_20k": "₹10,000 - ₹20,000",
+    "20k_30k": "₹20,000 - ₹30,000",
+    "30k_40k": "₹30,000 - ₹40,000",
+    "40k_50k": "₹40,000 - ₹50,000",
+    "above_50k": "Above ₹50,000"
+  };
+
+  const expMap = {
+    "no_experience": "No Experience Required",
+    "fresher_or_exp": "Fresher or Experienced",
+    "1_2_years": "1-2 Years",
+    "3_5_years": "3-5 Years",
+    "5_plus_years": "5+ Years"
+  };
+
+  const fmtSalary = job.salary_range ? (salaryMap[job.salary_range] || job.salary_range) : null;
+  const fmtExp = job.experience_required ? (expMap[job.experience_required] || job.experience_required) : null;
+
+  const salary = fmtSalary && fmtSalary !== "Not Mentioned" ? `<span class="badge-salary me-1"><i class="bi bi-currency-rupee"></i>${fmtSalary}</span>` : "";
+  const exp = fmtExp ? `<span class="badge-exp"><i class="bi bi-briefcase me-1"></i>${fmtExp}</span>` : "";
+
+  // Combine exact_location and district_region cleanly
+  const locParts = [];
+  if (job.exact_location && job.exact_location.trim()) {
+    locParts.push(job.exact_location.trim());
+  }
+  if (job.district_region && job.district_region.trim() && (!job.exact_location || job.district_region.trim().toLowerCase() !== job.exact_location.trim().toLowerCase())) {
+    locParts.push(job.district_region.trim());
+  }
+  const displayLoc = locParts.length > 0 ? locParts.join(", ") : (job.district_region || "—");
+
+  return `
+  <div class="col-lg-4 col-md-6 job-card-col" data-aos="fade-up" style="cursor:pointer;" onclick="showJobDetailsModal('${job.job_code}')">
+    <div class="job-card h-100 p-4 bg-white rounded-3 shadow-sm d-flex flex-column">
+      <div class="job-card-header mb-2">
+        <span class="job-code-badge">${job.job_code}</span>
+        <h5 class="job-title mt-2 mb-1">${window.escHtml(job.job_title)}</h5>
+        <p class="job-company text-muted mb-1"><i class="bi bi-building me-1"></i>${window.escHtml(job.company_name || "—")}</p>
+        <p class="job-location text-muted mb-1"><i class="bi bi-geo-alt me-1"></i>${window.escHtml(displayLoc)}</p>
+      </div>
+      <div class="job-badges mb-3 d-flex flex-wrap gap-1">${salary}${exp}</div>
+      <p class="job-desc text-muted small flex-grow-1">${window.escHtml((job.job_description || "").substring(0, 150))}</p>
+      <div class="d-flex flex-column gap-2 mt-auto pt-2">
+        <button type="button" class="btn apply-web-btn w-100" onclick="event.stopPropagation(); window.triggerWebApply('${job.job_code}')">
+          <i class="bi bi-send-fill me-1"></i>Apply on Website
+        </button>
+        <a href="${applyUrl}" target="_blank" rel="noopener" class="apply-wa-btn w-100" onclick="event.stopPropagation()">
+          <i class="bi bi-whatsapp me-2"></i>Apply via WhatsApp
+        </a>
+      </div>
+    </div>
+  </div>`;
+};
+

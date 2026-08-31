@@ -77,41 +77,118 @@
 
     /* ── Job card ────────────────────────────────────── */
     .job-card {
-      border: 1px solid #eef0f4;
-      transition: transform .2s, box-shadow .2s;
+      border: 1px solid #eef2f6 !important;
+      border-radius: 14px !important;
+      background: #ffffff;
+      transition: transform .25s ease, box-shadow .25s ease;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
     }
 
     .job-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, .09) !important;
+      transform: translateY(-4px);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08) !important;
+      border-color: #cbd5e1 !important;
     }
 
     .job-code-badge {
       display: inline-block;
-      background: #e8f5e9;
-      color: #1e8449;
+      background: #f1f5f9;
+      color: #475569;
       border-radius: 20px;
-      padding: 2px 12px;
-      font-size: .72rem;
+      padding: 2px 10px;
+      font-size: .7rem;
       font-weight: 700;
       letter-spacing: .04em;
+      border: 1px solid #e2e8f0;
     }
 
     .job-title {
-      font-size: 1rem;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #0f172a;
+      line-height: 1.35;
+    }
+
+    .job-company, .job-location {
+      font-size: 0.84rem;
+      color: #64748b;
+    }
+
+    .job-desc {
+      font-size: 0.85rem;
+      color: #64748b;
+      line-height: 1.5;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      min-height: 2.5em;
+    }
+
+    .badge-salary {
+      display: inline-flex;
+      align-items: center;
+      background: #ecfdf5;
+      color: #059669;
+      border: 1px solid #a7f3d0;
+      border-radius: 20px;
+      padding: 3px 10px;
+      font-size: .72rem;
       font-weight: 600;
-      color: #1a1a2e;
+    }
+
+    .badge-exp {
+      display: inline-flex;
+      align-items: center;
+      background: #f0f9ff;
+      color: #0284c7;
+      border: 1px solid #bae6fd;
+      border-radius: 20px;
+      padding: 3px 10px;
+      font-size: .72rem;
+      font-weight: 600;
+    }
+
+    /* ── Action Buttons ──────────────────────────────── */
+    .apply-web-btn {
+      background: #0f62fe;
+      border: 1.5px solid #0f62fe;
+      color: #ffffff;
+      border-radius: 9px;
+      padding: 8px 14px;
+      font-weight: 600;
+      font-size: 0.88rem;
+      transition: all .2s ease;
+      box-shadow: 0 2px 6px rgba(15, 98, 254, 0.2);
+    }
+
+    .apply-web-btn:hover {
+      background: #0043ce;
+      border-color: #0043ce;
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(15, 98, 254, 0.35);
     }
 
     .apply-wa-btn {
-      background: #25d366;
-      border-color: #25d366;
+      background: #e8f5e9;
+      border: 1.5px solid #25d366;
+      color: #128c7e;
+      border-radius: 9px;
+      padding: 7px 14px;
       font-weight: 600;
+      font-size: 0.88rem;
+      transition: all .2s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .apply-wa-btn:hover {
-      background: #1ebe5d;
-      border-color: #1ebe5d;
+      background: #25d366;
+      border-color: #25d366;
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
     }
 
     /* ── Load more ───────────────────────────────────── */
@@ -257,7 +334,7 @@
         <div class="section-title mb-3" data-aos="fade-up">
           <span>LIVE VACANCIES</span>
           <h2>Browse Jobs</h2>
-          <p>All listings are verified. Apply instantly via WhatsApp — zero forms, zero downloads.</p>
+          <p>All listings are verified. Apply directly online or connect via WhatsApp.</p>
         </div>
         <div class="search-input-group" data-aos="fade-up" data-aos-delay="100">
           <div class="title-wrapper">
@@ -269,9 +346,8 @@
             <ul id="location-suggestions"></ul>
           </div>
           <button id="search-btn"><i class="bi bi-search me-1"></i>Search</button>
+          <button id="clear-search-btn" class="btn btn-outline-secondary" style="display:none; border-radius:8px; padding:10px 18px; font-weight:600;"><i class="bi bi-x-lg me-1"></i>Clear</button>
         </div>
-        <!-- show job counts -->
-        <!-- <div class="mt-2"><span id="jobs-count" class="text-muted small"></span></div> -->
       </div>
     </section>
 
@@ -362,9 +438,10 @@
   <script src="assets/vendor/aos/aos.js"></script>
 
   <!-- App JS -->
-  <script src="assets/js/main.js?v=2"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   <script src="assets/js/config.js"></script>
-  <script src="assets/js/jobs.js?v=2"></script>
+  <script src="assets/js/main.js?v=5"></script>
+  <script src="assets/js/jobs.js?v=5"></script>
   <script>
     (function () {
       const token = sessionStorage.getItem("ji_r_token");
@@ -383,8 +460,9 @@
   </script>
 
   <div id="modals-container"></div>
-  <script src="assets/js/components.js?v=2"></script>
-  <script src="assets/js/seeker-auth.js?v=2"></script>
+  <script src="assets/js/components.js?v=3"></script>
+  <script src="assets/js/seeker-auth.js?v=3"></script>
+  <script src="assets/js/web-apply.js?v=4"></script>
 
   <!-- Job Details Modal -->
   <div class="modal fade" id="jobDetailsModal" tabindex="-1" aria-labelledby="jobDetailsModalLabel" aria-hidden="true">
@@ -399,22 +477,28 @@
           <p class="text-muted mb-4" id="jd-company"><i class="bi bi-building me-1"></i><span></span></p>
 
           <div class="row g-3 mb-4">
-            <div class="col-sm-4">
-              <div class="p-3 bg-light rounded" style="font-size:0.85rem;">
-                <div class="text-muted fw-bold text-uppercase mb-1" style="font-size:0.75rem;">Location</div>
-                <div class="fw-semibold text-dark" id="jd-location"></div>
+            <div class="col-sm-6">
+              <div class="p-3 bg-light rounded-3">
+                <div class="text-muted small mb-1"><i class="bi bi-geo-alt me-1"></i>Location</div>
+                <div class="fw-bold" id="jd-location"></div>
               </div>
             </div>
-            <div class="col-sm-4">
-              <div class="p-3 bg-light rounded" style="font-size:0.85rem;">
-                <div class="text-muted fw-bold text-uppercase mb-1" style="font-size:0.75rem;">Salary</div>
-                <div class="fw-semibold text-success" id="jd-salary"></div>
+            <div class="col-sm-6">
+              <div class="p-3 bg-light rounded-3">
+                <div class="text-muted small mb-1"><i class="bi bi-currency-rupee me-1"></i>Salary</div>
+                <div class="fw-bold" id="jd-salary"></div>
               </div>
             </div>
-            <div class="col-sm-4">
-              <div class="p-3 bg-light rounded" style="font-size:0.85rem;">
-                <div class="text-muted fw-bold text-uppercase mb-1" style="font-size:0.75rem;">Experience</div>
-                <div class="fw-semibold text-info" id="jd-experience"></div>
+            <div class="col-sm-6">
+              <div class="p-3 bg-light rounded-3">
+                <div class="text-muted small mb-1"><i class="bi bi-briefcase me-1"></i>Experience</div>
+                <div class="fw-bold" id="jd-experience"></div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="p-3 bg-light rounded-3">
+                <div class="text-muted small mb-1"><i class="bi bi-laptop me-1"></i>Job Mode</div>
+                <div class="fw-bold" id="jd-mode"></div>
               </div>
             </div>
           </div>
@@ -426,6 +510,10 @@
           </div>
 
           <div class="d-grid gap-2 mt-4">
+            <button type="button" id="jd-web-apply-btn" class="btn btn-primary py-3 fw-bold rounded-pill shadow-sm"
+              style="font-size:1.05rem; background:#107bbc; border-color:#107bbc;">
+              <i class="bi bi-send-fill me-2"></i> Apply on Website
+            </button>
             <a href="#" id="jd-apply-btn" target="_blank" class="btn btn-success py-3 fw-bold rounded-pill shadow-sm"
               style="font-size:1.05rem;">
               <i class="bi bi-whatsapp me-2"></i> Apply via WhatsApp
