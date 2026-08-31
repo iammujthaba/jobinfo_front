@@ -112,11 +112,13 @@ document.addEventListener("DOMContentLoaded", () => {
   // Job form submit
   const jobForm = document.querySelector(".job-form");
   if (jobForm) {
+    initCharCounter();
+
     jobForm.addEventListener("submit", async (e) => {
       e.preventDefault();
 
-      if (!sessionToken) sessionToken = sessionStorage.getItem("ji_token");
-      if (!verifiedWaNumber) verifiedWaNumber = sessionStorage.getItem("ji_wa");
+      if (!sessionToken) sessionToken = sessionStorage.getItem("ji_token") || sessionStorage.getItem("ji_r_token");
+      if (!verifiedWaNumber) verifiedWaNumber = sessionStorage.getItem("ji_wa") || sessionStorage.getItem("ji_r_wa");
 
       if (!sessionToken || !verifiedWaNumber) {
         swal("Session Expired", "Please verify your WhatsApp number again.", "warning");
@@ -124,8 +126,9 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       const submitBtn = jobForm.querySelector("[type=submit]");
+      const originalBtnHtml = submitBtn.innerHTML;
       submitBtn.disabled = true;
-      submitBtn.textContent = "Submitting…";
+      submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Submitting…';
 
       const fd = new FormData(jobForm);
       const payload = {
@@ -135,7 +138,7 @@ document.addEventListener("DOMContentLoaded", () => {
         district_region: fd.get("district_region"),
         exact_location: fd.get("exact_location"),
         job_title: fd.get("job_title"),
-        job_description: fd.get("job_description"),
+        job_description: (fd.get("job_description") || "").slice(0, 600),
         job_mode: fd.get("job_mode"),
         experience_required: fd.get("experience_required"),
         salary_range: fd.get("salary_range"),
@@ -147,24 +150,132 @@ document.addEventListener("DOMContentLoaded", () => {
           method: "POST", headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
         });
+
+        if (res.status === 401) {
+          sessionStorage.removeItem("ji_token");
+          sessionStorage.removeItem("ji_r_token");
+          sessionToken = null;
+          swal("Session Expired", "Your login session has expired or something went wrong. Please log in again to post your vacancy.", "warning")
+            .then(() => {
+              window.location.reload();
+            });
+          return;
+        }
+
         if (!res.ok) throw new Error(await res.text());
         const data = await res.json();
-        swal(
-          "Vacancy Submitted! 🎉",
-          `Your vacancy (${data.job_code}) has been received and is under review. You'll get a WhatsApp notification once it's approved.`,
-          "success"
-        );
-        jobForm.reset();
+
+        // 1. Reset the form immediately upon successful submission
+        try {
+          resetJobForm(jobForm);
+        } catch (resetErr) {
+          console.warn("Form reset failed:", resetErr);
+        }
+
+        // 2. Show confirmation pop-up modal or sweetalert
+        let modalShown = false;
+        try {
+          const successModalEl = document.getElementById("vacancySuccessModal");
+          if (successModalEl && typeof bootstrap !== "undefined" && bootstrap.Modal) {
+            const codeEl = document.getElementById("success-job-code");
+            if (codeEl) {
+              const jCode = data.job_code || "";
+              codeEl.textContent = jCode ? (jCode.startsWith("#") || jCode.startsWith("JC:") ? jCode : `#${jCode}`) : "---";
+            }
+            const modalInstance = (bootstrap.Modal.getInstance && bootstrap.Modal.getInstance(successModalEl))
+              || new bootstrap.Modal(successModalEl);
+            modalInstance.show();
+
+            const postAnotherBtn = document.getElementById("post-another-btn");
+            if (postAnotherBtn) {
+              postAnotherBtn.onclick = () => {
+                modalInstance.hide();
+                const firstInput = jobForm.querySelector("select, input");
+                if (firstInput) firstInput.focus();
+              };
+            }
+            modalShown = true;
+          }
+        } catch (modalErr) {
+          console.warn("Bootstrap modal show error, falling back to swal:", modalErr);
+        }
+
+        if (!modalShown) {
+          swal(
+            "Vacancy Submitted! 🎉",
+            `Your vacancy (${data.job_code || ""}) has been received and is under review. You'll get a WhatsApp notification once it's approved.`,
+            "success"
+          );
+        }
       } catch (err) {
         swal("Submission Failed", "Something went wrong. Please try again or contact us on WhatsApp.", "error");
-        console.error(err);
+        console.error("Vacancy submission error:", err);
       } finally {
         submitBtn.disabled = false;
-        submitBtn.textContent = "Submit Job";
+        submitBtn.innerHTML = originalBtnHtml;
       }
     });
   }
 });
+
+function initCharCounter() {
+  const descTextarea = document.querySelector('textarea[name="job_description"]');
+  const countSpan = document.getElementById("desc-char-count");
+  const wrapSpan = document.getElementById("desc-char-wrap");
+
+  if (!descTextarea || !countSpan) return;
+
+  const updateCount = () => {
+    let len = descTextarea.value.length;
+    if (len > 600) {
+      descTextarea.value = descTextarea.value.substring(0, 600);
+      len = 600;
+    }
+    countSpan.textContent = len;
+    if (wrapSpan) {
+      wrapSpan.classList.toggle("limit-warn", len >= 550 && len < 600);
+      wrapSpan.classList.toggle("limit-reached", len >= 600);
+    }
+  };
+
+  descTextarea.removeEventListener("input", updateCount);
+  descTextarea.addEventListener("input", updateCount);
+  updateCount();
+}
+
+function resetJobForm(form) {
+  if (!form) return;
+  form.reset();
+
+  // Explicitly reset select dropdowns
+  form.querySelectorAll("select").forEach(sel => {
+    sel.selectedIndex = 0;
+  });
+
+  // Explicitly clear text fields & textarea
+  form.querySelectorAll('input[type="text"], input[type="tel"]').forEach(inp => {
+    inp.value = "";
+  });
+  const ta = form.querySelector('textarea[name="job_description"]');
+  if (ta) {
+    ta.value = "";
+  }
+
+  // Reset char counter
+  const countSpan = document.getElementById("desc-char-count");
+  const wrapSpan = document.getElementById("desc-char-wrap");
+  if (countSpan) countSpan.textContent = "0";
+  if (wrapSpan) {
+    wrapSpan.classList.remove("limit-warn", "limit-reached");
+  }
+
+  // Restore verified WhatsApp number into hidden field
+  const rWa = verifiedWaNumber || sessionStorage.getItem("ji_r_wa") || sessionStorage.getItem("ji_wa");
+  const hiddenWa = document.getElementById("form-wa-number");
+  if (hiddenWa && rWa) {
+    hiddenWa.value = rWa;
+  }
+}
 
 function initSurface(prefix, intent) {
   const isModal = (prefix === 'modal-');
@@ -209,11 +320,14 @@ function initSurface(prefix, intent) {
     s3.style.display = (n === 3) ? 'block' : 'none';
     if (s4) s4.style.display = (n === 4) ? 'block' : 'none';
     if (sQr) sQr.style.display = (n === 'qr') ? 'block' : 'none';
-    if (isModal) {
-      document.getElementById('modal-dot1')?.classList.toggle('active', n === 1 || n === 'qr' || n >= 1);
-      document.getElementById('modal-dot2')?.classList.toggle('active', n === 2 || n >= 2);
-      document.getElementById('modal-dot3')?.classList.toggle('active', n === 3 || n >= 3);
-    }
+
+    const authCard = document.getElementById(prefix + 'auth-card');
+    if (authCard) authCard.style.display = (n === 4) ? 'none' : 'block';
+
+    const dotPrefix = isModal ? 'modal-dot' : prefix + 'dot';
+    document.getElementById(dotPrefix + '1')?.classList.toggle('active', n === 1 || n === 'qr' || n >= 1);
+    document.getElementById(dotPrefix + '2')?.classList.toggle('active', n === 2 || n >= 2);
+    document.getElementById(dotPrefix + '3')?.classList.toggle('active', n === 3 || n >= 3);
   };
 
   sendBtn.addEventListener('click', async () => {
@@ -246,7 +360,7 @@ function initSurface(prefix, intent) {
         surfaceRegMode[prefix] = false;
         if (data.within_24h) {
           setDisplay(3);
-          startResend(resendBtn, isModal ? 'modal-cd' : null);
+          startResend(resendBtn, isModal ? 'modal-cd' : (document.getElementById(prefix + 'cd') ? prefix + 'cd' : null));
         } else {
           showQrStep(prefix, verifiedWaNumber, false, setDisplay, resendBtn, isModal);
         }
@@ -443,11 +557,24 @@ function handleSuccessfulLogin(intent, setDisplay) {
     // Set display for the active flow if applicable
     setDisplay(4);
 
+    const step4 = document.getElementById("otp-step4");
+    if (step4) {
+      step4.innerHTML = `
+        <div class="recruiter-session-banner mb-4">
+          <i class="bi bi-patch-check-fill text-success fs-5"></i>
+          <span>You're logged in as <strong>+${verifiedWaNumber}</strong>. Fill in your vacancy details below.</span>
+        </div>`;
+    }
+
+    const pvAuth = document.getElementById("pv-auth-card");
+    if (pvAuth) pvAuth.style.display = "none";
+
     const jf = document.querySelector(".job-form");
     if (jf) {
       jf.style.display = "block";
       const hiddenWa = document.getElementById("form-wa-number");
       if (hiddenWa) hiddenWa.value = verifiedWaNumber;
+      initCharCounter();
     }
   }
 }
@@ -495,6 +622,9 @@ document.querySelectorAll(".accordion-header").forEach((header) => {
   if (mb) { mb.innerHTML = '<i class="bi bi-layout-text-sidebar-reverse me-1"></i>My Vacancies'; mb.href = "recruiter-dashboard.html"; mb.removeAttribute("data-bs-toggle"); mb.removeAttribute("data-bs-target"); }
   if (db) { db.innerHTML = '<i class="bi bi-layout-text-sidebar-reverse me-1"></i>My Vacancies'; db.href = "recruiter-dashboard.html"; db.removeAttribute("data-bs-toggle"); db.removeAttribute("data-bs-target"); }
 
+  const pvAuth = document.getElementById("pv-auth-card");
+  if (pvAuth) pvAuth.style.display = "none";
+
   if (document.getElementById("otp-step1")) document.getElementById("otp-step1").style.display = "none";
   if (document.getElementById("otp-step2")) document.getElementById("otp-step2").style.display = "none";
   if (document.getElementById("otp-step3")) document.getElementById("otp-step3").style.display = "none";
@@ -503,13 +633,16 @@ document.querySelectorAll(".accordion-header").forEach((header) => {
   if (step4) {
     step4.style.display = "block";
     step4.innerHTML = `
-      <div class="alert alert-success text-center fw-semibold mb-4" style="max-width:800px;margin:0 auto 24px;">
-        <i class="bi bi-check-circle-fill me-2"></i>
-        You're logged in as <strong>+${rWa}</strong>. Fill in your vacancy details below.
+      <div class="recruiter-session-banner mb-4">
+        <i class="bi bi-patch-check-fill text-success fs-5"></i>
+        <span>You're logged in as <strong>+${rWa}</strong>. Fill in your vacancy details below.</span>
       </div>`;
   }
   const jf = document.querySelector(".job-form");
-  if (jf) jf.style.display = "block";
+  if (jf) {
+    jf.style.display = "block";
+    initCharCounter();
+  }
 })();
 
 let pollTimers = {};

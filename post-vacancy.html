@@ -6,7 +6,8 @@
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <base href="/">
   <title>Post Vacancy – JobInfo</title>
-  <meta name="description" content="Post your job vacancy on JobInfo. Verify your WhatsApp number and fill in the details to reach active job seekers in Kerala.">
+  <meta name="description"
+    content="Post your job vacancy on JobInfo. Verify your WhatsApp number and fill in the details to reach active job seekers in Kerala.">
   <meta name="keywords" content="Post job vacancy, Kerala recruitment, WhatsApp hiring, JobInfo recruiter">
 
   <!-- Favicons -->
@@ -16,7 +17,9 @@
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Raleway:wght@400;600;700&family=Ubuntu:wght@400;500;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Raleway:wght@400;600;700&family=Ubuntu:wght@400;500;700&display=swap"
+    rel="stylesheet">
 
   <!-- Vendor CSS -->
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -53,23 +56,33 @@
       transition: background 0.3s, color 0.3s;
       white-space: nowrap;
     }
-    .btn-nav-outline:hover { background: #107bbc; color: #fff; }
+
+    .btn-nav-outline:hover {
+      background: #107bbc;
+      color: #fff;
+    }
 
     /* Browse Jobs button hover – outlined on hover */
     .header-nav-btns .btn-getstarted {
       font-size: 14px !important;
       border: 2px solid transparent !important;
     }
+
     .header-nav-btns .btn-getstarted:hover {
       background: transparent !important;
       color: #1a1a1a !important;
       border: 2px solid #107bbc !important;
       box-shadow: none !important;
     }
-    .header-nav-btns .btn-getstarted:hover i { color: #107bbc !important; }
+
+    .header-nav-btns .btn-getstarted:hover i {
+      color: #107bbc !important;
+    }
 
     @media (max-width: 1199px) {
-      .header-nav-btns { display: none !important; }
+      .header-nav-btns {
+        display: none !important;
+      }
     }
 
     /* Page header gradient banner */
@@ -77,13 +90,270 @@
       background: linear-gradient(135deg, #e8f5e9 0%, #f1f8fe 100%);
       padding: 32px 0 20px;
     }
-    .pv-banner .section-title { margin-bottom: 0; padding-bottom: 0; }
 
+    .pv-banner .section-title {
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    /* OTP + form wrapper */
     /* OTP + form wrapper */
     .pv-body {
       max-width: 760px;
       margin: 0 auto;
       padding: 20px 16px 10px;
+    }
+
+    /* Auth Card Styles matching Recruiter Modal */
+    .auth-card-pv {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+      padding: 32px 28px;
+      max-width: 440px;
+      margin: 0 auto 24px;
+    }
+
+    .auth-card-pv h2 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #1a1a2e;
+    }
+
+    .step-dots {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 22px;
+      justify-content: center;
+    }
+
+    .step-dot {
+      width: 32px;
+      height: 6px;
+      border-radius: 4px;
+      background: #e0e0e0;
+      transition: background 0.3s;
+    }
+
+    .step-dot.active {
+      background: #25d366;
+    }
+
+    .field-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #475569;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .wa-wrap {
+      display: flex;
+      border: 1.5px solid #dde1e7;
+      border-radius: 10px;
+      overflow: hidden;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .wa-wrap:focus-within {
+      border-color: #25d366;
+      box-shadow: 0 0 0 3px rgba(37, 211, 102, 0.15);
+    }
+
+    .wa-wrap .prefix {
+      background: #f8fafc;
+      padding: 11px 14px;
+      font-size: 0.92rem;
+      color: #475569;
+      border-right: 1px solid #dde1e7;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 600;
+    }
+
+    .wa-wrap input {
+      border: none;
+      border-radius: 0;
+      padding: 11px 14px;
+      width: 100%;
+      font-size: 0.95rem;
+      outline: none;
+    }
+
+    .btn-ji {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      background: #25d366;
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .btn-ji:hover {
+      background: #1ebe5d;
+      color: #fff;
+    }
+
+    .btn-ji:active {
+      transform: scale(0.99);
+    }
+
+    .btn-ji:disabled {
+      background: #aaa;
+      cursor: not-allowed;
+    }
+
+    .otp-field {
+      font-size: 2rem;
+      letter-spacing: 0.6rem;
+      text-align: center;
+      font-weight: 700;
+      width: 100%;
+      padding: 11px;
+      border: 1.5px solid #dde1e7;
+      border-radius: 10px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .otp-field:focus {
+      border-color: #25d366;
+      box-shadow: 0 0 0 3px rgba(37, 211, 102, 0.15);
+    }
+
+    .btn-resend {
+      background: none;
+      border: none;
+      color: #888;
+      font-size: 0.82rem;
+      cursor: pointer;
+    }
+
+    .btn-resend:disabled {
+      color: #ccc;
+      cursor: default;
+    }
+
+    /* Enhanced Vacancy Form Styling */
+    .vacancy-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+      padding: 32px;
+      transition: all 0.3s ease;
+    }
+
+    .form-field-label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #475569;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .form-field-label i {
+      color: #107bbc;
+      font-size: 0.95rem;
+    }
+
+    .vacancy-card .form-control,
+    .vacancy-card .form-select {
+      border: 1.5px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 0.95rem;
+      color: #1e293b;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .vacancy-card .form-control:focus,
+    .vacancy-card .form-select:focus {
+      border-color: #107bbc;
+      box-shadow: 0 0 0 3px rgba(16, 123, 188, 0.15);
+      outline: none;
+    }
+
+    .vacancy-card .form-control::placeholder {
+      color: #94a3b8;
+    }
+
+    /* Recruiter session alert banner */
+    .recruiter-session-banner {
+      background: linear-gradient(135deg, #e8fbf0 0%, #f0fdf4 100%);
+      border: 1px solid #bbf7d0;
+      border-radius: 12px;
+      padding: 12px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      color: #166534;
+      font-size: 0.92rem;
+      font-weight: 500;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+    }
+
+    /* Character Counter */
+    .char-counter-wrap {
+      font-size: 0.82rem;
+      transition: color 0.2s;
+    }
+    .char-counter-wrap.limit-warn {
+      color: #d97706 !important;
+      font-weight: 700;
+    }
+    .char-counter-wrap.limit-reached {
+      color: #dc2626 !important;
+      font-weight: 700;
+    }
+
+    /* Submit Button */
+    .btn-submit-vacancy {
+      background: #107bbc;
+      border: none;
+      color: #ffffff;
+      padding: 12px 36px;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 50px;
+      box-shadow: 0 4px 12px rgba(16, 123, 188, 0.25);
+      transition: all 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-submit-vacancy:hover {
+      background: #0d69a0;
+      box-shadow: 0 6px 16px rgba(16, 123, 188, 0.35);
+      transform: translateY(-1px);
+      color: #ffffff;
+    }
+
+    .btn-submit-vacancy:active {
+      transform: translateY(0);
+    }
+
+    .btn-submit-vacancy:disabled {
+      background: #94a3b8;
+      box-shadow: none;
+      cursor: not-allowed;
+      transform: none;
     }
   </style>
 </head>
@@ -109,15 +379,18 @@
           <li><a href="recruiter.html#join-now">Network</a></li>
           <li><a href="recruiter.html#faq">FAQ</a></li>
           <li class="d-xl-none text-center" style="padding: 10px 20px;">
-            <a class="btn-nav-outline w-100 justify-content-center" href="index.html"><i class="bi bi-briefcase"></i>Browse Jobs</a>
+            <a class="btn-nav-outline w-100 justify-content-center" href="index.html"><i
+                class="bi bi-briefcase"></i>Browse Jobs</a>
           </li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
 
       <div class="header-nav-btns d-xl-flex align-items-center gap-2">
-        <a class="btn-getstarted btn-primary" href="index.html" style="padding:8px 18px;font-size:14px;"><i class="bi bi-briefcase me-1"></i>Browse Jobs</a>
-        <a class="btn-nav-outline" id="login-nav-btn" href="#" data-bs-toggle="modal" data-bs-target="#recruiterLoginModal"><i class="bi bi-box-arrow-in-right"></i>Login</a>
+        <a class="btn-getstarted btn-primary" href="index.html" style="padding:8px 18px;font-size:14px;"><i
+            class="bi bi-briefcase me-1"></i>Browse Jobs</a>
+        <a class="btn-nav-outline" id="login-nav-btn" href="#" data-bs-toggle="modal"
+          data-bs-target="#recruiterLoginModal"><i class="bi bi-box-arrow-in-right"></i>Login</a>
       </div>
 
     </div>
@@ -142,116 +415,166 @@
 
 
 
-        <!-- Step 1: WhatsApp number -->
-        <div id="otp-step1" class="bg-white p-4 rounded shadow mb-4">
-          <h5 class="mb-3"><i class="bi bi-whatsapp text-success me-2"></i>Verify Your WhatsApp Number</h5>
-          <p class="text-muted small mb-3">We'll send a one-time password to your WhatsApp to verify your identity before posting.</p>
-          <div class="input-group">
-            <span class="input-group-text">+91</span>
-            <input type="tel" id="wa-number-input" class="form-control" placeholder="Your WhatsApp number" maxlength="10" pattern="[0-9]{10}">
+        <!-- Recruiter Auth Container (matches Recruiter Login Modal) -->
+        <div id="pv-auth-card" class="auth-card-pv">
+          <div style="text-align:center;margin-bottom:20px;">
+            <span style="font-size:1.6rem;font-weight:800">
+              <span style="color:#e74c3c">Job</span><span style="color:#1a1a2e">info</span>
+            </span>
+            <p style="margin:4px 0 0;color:#888;font-size:.82rem">Recruiter Verification</p>
           </div>
-          <button type="button" id="send-otp-btn" class="btn btn-success w-100 mt-3 fw-bold">
-            <i class="bi bi-send me-1"></i>Send OTP
-          </button>
-        </div>
 
-        <!-- Step QR: Connect WhatsApp (24h Window Activation) -->
-        <div id="otp-step-qr" class="bg-white p-4 rounded shadow mb-4 text-center" style="display:none">
-          <h5 class="mb-2"><i class="bi bi-whatsapp text-success me-2"></i>Connect to WhatsApp</h5>
-          <p class="text-muted small mb-3">To receive your instant verification code, please send a quick message to our WhatsApp bot.</p>
-          <div class="mb-3 p-2 bg-light rounded-3 d-inline-block border shadow-sm">
-            <img id="pv-qr-img" src="" alt="WhatsApp QR Code" style="width:160px;height:160px;display:block;margin:0 auto;" />
+          <div class="step-dots">
+            <div class="step-dot active" id="pv-dot1"></div>
+            <div class="step-dot" id="pv-dot2"></div>
+            <div class="step-dot" id="pv-dot3"></div>
           </div>
-          <p class="text-muted small mb-3" style="font-size:.78rem;">Scan with your phone camera or WhatsApp</p>
-          <div class="d-grid gap-2">
-            <a id="pv-wa-chat-btn" href="#" target="_blank" class="btn btn-success fw-bold rounded-3 shadow-sm py-2">
-              <i class="bi bi-whatsapp me-2"></i>Open WhatsApp Chat
-            </a>
-            <button type="button" class="btn btn-outline-secondary btn-sm rounded-3 mt-1 py-2" id="pv-check-wa-btn">
-              <i class="bi bi-arrow-clockwise me-1"></i>I've Sent the Message — Continue
-            </button>
+
+          <!-- Step 1: Phone Entry -->
+          <div id="otp-step1">
+            <h2 style="text-align:center;">Verify your WhatsApp</h2>
+            <p class="text-muted mb-4" style="text-align:center;font-size:.88rem">Enter your WhatsApp Number to verify.</p>
+            <div class="mb-3">
+              <label class="field-label">WhatsApp Number</label>
+              <div class="wa-wrap mb-4">
+                <span class="prefix"><i class="bi bi-whatsapp" style="color:#25d366"></i> +91</span>
+                <input type="tel" id="wa-number-input" placeholder="10-digit number" maxlength="10">
+              </div>
+            </div>
+            <button class="btn-ji" id="send-otp-btn"><i class="bi bi-send me-2"></i>Continue</button>
           </div>
-        </div>
 
-        <!-- Step 2: Registration Form -->
-        <div id="otp-step2" class="bg-white p-4 rounded shadow mb-4" style="display:none">
-          <h5 class="mb-3"><i class="bi bi-person-lines-fill text-success me-2"></i>Complete Profile</h5>
-          <p class="text-muted small mb-3">We need a few details before you can continue.</p>
-          <form id="pv-reg-form">
-            <div class="mb-3">
-              <label class="form-label small fw-bold text-secondary mb-1">Company Name</label>
-              <input type="text" id="pv-company" class="form-control" placeholder="e.g. ABC Pvt Ltd" required>
-            </div>
-            <div class="mb-3">
-              <label class="form-label small fw-bold text-secondary mb-1">Business Type</label>
-              <select id="pv-type" class="form-select" required>
-                <option value="">Select Type</option>
-                <option value="shop_retail">Shop / Supermarket / Retail</option>
-                <option value="hotel_bakery">Hotel / Restaurant / Bakery</option>
-                <option value="contractor">Contractor / Builder</option>
-                <option value="individual">Individual / Household</option>
-                <option value="petrol_pump">Petrol Pump / Fuel Station</option>
-                <option value="workshop_garage">Workshop / Garage</option>
-                <option value="transport">Travels / Transport / Logistics</option>
-                <option value="agency">Agency / Consultancy</option>
-                <option value="company">Company / Pvt Ltd</option>
-                <option value="other">Other</option>
-              </select>
-            </div>
-            <div class="mb-3">
-              <label class="form-label small fw-bold text-secondary mb-1">Your Role in Company / Shop</label>
-              <select id="pv-role" class="form-select" required>
-                <option value="">Select Your Role</option>
-                <option value="founder">Founder / Owner</option>
-                <option value="hr">HR / Recruiter</option>
-                <option value="manager">Manager</option>
-                <option value="employee">Employee</option>
-                <option value="other">Other</option>
-              </select>
-            </div>
-            <div class="mb-3">
-              <label class="form-label small fw-bold text-secondary mb-1">Company Location</label>
-              <select id="pv-location" class="form-select" required>
-                <option value="">Select Region</option>
-                <option value="Kerala">Kerala</option>
-                <option value="Karnataka">Karnataka</option>
-                <option value="GCC">GCC</option>
-                <option value="Other">Other</option>
-              </select>
-            </div>
-            <div class="mb-4">
-              <label class="form-label small fw-bold text-secondary mb-1">Business Contact Number</label>
-              <input type="tel" id="pv-contact" class="form-control" placeholder="Phone/Mobile" required>
-            </div>
-            <button type="submit" class="btn btn-success w-100 fw-bold" id="pv-reg-submit"><i class="bi bi-person-check me-1"></i>Register &amp; Send OTP</button>
-          </form>
-        </div>
+          <!-- Step QR: Reverse OTP (24h Window Activation) -->
+          <div id="otp-step-qr" style="display:none; text-align:center;">
+            <h2 style="font-size:1.2rem;">WhatsApp OTP Verification 📱</h2>
+            <p class="text-muted mb-3" style="font-size:.85rem;">
+              Open WhatsApp and verify OTP with <strong>JobInfo</strong> bot.
+            </p>
 
-        <!-- Step 3: Enter OTP -->
-        <div id="otp-step3" class="bg-white p-4 rounded shadow mb-4" style="display:none">
-          <h5 class="mb-2"><i class="bi bi-shield-check text-success me-2"></i>Enter OTP</h5>
-          <p class="text-muted small mb-3">A 6-digit OTP was sent to your WhatsApp. Enter it below.</p>
-          <input type="text" id="otp-input" class="form-control text-center fw-bold" maxlength="6"
-            placeholder="_ _ _ _ _ _" style="font-size:1.5rem;letter-spacing:.5rem">
-          <button type="button" id="verify-otp-btn" class="btn btn-success w-100 mt-3 fw-bold">Verify OTP</button>
-          <div class="text-center mt-2">
-            <button type="button" id="resend-otp-btn" class="btn btn-link btn-sm text-muted" disabled>Resend OTP</button>
+            <!-- OTP display -->
+            <div style="background:#f0fdf4;border:1.5px dashed #25d366;border-radius:10px;padding:10px 8px;margin-bottom:12px;">
+              <p style="font-size:.72rem;font-weight:600;color:#555;margin:0 0 4px;">Send this OTP to <strong>+91 7025962176</strong> WhatsApp number</p>
+              <div id="pv-pin-display" style="font-size:1.6rem;font-weight:800;letter-spacing:.25rem;color:#1a1a2e;font-family:monospace;">——————</div>
+              <p style="font-size:.68rem;color:#888;margin:4px 0 0;">Expires in 5 minutes &nbsp;·&nbsp; Single use</p>
+            </div>
+
+            <!-- OR Divider -->
+            <div style="display:flex;align-items:center;margin:10px 0;color:#888;font-size:.75rem;font-weight:600;">
+              <div style="flex:1;border-bottom:1px dashed #ccc;"></div>
+              <span style="padding:0 10px;">OR</span>
+              <div style="flex:1;border-bottom:1px dashed #ccc;"></div>
+            </div>
+
+            <!-- QR code -->
+            <div class="mb-2 p-2 bg-light rounded-3 d-inline-block border shadow-sm">
+              <img id="pv-qr-img" src="" alt="WhatsApp QR Code" style="width:130px;height:130px;display:block;margin:0 auto;" />
+            </div>
+
+            <!-- OR Divider -->
+            <div style="display:flex;align-items:center;margin:10px 0;color:#888;font-size:.75rem;font-weight:600;">
+              <div style="flex:1;border-bottom:1px dashed #ccc;"></div>
+              <span style="padding:0 10px;">OR</span>
+              <div style="flex:1;border-bottom:1px dashed #ccc;"></div>
+            </div>
+
+            <div class="d-grid mb-2">
+              <a id="pv-wa-chat-btn" href="#" target="_blank" class="btn btn-success fw-bold rounded-3 shadow-sm py-2">
+                <i class="bi bi-whatsapp me-2"></i>Open WhatsApp &amp; Send OTP
+              </a>
+            </div>
+
+            <div id="pv-pin-status-wrap" style="margin-top:10px;display:flex;align-items:center;justify-content:center;gap:8px;">
+              <div class="spinner-border spinner-border-sm text-success" role="status"></div>
+              <span id="pv-pin-status-text" style="font-size:.8rem;color:#888;">Waiting for your OTP…</span>
+            </div>
+          </div>
+
+          <!-- Step 2: Registration Form -->
+          <div id="otp-step2" style="display:none; text-align:left;">
+            <h2 style="text-align:center;">Complete Profile</h2>
+            <p class="text-muted mb-4" style="text-align:center;font-size:.88rem">We need a few details before you can continue.</p>
+            <form id="pv-reg-form">
+              <div class="mb-3">
+                <label class="field-label">Company Name</label>
+                <input type="text" id="pv-company" class="form-control" style="font-size:.9rem" placeholder="e.g. ABC Pvt Ltd" required>
+              </div>
+              <div class="mb-3">
+                <label class="field-label">Business Type</label>
+                <select id="pv-type" class="form-select" style="font-size:.9rem" required>
+                  <option value="">Select Type</option>
+                  <option value="shop_retail">Shop / Supermarket / Retail</option>
+                  <option value="hotel_bakery">Hotel / Restaurant / Bakery</option>
+                  <option value="contractor">Contractor / Builder</option>
+                  <option value="individual">Individual / Household</option>
+                  <option value="petrol_pump">Petrol Pump / Fuel Station</option>
+                  <option value="workshop_garage">Workshop / Garage</option>
+                  <option value="transport">Travels / Transport / Logistics</option>
+                  <option value="agency">Agency / Consultancy</option>
+                  <option value="company">Company / Pvt Ltd</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label class="field-label">Your Role in Company / Shop</label>
+                <select id="pv-role" class="form-select" style="font-size:.9rem" required>
+                  <option value="">Select Your Role</option>
+                  <option value="founder">Founder / Owner</option>
+                  <option value="hr">HR / Recruiter</option>
+                  <option value="manager">Manager</option>
+                  <option value="employee">Employee</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label class="field-label">Location Region</label>
+                <select id="pv-location" class="form-select" style="font-size:.9rem" required>
+                  <option value="">Select Region</option>
+                  <option value="Kerala">Kerala</option>
+                  <option value="Karnataka">Karnataka</option>
+                  <option value="GCC">GCC</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+              <div class="mb-4">
+                <label class="field-label">Business Contact Number</label>
+                <input type="tel" id="pv-contact" class="form-control" style="font-size:.9rem" placeholder="Phone/Mobile" required>
+              </div>
+              <button type="submit" class="btn-ji" id="pv-reg-submit"><i class="bi bi-person-check me-2"></i>Register &amp; Send OTP</button>
+            </form>
+          </div>
+
+          <!-- Step 3: Enter OTP -->
+          <div id="otp-step3" style="display:none; text-align:center;">
+            <h2>Enter OTP</h2>
+            <p class="text-muted mb-4" style="font-size:.88rem">A 6-digit code was sent to your WhatsApp.</p>
+            <div class="mb-4" style="text-align:left;">
+              <label class="field-label">One-Time Password</label>
+              <input type="text" id="otp-input" class="otp-field" maxlength="6" placeholder="••••••" autocomplete="one-time-code">
+            </div>
+            <button class="btn-ji" id="verify-otp-btn">Verify OTP</button>
+            <div class="resend-row" style="text-align:center;margin-top:15px">
+              <button class="btn-resend" id="resend-otp-btn" disabled>Resend in <span id="pv-cd">60</span>s</button>
+            </div>
           </div>
         </div>
 
         <!-- Step 4: Success banner (shown after OTP verified) -->
         <div id="otp-step4" style="display:none">
-          <div class="alert alert-success text-center fw-semibold">
-            <i class="bi bi-check-circle-fill me-2"></i>WhatsApp verified! Now fill in your vacancy details.
+          <div class="recruiter-session-banner mb-4">
+            <i class="bi bi-patch-check-fill text-success fs-5"></i>
+            <span>You're logged in as <strong id="recruiter-display-wa">+91...</strong>. Fill in your vacancy details below.</span>
           </div>
         </div>
 
         <!-- Vacancy Form (hidden until OTP verified) -->
-        <form name="job-form" class="job-form bg-white p-4 rounded shadow" style="display:none">
+        <form name="job-form" class="job-form vacancy-card" style="display:none">
           <div class="row gy-3">
             <div class="col-md-6">
+              <label class="form-field-label">
+                <i class="bi bi-grid-fill"></i>Job Category <span class="text-danger">*</span>
+              </label>
               <select name="job_category" class="form-select" required>
-                <option value="">Job Category?</option>
+                <option value="" selected disabled>Select Job Category</option>
                 <option value="retail">Retail &amp; Showrooms</option>
                 <option value="sales_business">Sales &amp; Business Executive</option>
                 <option value="hospitality">Hospitality &amp; Food Service</option>
@@ -271,12 +594,19 @@
                 <option value="other">Other / General</option>
               </select>
             </div>
-            <div class="col-md-12">
-              <input type="text" name="job_title" class="form-control" placeholder="Job Title (E.g. Sales Executive)" required>
+            <div class="col-md-6">
+              <label class="form-field-label">
+                <i class="bi bi-briefcase-fill"></i>Job Title <span class="text-danger">*</span>
+              </label>
+              <input type="text" name="job_title" class="form-control" placeholder="E.g. Sales Executive, Accountant"
+                required>
             </div>
             <div class="col-md-6">
+              <label class="form-field-label">
+                <i class="bi bi-geo-alt-fill"></i>District / Region <span class="text-danger">*</span>
+              </label>
               <select name="district_region" class="form-select" required>
-                <option value="">District / Region?</option>
+                <option value="" selected disabled>Select District</option>
                 <option value="Kasaragod">Kasaragod</option>
                 <option value="Kannur">Kannur</option>
                 <option value="Wayanad">Wayanad</option>
@@ -295,11 +625,18 @@
               </select>
             </div>
             <div class="col-md-6">
-              <input type="text" name="exact_location" class="form-control" placeholder="Exact Location (E.g. Vyttila)" required>
+              <label class="form-field-label">
+                <i class="bi bi-pin-map-fill"></i>Exact Location / Town <span class="text-danger">*</span>
+              </label>
+              <input type="text" name="exact_location" class="form-control" placeholder="E.g. Vyttila, Edappally, Calicut Town"
+                required>
             </div>
             <div class="col-md-4">
+              <label class="form-field-label">
+                <i class="bi bi-clock-fill"></i>Job Mode <span class="text-danger">*</span>
+              </label>
               <select name="job_mode" class="form-select" required>
-                <option value="">Job Mode?</option>
+                <option value="" selected disabled>Select Mode</option>
                 <option value="full_time">Full-Time</option>
                 <option value="part_time">Part-Time</option>
                 <option value="remote">Remote</option>
@@ -307,8 +644,11 @@
               </select>
             </div>
             <div class="col-md-4">
+              <label class="form-field-label">
+                <i class="bi bi-award-fill"></i>Experience Required <span class="text-danger">*</span>
+              </label>
               <select name="experience_required" class="form-select" required>
-                <option value="">Experience Required?</option>
+                <option value="" selected disabled>Select Experience</option>
                 <option value="no_experience">No Experience Required</option>
                 <option value="fresher_or_exp">Fresher or Experienced</option>
                 <option value="1_2_years">1-2 Years</option>
@@ -317,8 +657,11 @@
               </select>
             </div>
             <div class="col-md-4">
+              <label class="form-field-label">
+                <i class="bi bi-cash-stack"></i>Salary Range <span class="text-danger">*</span>
+              </label>
               <select name="salary_range" class="form-select" required>
-                <option value="">Salary Range?</option>
+                <option value="" selected disabled>Select Salary</option>
                 <option value="interview_based">Based on Interview</option>
                 <option value="not_mentioned">Not Mentioned</option>
                 <option value="stipend">Stipend</option>
@@ -345,33 +688,58 @@
                 <option value="above_300k">Above ₹3,00,000</option>
               </select>
             </div>
-            <div class="col-md-12">
+            <div class="col-12">
+              <label class="form-field-label">
+                <i class="bi bi-file-earmark-text-fill"></i>Require CV from applicants? <span class="text-danger">*</span>
+              </label>
               <select id="cv_required" name="cv_required" class="form-select" required>
-                <option value="">Require CV from applicants?</option>
+                <option value="" selected disabled>Select CV Requirement</option>
                 <option value="false">No (CV is optional)</option>
                 <option value="true">Yes (CV is mandatory)</option>
               </select>
             </div>
             <div class="col-12">
-              <textarea name="job_description" class="form-control" rows="4" placeholder="Job Description (Duties, skills, qualifications, timings, etc.)" required></textarea>
+              <div class="d-flex justify-content-between align-items-center mb-1">
+                <label class="form-field-label mb-0">
+                  <i class="bi bi-card-text"></i>Job Description <span class="text-danger">*</span>
+                </label>
+                <span class="char-counter-wrap text-muted small" id="desc-char-wrap">
+                  <span id="desc-char-count">0</span> / 600
+                </span>
+              </div>
+              <textarea name="job_description" id="job_description_input" class="form-control" rows="4" maxlength="600"
+                placeholder="Briefly describe key duties, skills, qualifications, work timings, etc." required></textarea>
+              <div class="d-flex justify-content-between align-items-center mt-1">
+                <small class="text-muted" style="font-size: 0.78rem;">
+                  <i class="bi bi-info-circle me-1"></i>Be clear and specific to attract the best candidates (max 600 characters).
+                </small>
+              </div>
             </div>
             <!-- Hidden verified WA number (set by recruiter.js after OTP) -->
             <input type="hidden" id="form-wa-number" name="form-wa-number">
             <div class="col-12 text-center mt-4">
-              <button type="submit" class="btn btn-primary px-5">Submit Job</button>
+              <button type="submit" class="btn btn-submit-vacancy" id="vacancy-submit-btn">
+                <i class="bi bi-send-fill me-1"></i>Submit Job
+              </button>
             </div>
           </div>
         </form>
 
-        <div class="card border-0 shadow-sm mt-5 mb-4 rounded-4" style="background: linear-gradient(135deg, #e8fbf0 0%, #ffffff 100%);">
+        <div class="card border-0 shadow-sm mt-5 mb-4 rounded-4"
+          style="background: linear-gradient(135deg, #e8fbf0 0%, #ffffff 100%);">
           <div class="card-body p-4 text-center">
-            <div class="mx-auto mb-3 bg-success text-white rounded-circle d-flex align-items-center justify-content-center shadow-sm" style="width: 64px; height: 64px;">
+            <div
+              class="mx-auto mb-3 bg-success text-white rounded-circle d-flex align-items-center justify-content-center shadow-sm"
+              style="width: 64px; height: 64px;">
               <i class="bi bi-whatsapp fs-1"></i>
             </div>
             <h5 class="fw-bold text-success mb-2">In a hurry?</h5>
-            <p class="text-muted small mb-4 px-2" style="font-size: 0.95em;">Skip the web form. Post your vacancy instantly through our automated WhatsApp assistant.</p>
-            <a id="wa-post-btn" href="#" target="_blank" class="btn btn-success btn-lg w-100 rounded-pill fw-bold shadow d-flex justify-content-center align-items-center gap-2 transition" style="padding: 14px 20px;">
-               Post via WhatsApp <i class="bi bi-arrow-right-short fs-4"></i>
+            <p class="text-muted small mb-4 px-2" style="font-size: 0.95em;">Skip the web form. Post your vacancy
+              instantly through our automated WhatsApp assistant.</p>
+            <a id="wa-post-btn" href="#" target="_blank"
+              class="btn btn-success btn-lg w-100 rounded-pill fw-bold shadow d-flex justify-content-center align-items-center gap-2 transition"
+              style="padding: 14px 20px;">
+              Post via WhatsApp <i class="bi bi-arrow-right-short fs-4"></i>
             </a>
           </div>
         </div>
@@ -427,8 +795,36 @@
     <i class="bi bi-arrow-up-short"></i>
   </a>
 
-  <!-- Preloader -->
-  <div id="preloader"></div>
+  <!-- Vacancy Submission Success Modal -->
+  <div class="modal fade" id="vacancySuccessModal" tabindex="-1" aria-labelledby="vacancySuccessModalLabel" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 440px;">
+      <div class="modal-content border-0 shadow-lg" style="border-radius: 20px; overflow: hidden;">
+        <div class="modal-body text-center p-4 p-md-5">
+          <div class="mb-3">
+            <div class="d-inline-flex align-items-center justify-content-center bg-success bg-opacity-10 text-success rounded-circle shadow-sm" style="width: 72px; height: 72px;">
+              <i class="bi bi-check-circle-fill" style="font-size: 2.4rem;"></i>
+            </div>
+          </div>
+          <h4 class="fw-bold mb-2 text-dark" id="vacancySuccessModalLabel">Vacancy Submitted!</h4>
+          <div class="d-inline-flex align-items-center justify-content-center gap-2 px-3 py-2 rounded-pill mb-3" style="background: #e0f2fe; border: 1.5px solid #7dd3fc;">
+            <span style="color: #0369a1; font-size: 0.9rem; font-weight: 600;">Job Code:</span>
+            <span id="success-job-code" style="color: #0c4a6e; font-size: 1.05rem; font-weight: 700; letter-spacing: 0.5px;">---</span>
+          </div>
+          <p class="text-muted small mb-4" id="success-modal-msg" style="line-height: 1.55;">
+            Your vacancy has been received and is under review. You'll receive a WhatsApp notification once it is approved and broadcast to job seekers.
+          </p>
+          <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+            <button type="button" class="btn btn-outline-secondary rounded-pill px-4 fw-medium" data-bs-dismiss="modal" id="post-another-btn">
+              <i class="bi bi-plus-circle me-1"></i>Post Another
+            </button>
+            <a href="recruiter-dashboard.html" class="btn btn-primary rounded-pill px-4 fw-medium" style="background: #107bbc; border-color: #107bbc;">
+              <i class="bi bi-speedometer2 me-1"></i>My Dashboard
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div id="modals-container"></div>
   <script src="assets/js/components.js?v=2"></script>
@@ -445,7 +841,7 @@
   <script>
     (function () {
       const token = sessionStorage.getItem("ji_r_token");
-      const wa    = sessionStorage.getItem("ji_r_wa");
+      const wa = sessionStorage.getItem("ji_r_wa");
       if (token && wa) {
         const btn = document.getElementById("login-nav-btn");
         if (btn) btn.innerHTML = '<i class="bi bi-layout-text-sidebar-reverse me-1"></i>My Vacancies';
