@@ -238,7 +238,7 @@
               <div class="mb-3">
                 <label class="field-label">Attach CV <span class="text-muted small fw-normal">(Optional)</span></label>
                 <input type="file" id="seeker-cv-file" class="form-control" style="font-size:.85rem" accept=".pdf,.doc,.docx">
-                <div class="form-text" style="font-size:.75rem;color:#888;">PDF or Document (Max 5MB).</div>
+                <div class="form-text" style="font-size:.75rem;color:#888;">PDF or Document (Max 350 KB).</div>
               </div>
               <button type="button" class="btn-ji" id="seeker-btn-next" onclick="goToSeekerTab(2)">
                 Next <i class="bi bi-arrow-right ms-2"></i>
@@ -604,7 +604,7 @@
               <div class="d-flex align-items-center justify-content-between">
                 <div>
                   <div class="fw-semibold small text-dark"><i class="bi bi-cloud-arrow-up me-1"></i>Upload New CV</div>
-                  <div class="text-muted" style="font-size:0.75rem;">PDF or Word document (max 10MB)</div>
+                  <div class="text-muted" style="font-size:0.75rem;">PDF or Word document (max 350 KB)</div>
                 </div>
                 <label class="btn btn-sm btn-outline-primary mb-0" style="cursor:pointer; font-size:0.8rem;">
                   Browse File <input type="file" id="apply-new-cv-input" onchange="window.handleApplyCvFileChange ? window.handleApplyCvFileChange(this) : null" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" style="display:none;">

@@ -6,7 +6,8 @@
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <base href="/">
   <title>Jobinfo</title>
-  <meta name="description" content="JobInfo helps job seekers in India get verified job alerts via WhatsApp. Easy, fast, and free to use.">
+  <meta name="description"
+    content="JobInfo helps job seekers in India get verified job alerts via WhatsApp. Easy, fast, and free to use.">
   <meta name="keywords" content="WhatsApp jobs, India jobs, Job alerts, Kerala hiring, JobInfo">
 
 
@@ -17,7 +18,9 @@
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+    rel="stylesheet">
 
   <!-- Vendor CSS Files -->
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -45,6 +48,7 @@
       font-size: 15px !important;
       border: 2px solid transparent !important;
     }
+
     .hero .btn-get-started:hover,
     a.btn-get-started:hover {
       background: transparent !important;
@@ -52,6 +56,7 @@
       border: 2px solid #10bc69 !important;
       box-shadow: none !important;
     }
+
     .hero .btn-get-started:hover i,
     a.btn-get-started:hover i {
       color: #10bc69 !important;
@@ -65,11 +70,12 @@
       color: #10bc69 !important;
       background: transparent !important;
     }
+
     .hero .btn-watch-video:hover,
     a.btn-watch-video:hover {
       background: #10bc69 !important;
       color: #fff !important;
-      box-shadow: 0 8px 20px rgba(16,188,105,0.2) !important;
+      box-shadow: 0 8px 20px rgba(16, 188, 105, 0.2) !important;
     }
 
     /* ── Job card (Latest Jobs) ──────────────────────── */
@@ -106,7 +112,8 @@
       line-height: 1.35;
     }
 
-    .job-company, .job-location {
+    .job-company,
+    .job-location {
       font-size: 0.84rem;
       color: #64748b;
     }
@@ -117,6 +124,7 @@
       line-height: 1.5;
       display: -webkit-box;
       -webkit-line-clamp: 2;
+      line-clamp: 2;
       -webkit-box-orient: vertical;
       overflow: hidden;
       min-height: 2.5em;
@@ -203,6 +211,7 @@
       background: #25d366;
       color: #fff;
     }
+
     a.glightbox.btn-watch-video {
       display: inline-flex !important;
       align-items: center !important;
@@ -221,6 +230,7 @@
       margin-left: 12px;
       white-space: nowrap;
     }
+
     .hero .btn-watch-video i,
     a.glightbox.btn-watch-video i {
       font-size: 18px !important;
@@ -228,23 +238,39 @@
       line-height: 1 !important;
       margin: 0 !important;
     }
+
     .hero .btn-watch-video:hover,
     a.glightbox.btn-watch-video:hover {
       background: #10bc69 !important;
       color: #fff !important;
     }
+
     .hero .btn-watch-video:hover i,
     a.glightbox.btn-watch-video:hover i {
       color: #fff !important;
     }
+
     @media (max-width: 640px) {
-      .hero .btn-get-started { width: 48% !important; }
-      a.glightbox.btn-watch-video { width: 48% !important; padding: 12px 0 !important; margin-left: 0 !important; }
+      .hero .btn-get-started {
+        width: 48% !important;
+      }
+
+      a.glightbox.btn-watch-video {
+        width: 48% !important;
+        padding: 12px 0 !important;
+        margin-left: 0 !important;
+      }
     }
+
     /* iPhone SE and smaller (≤375px): swap "Follow Channel" for "Follow us" */
     @media (max-width: 425px) {
-      .hide-xs { display: none !important; }
-      .show-xs { display: inline !important; }
+      .hide-xs {
+        display: none !important;
+      }
+
+      .show-xs {
+        display: inline !important;
+      }
     }
 
     /* Outlined pill button for navbar } */
@@ -263,6 +289,7 @@
       transition: background 0.3s, color 0.3s;
       white-space: nowrap;
     }
+
     .btn-nav-outline:hover {
       background: #10bc69;
       color: #fff;
@@ -294,14 +321,17 @@
           <li><a href="#call-to-action">Join Now</a></li>
           <li><a href="#faq">FAQ</a></li>
           <li class="d-xl-none text-center" style="padding: 10px 20px;">
-            <a id="login-nav-btn-mobile" class="btn-nav-outline w-100 justify-content-center" href="#" data-bs-toggle="modal" data-bs-target="#seekerLoginModal"><i class="bi bi-box-arrow-in-right"></i>Login</a>
+            <a id="login-nav-btn-mobile" class="btn-nav-outline w-100 justify-content-center" href="#"
+              data-bs-toggle="modal" data-bs-target="#seekerLoginModal"><i
+                class="bi bi-box-arrow-in-right"></i>Login</a>
           </li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
 
       <a class="btn-getstarted" href="recruiter.html">Post Vacancies</a>
-      <a class="btn-nav-outline d-none d-xl-flex" id="login-nav-btn" href="#" data-bs-toggle="modal" data-bs-target="#seekerLoginModal" style="margin-left: 10px;"><i class="bi bi-box-arrow-in-right"></i>Login</a>
+      <a class="btn-nav-outline d-none d-xl-flex" id="login-nav-btn" href="#" data-bs-toggle="modal"
+        data-bs-target="#seekerLoginModal" style="margin-left: 10px;"><i class="bi bi-box-arrow-in-right"></i>Login</a>
 
     </div>
   </header>
@@ -315,14 +345,20 @@
         <div class="row gy-4">
           <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center" data-aos="fade-up">
             <h1>Find Your Dream Job on WhatsApp</h1>
-            <p>Get daily job updates directly in your WhatsApp! Say goodbye to endless job searches and spam! – Discover your dream job at your fingertips!</p>
+            <p>Get daily job updates directly in your WhatsApp! Say goodbye to endless job searches and spam! – Discover
+              your dream job at your fingertips!</p>
             <div class="d-flex flex-nowrap gap-2">
-              <a href="https://whatsapp.com/channel/0029VbBrkDB8fewxd9QIMA2k" class="btn-get-started flex-fill text-center justify-content-center"><i class="bi bi-whatsapp icon whats"></i><span><span class="hide-xs">Follow Channel</span><span class="show-xs" style="display:none;">Jobinfo</span></span></a>
-              <a href="jobs.html" class="btn-watch-video flex-fill text-center justify-content-center"><i class="bi bi-briefcase"></i><span>Browse Jobs</span></a>
+              <a href="https://whatsapp.com/channel/0029VbBrkDB8fewxd9QIMA2k"
+                class="btn-get-started flex-fill text-center justify-content-center"><i
+                  class="bi bi-whatsapp icon whats"></i><span><span class="hide-xs">Follow Channel</span><span
+                    class="show-xs" style="display:none;">Jobinfo</span></span></a>
+              <a href="jobs.html" class="btn-watch-video flex-fill text-center justify-content-center"><i
+                  class="bi bi-briefcase"></i><span>Browse Jobs</span></a>
             </div>
           </div>
           <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-out" data-aos-delay="100">
-            <img src="assets/img/hero-img2.png" class="img-fluid animated" alt="Young job seeker checking WhatsApp for job alerts">
+            <img src="assets/img/hero-img2.png" class="img-fluid animated"
+              alt="Young job seeker checking WhatsApp for job alerts">
           </div>
         </div>
       </div>
@@ -343,7 +379,8 @@
                 <i class="bi bi-whatsapp icon"></i>
               </div>
               <h4 class="stretched-link">Easy Job Access</h4>
-              <p>Stay updated, Receive job openings directly on your WhatsApp—no app downloads or website visits are needed.</p>
+              <p>Stay updated, Receive job openings directly on your WhatsApp—no app downloads or website visits are
+                needed.</p>
             </div>
           </div><!-- End Service Item -->
 
@@ -353,7 +390,8 @@
                 <i class="bi bi-list-ul icon"></i>
               </div>
               <h4 class="stretched-link">Multiple Job Categories</h4>
-              <p>Jobinfo offers white-collar, blue-collar, and mid-level positions. Discover opportunities across a wide range of industries and roles.</p>
+              <p>Jobinfo offers white-collar, blue-collar, and mid-level positions. Discover opportunities across a wide
+                range of industries and roles.</p>
             </div>
           </div><!-- End Service Item -->
 
@@ -363,7 +401,8 @@
                 <i class="bi bi-rocket icon"></i>
               </div>
               <h4 class="stretched-link">Real-time job</h4>
-              <p>We’re excited to share the latest job opportunities straight from recruiters! Stay tuned for the latest vacancies.</p>
+              <p>We’re excited to share the latest job opportunities straight from recruiters! Stay tuned for the latest
+                vacancies.</p>
             </div>
           </div><!-- End Service Item -->
 
@@ -391,14 +430,21 @@
             <a href="https://youtu.be/Fwk7bPOUHM4?si=lMUgeWp1o3-aGlSm" class="glightbox pulsating-play-btn"></a>
           </div>
           <div class="col-lg-6 content" data-aos="fade-up" data-aos-delay="200">
-            <h3>Say goodbye to endless job searches! Find your dream job at your favourite chat application, unlock your career with a simple message!</h3>
+            <h3>Say goodbye to endless job searches! Find your dream job at your favourite chat application, unlock your
+              career with a simple message!</h3>
             <p class="fst-italic">
-              We started with a simple goal: to make job searching easier for people who aren’t familiar with job portals or online platforms. Many job seekers in India are comfortable using WhatsApp but find traditional job websites confusing or inaccessible. <br><br>Through Jobinfo,
+              We started with a simple goal: to make job searching easier for people who aren’t familiar with job
+              portals or online platforms. Many job seekers in India are comfortable using WhatsApp but find traditional
+              job websites confusing or inaccessible. <br><br>Through Jobinfo,
             </p>
             <ul>
-              <li><i class="bi bi-check2-all"></i> <span>Users can receive real-time job updates with detailed job information, and easily apply for positions—all through WhatsApp.</span></li>
-              <li><i class="bi bi-check2-all"></i> <span>Jobinfo connect you with your dream job and simplify the process of bridging the gap between recruiters and job seekers with our simple and mobile-friendly solution.</span></li>
-              <li><i class="bi bi-check2-all"></i> <span>We aim to empower individuals in mid-level and entry-level positions, as well as in white-collar jobs across various fields.</span></li>
+              <li><i class="bi bi-check2-all"></i> <span>Users can receive real-time job updates with detailed job
+                  information, and easily apply for positions—all through WhatsApp.</span></li>
+              <li><i class="bi bi-check2-all"></i> <span>Jobinfo connect you with your dream job and simplify the
+                  process of bridging the gap between recruiters and job seekers with our simple and mobile-friendly
+                  solution.</span></li>
+              <li><i class="bi bi-check2-all"></i> <span>We aim to empower individuals in mid-level and entry-level
+                  positions, as well as in white-collar jobs across various fields.</span></li>
             </ul>
             <!-- <p>
               Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
@@ -427,28 +473,32 @@
 
           <div class="col-lg-3 col-md-6">
             <div class="stats-item single-counter text-center w-100 h-100">
-              <span data-purecounter-start="0" data-purecounter-end="134" data-purecounter-duration="1" class="purecounter"></span>
+              <span data-purecounter-start="0" data-purecounter-end="134" data-purecounter-duration="1"
+                class="purecounter"></span>
               <p>Recruiters</p>
             </div>
           </div><!-- End Stats Item -->
 
           <div class="col-lg-3 col-md-6">
             <div class="stats-item single-counter text-center w-100 h-100">
-              <span data-purecounter-start="0" data-purecounter-end="300" data-purecounter-duration="1" class="purecounter"></span>
+              <span data-purecounter-start="0" data-purecounter-end="300" data-purecounter-duration="1"
+                class="purecounter"></span>
               <p>Vacancies / Month</p>
             </div>
           </div><!-- End Stats Item -->
 
           <div class="col-lg-3 col-md-6">
             <div class="stats-item single-counter text-center w-100 h-100">
-              <span data-purecounter-start="0" data-purecounter-end="3" data-purecounter-duration="1" class="purecounter"></span>
+              <span data-purecounter-start="0" data-purecounter-end="3" data-purecounter-duration="1"
+                class="purecounter"></span>
               <p>Year of Experience</p>
             </div>
           </div><!-- End Stats Item -->
 
           <div class="col-lg-3 col-md-6">
             <div class="stats-item single-counter text-center w-100 h-100">
-              <span data-purecounter-start="0" data-purecounter-end="78" data-purecounter-duration="1" class="purecounter"></span>
+              <span data-purecounter-start="0" data-purecounter-end="78" data-purecounter-duration="1"
+                class="purecounter"></span>
               <p>Feedback</p>
             </div>
           </div><!-- End Stats Item -->
@@ -488,7 +538,9 @@
             <div class="col-xl-10">
               <div class="text-center">
                 <h3>Join our WhatsApp channel to stay updated!</h3>
-                <p>Get instant job alerts, updates, and career tips delivered directly to your WhatsApp! Whether you're actively searching or just staying informed, our channel helps you stay ahead with verified job openings across various sectors—no app installs, no spam, just pure opportunity.</p>
+                <p>Get instant job alerts, updates, and career tips delivered directly to your WhatsApp! Whether you're
+                  actively searching or just staying informed, our channel helps you stay ahead with verified job
+                  openings across various sectors—no app installs, no spam, just pure opportunity.</p>
                 <a class="cta-btn" href="https://whatsapp.com/channel/0029VbBrkDB8fewxd9QIMA2k">Join Now</a>
               </div>
             </div>
@@ -507,19 +559,20 @@
         <h2>Questions</h2>
         <p>Find answers to the most common questions. We’ve compiled the most common question here.</p>
       </div><!-- End Section Title -->
-    
+
       <div class="accordion">
-  
+
         <div class="accordion-item">
           <button class="accordion-header">
             <span>How does JobInfo work?</span>
             <i class="arrow"></i>
           </button>
           <div class="accordion-body">
-            <p>Recruiters share their vacancies with the Jobinfo admin or post vacancies via the website. We evaluate the genuineness of the vacancies and share them with our community and channel members.</p>
+            <p>Recruiters share their vacancies with the Jobinfo admin or post vacancies via the website. We evaluate
+              the genuineness of the vacancies and share them with our community and channel members.</p>
           </div>
         </div>
-  
+
         <div class="accordion-item">
           <button class="accordion-header collapsed">
             <span>Is JobInfo free?</span>
@@ -527,10 +580,12 @@
           </button>
           <div class="accordion-body">
             <!-- <p>Yes, joining the WhatsApp group and getting more details about the jobs is free. Applying for jobs requires a subscription.</p> -->
-             <p>Yes, JobInfo is a completely free service dedicated to helping job seekers connect with opportunities. We operate with a helping mentality, aiming to make job discovery and application accessible to everyone at no cost.</p>
+            <p>Yes, JobInfo is a completely free service dedicated to helping job seekers connect with opportunities. We
+              operate with a helping mentality, aiming to make job discovery and application accessible to everyone at
+              no cost.</p>
           </div>
         </div>
-  
+
         <!-- <div class="accordion-item">
           <button class="accordion-header collapsed">
             <span>Can I choose what kind of jobs I receive?</span>
@@ -547,7 +602,8 @@
             <i class="arrow"></i>
           </button>
           <div class="accordion-body">
-            <p>We collaborate directly with verified recruiters and employers who share their openings with us. Each listing goes through a basic screening to ensure it’s genuine and relevant to job seekers.</p>
+            <p>We collaborate directly with verified recruiters and employers who share their openings with us. Each
+              listing goes through a basic screening to ensure it’s genuine and relevant to job seekers.</p>
           </div>
         </div>
 
@@ -557,10 +613,13 @@
             <i class="arrow"></i>
           </button>
           <div class="accordion-body">
-            <p>Posting a vacancy is easy!  You can easily share them with us by clicking the “<a href="recruiter.html">Post Vacancies</a>” button in the top right corner. Just fill out the simple form with your job details and submit it — You can also share the vacancy directly with the admin on WhatsApp.</p>
+            <p>Posting a vacancy is easy! You can easily share them with us by clicking the “<a
+                href="recruiter.html">Post Vacancies</a>” button in the top right corner. Just fill out the simple form
+              with your job details and submit it — You can also share the vacancy directly with the admin on WhatsApp.
+            </p>
           </div>
         </div>
-  
+
       </div>
 
       <!-- Question Submission Form (Initially Hidden) -->
@@ -584,7 +643,7 @@
         </form>
       </div>
 
-  
+
       <div class="faq-button-wrapper">
         <button id="toggle-question-form" class="faq-more-button">Ask Question</button>
       </div>
@@ -639,7 +698,8 @@
 
         <div class="col-lg-4 col-md-12">
           <h4>Follow Us</h4>
-          <p>Stay connected with us on social media for daily job updates, hiring tips, and news. Join our growing community and boost your career!</p>
+          <p>Stay connected with us on social media for daily job updates, hiring tips, and news. Join our growing
+            community and boost your career!</p>
           <div class="social-links d-flex">
             <a href=""><i class="bi bi-instagram"></i></a>
             <a href=""><i class="bi bi-linkedin"></i></a>
@@ -666,7 +726,8 @@
   </footer>
 
   <!-- Scroll Top -->
-  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
 
   <!-- Preloader -->
   <div id="preloader"></div>
@@ -687,34 +748,34 @@
   <script src="assets/js/main.js?v=5"></script>
   <script src="assets/js/jobseeker.js?v=2"></script>
   <script>
-  /* ─ Latest Jobs teaser (index.html only) ─────────────────────────── */
-  (async function loadLatestJobs() {
-    const grid = document.getElementById("latest-jobs-grid");
-    if (!grid) return;
-    try {
-      const res = await fetch(JOBINFO_CONFIG.API_URL + "/api/vacancies?page_size=6");
-      if (!res.ok) throw new Error();
-      const data = await res.json();
-      grid.innerHTML = "";
-      if (!data.results || data.results.length === 0) {
-        grid.innerHTML = '<div class="col-12 text-center py-4 text-muted"><i class="bi bi-briefcase" style="font-size:2.5rem;color:#ccc"></i><p class="mt-2 text-muted">No vacancies active right now. Check back soon!</p></div>';
-        return;
+    /* ─ Latest Jobs teaser (index.html only) ─────────────────────────── */
+    (async function loadLatestJobs() {
+      const grid = document.getElementById("latest-jobs-grid");
+      if (!grid) return;
+      try {
+        const res = await fetch(JOBINFO_CONFIG.API_URL + "/api/vacancies?page_size=6");
+        if (!res.ok) throw new Error();
+        const data = await res.json();
+        grid.innerHTML = "";
+        if (!data.results || data.results.length === 0) {
+          grid.innerHTML = '<div class="col-12 text-center py-4 text-muted"><i class="bi bi-briefcase" style="font-size:2.5rem;color:#ccc"></i><p class="mt-2 text-muted">No vacancies active right now. Check back soon!</p></div>';
+          return;
+        }
+        data.results.forEach(function (job) {
+          grid.insertAdjacentHTML("beforeend", window.buildJobCard(job));
+        });
+        if (typeof AOS !== "undefined") {
+          AOS.refresh();
+        }
+      } catch (e) {
+        grid.innerHTML = '<div class="col-12 text-center py-4 text-muted">Could not load jobs right now.</div>';
       }
-      data.results.forEach(function(job) {
-        grid.insertAdjacentHTML("beforeend", window.buildJobCard(job));
-      });
-      if (typeof AOS !== "undefined") {
-        AOS.refresh();
-      }
-    } catch(e) {
-      grid.innerHTML = '<div class="col-12 text-center py-4 text-muted">Could not load jobs right now.</div>';
-    }
-  })();
+    })();
   </script>
   <script>
     (function () {
       const token = sessionStorage.getItem("ji_r_token");
-      const wa    = sessionStorage.getItem("ji_r_wa");
+      const wa = sessionStorage.getItem("ji_r_wa");
       if (token && wa) {
         const btn = document.getElementById("login-nav-btn");
         if (btn) {
@@ -774,7 +835,8 @@
 
           <div class="mb-4">
             <h5 class="fw-bold mb-2">Job Description</h5>
-            <div class="text-muted" style="white-space:pre-wrap; font-size:0.95rem; line-height:1.6;" id="jd-description"></div>
+            <div class="text-muted" style="white-space:pre-wrap; font-size:0.95rem; line-height:1.6;"
+              id="jd-description"></div>
           </div>
 
           <div class="d-grid gap-2 mt-4">
@@ -782,7 +844,8 @@
               style="font-size:1.05rem; background:#107bbc; border-color:#107bbc;">
               <i class="bi bi-send-fill me-2"></i> Apply on Website
             </button>
-            <a href="#" id="jd-apply-btn" target="_blank" class="btn btn-success py-3 fw-bold rounded-pill shadow-sm" style="font-size:1.05rem;">
+            <a href="#" id="jd-apply-btn" target="_blank" class="btn btn-success py-3 fw-bold rounded-pill shadow-sm"
+              style="font-size:1.05rem;">
               <i class="bi bi-whatsapp me-2"></i> Apply via WhatsApp
             </a>
           </div>
@@ -791,6 +854,6 @@
     </div>
   </div>
 
-  </body>
+</body>
 
 </html>

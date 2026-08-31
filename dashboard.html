@@ -1,96 +1,399 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <base href="/">
   <title>Dashboard - Jobinfo</title>
-  
+
   <link href="assets/img/favicon.png" rel="icon">
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
   <link href="assets/css/main.css" rel="stylesheet">
-  
+
   <style>
-    :root { 
-      --ji-green: #25d366; 
-      --ji-dark: #1a1a2e; 
-      --ji-card-bg: #fff; 
+    :root {
+      --ji-green: #25d366;
+      --ji-dark: #1a1a2e;
+      --ji-card-bg: #fff;
       --ji-card-border: #eaeaea;
-      --ji-bg: #f4f6fb; 
+      --ji-bg: #f4f6fb;
       --ji-text-muted: #6c757d;
     }
-    body { background:var(--ji-bg); font-family:Roboto,sans-serif; padding-bottom: 30px;}
-    
+
+    body {
+      background: var(--ji-bg);
+      font-family: Roboto, sans-serif;
+      padding-bottom: 30px;
+    }
+
     /* Top Bar */
-    .top-bar { background:var(--ji-dark); color:#fff; padding:16px 20px; display:flex; align-items:center; justify-content:space-between; margin-bottom: 16px;}
-    .top-bar-left { display:flex; flex-direction:column; }
-    .top-bar .brand { font-size:1.15rem; font-weight:700; text-decoration:none; color:#fff; display: flex; align-items: center;}
-    .top-bar .brand span { color:var(--ji-green); font-weight: 700; }
-    .sub-label { font-size:0.8rem; color:#a1a1aa; margin-top: 2px;}
-    .btn-logout { background:none; border:1px solid rgba(255,255,255,.2); color:#fff; border-radius:8px; padding:6px 14px; font-size:0.85rem; cursor:pointer; transition:all .2s; }
-    .btn-logout:hover { background:rgba(255,255,255,.1); }
+    .top-bar {
+      background: var(--ji-dark);
+      color: #fff;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .top-bar-left {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .top-bar .brand {
+      font-size: 1.15rem;
+      font-weight: 700;
+      text-decoration: none;
+      color: #fff;
+      display: flex;
+      align-items: center;
+    }
+
+    .top-bar .brand span {
+      color: var(--ji-green);
+      font-weight: 700;
+    }
+
+    .sub-label {
+      font-size: 0.8rem;
+      color: #a1a1aa;
+      margin-top: 2px;
+    }
+
+    .btn-logout {
+      background: none;
+      border: 1px solid rgba(255, 255, 255, .2);
+      color: #fff;
+      border-radius: 8px;
+      padding: 6px 14px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all .2s;
+    }
+
+    .btn-logout:hover {
+      background: rgba(255, 255, 255, .1);
+    }
 
     /* Container */
-    .container-mobile { max-width: 440px; margin: auto; padding: 0 14px; }
+    .container-mobile {
+      max-width: 440px;
+      margin: auto;
+      padding: 0 14px;
+    }
 
 
     /* Cards */
-    .card-dark { background: var(--ji-card-bg); border-radius: 16px; padding: 20px; color: #333; margin-bottom: 16px; box-shadow: 0 4px 10px rgba(0,0,0,.05); border: 1px solid var(--ji-card-border); }
-    
+    .card-dark {
+      background: var(--ji-card-bg);
+      border-radius: 16px;
+      padding: 20px;
+      color: #333;
+      margin-bottom: 16px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, .05);
+      border: 1px solid var(--ji-card-border);
+    }
+
     /* Profile Overview */
-    .profile-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; }
-    .profile-info { display: flex; align-items: center; gap: 12px; }
-    .avatar-circle { width: 56px; height: 56px; background: var(--ji-green); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; font-weight: 700; color: #fff; }
-    .profile-name { font-size: 1.15rem; font-weight: 600; margin-bottom: 4px; }
-    .profile-location { font-size: 0.8rem; color: #666; display: flex; align-items: center; gap: 4px; line-height: 1.3;}
-    .btn-edit { background: none; border: 1px solid #ccc; color: #333; border-radius: 8px; padding: 6px 12px; font-size: 0.85rem; font-weight: 500; display: flex; align-items: center; gap: 6px; cursor: pointer; transition: background .2s;}
-    .btn-edit:hover { background: #f4f6fb; }
-    
-    .data-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px 16px; margin-bottom: 16px; }
-    .data-item-label { font-size: 0.65rem; color: #a1a1aa; text-transform: uppercase; margin-bottom: 4px; font-weight: 600; letter-spacing: 0.5px; }
-    .data-item-value { font-size: 0.95rem; font-weight: 600; color: #333; }
+    .profile-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 24px;
+    }
+
+    .profile-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .avatar-circle {
+      width: 56px;
+      height: 56px;
+      background: var(--ji-green);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .profile-name {
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .profile-location {
+      font-size: 0.8rem;
+      color: #666;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      line-height: 1.3;
+    }
+
+    .btn-edit {
+      background: none;
+      border: 1px solid #ccc;
+      color: #333;
+      border-radius: 8px;
+      padding: 6px 12px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: background .2s;
+    }
+
+    .btn-edit:hover {
+      background: #f4f6fb;
+    }
+
+    .data-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px 16px;
+      margin-bottom: 16px;
+    }
+
+    .data-item-label {
+      font-size: 0.65rem;
+      color: #a1a1aa;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .data-item-value {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #333;
+    }
 
     /* Profile Strength */
-    .strength-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
-    .strength-title { font-size: 1.05rem; font-weight: 600; }
-    .strength-pct { color: var(--ji-green); font-weight: 600; font-size:1.05rem;}
-    .strength-bar-bg { background: #e9ecef; height: 8px; border-radius: 4px; margin-bottom: 20px; overflow: hidden; }
-    .strength-bar-fill { background: var(--ji-green); height: 100%; border-radius: 4px; }
-    
-    .checklist { list-style: none; padding: 0; margin: 0; }
-    .checklist li { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; font-size: 0.85rem; color: #555; font-weight: 400;}
-    .checklist li:last-child { margin-bottom: 0; }
-    .check-icon { width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; }
-    .check-icon.done { background: #e0f2f1; color: var(--ji-green); }
-    .check-icon.pending { background: #fee2e2; color: #ef4444; }
+    .strength-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .strength-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+    }
+
+    .strength-pct {
+      color: var(--ji-green);
+      font-weight: 600;
+      font-size: 1.05rem;
+    }
+
+    .strength-bar-bg {
+      background: #e9ecef;
+      height: 8px;
+      border-radius: 4px;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+
+    .strength-bar-fill {
+      background: var(--ji-green);
+      height: 100%;
+      border-radius: 4px;
+    }
+
+    .checklist {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .checklist li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+      font-size: 0.85rem;
+      color: #555;
+      font-weight: 400;
+    }
+
+    .checklist li:last-child {
+      margin-bottom: 0;
+    }
+
+    .check-icon {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+    }
+
+    .check-icon.done {
+      background: #e0f2f1;
+      color: var(--ji-green);
+    }
+
+    .check-icon.pending {
+      background: #fee2e2;
+      color: #ef4444;
+    }
 
     /* CV Manager */
-    .cv-item { background: #f8f9fa; border: 1px solid #eaeaea; border-radius: 8px; padding: 12px 14px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-    .cv-item:last-child { margin-bottom: 0; }
-    .cv-info { display: flex; align-items: center; gap: 12px; }
-    .cv-icon { font-size: 1.4rem; color: #ef4444; }
-    .cv-name { font-size: 0.85rem; font-weight: 500; color: #333; margin-bottom: 0px; word-break: break-all;}
-    .cv-meta { font-size: 0.7rem; color: #888; margin-top: 2px;}
-    .btn-delete-cv { background: #fee2e2; color: #ef4444; border: none; width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s;}
-    .btn-delete-cv:hover { background: #fca5a5; color: #fff;}
-    .cv-upload-box { border: 2px dashed #ccc; border-radius: 8px; padding: 20px; text-align: center; cursor: pointer; transition: 0.2s; margin-top: 14px;}
-    .cv-upload-box:hover { border-color: var(--ji-green); background: #f0fdf4; }
-    .cv-upload-box i { font-size: 1.5rem; color: #888; margin-bottom: 8px; }
-    .cv-upload-box div { font-size: 0.85rem; font-weight: 500; color: #555; }
-    .cv-upload-box span { font-size: 0.75rem; color: #999; }
+    .cv-item {
+      background: #f8f9fa;
+      border: 1px solid #eaeaea;
+      border-radius: 8px;
+      padding: 12px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .cv-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .cv-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .cv-icon {
+      font-size: 1.4rem;
+      color: #ef4444;
+    }
+
+    .cv-name {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: #333;
+      margin-bottom: 0px;
+      word-break: break-all;
+    }
+
+    .cv-meta {
+      font-size: 0.7rem;
+      color: #888;
+      margin-top: 2px;
+    }
+
+    .btn-delete-cv {
+      background: #fee2e2;
+      color: #ef4444;
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .btn-delete-cv:hover {
+      background: #fca5a5;
+      color: #fff;
+    }
+
+    .cv-upload-box {
+      border: 2px dashed #ccc;
+      border-radius: 8px;
+      padding: 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: 0.2s;
+      margin-top: 14px;
+    }
+
+    .cv-upload-box:hover {
+      border-color: var(--ji-green);
+      background: #f0fdf4;
+    }
+
+    .cv-upload-box i {
+      font-size: 1.5rem;
+      color: #888;
+      margin-bottom: 8px;
+    }
+
+    .cv-upload-box div {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: #555;
+    }
+
+    .cv-upload-box span {
+      font-size: 0.75rem;
+      color: #999;
+    }
 
 
     /* Modals / Forms */
-    .form-label { font-size:.85rem;font-weight:500;color:#555;margin-bottom:5px; }
-    .form-control, .form-select { background: #fff; border:1px solid #ced4da; color: #333; border-radius:8px; padding:10px 14px; font-size:.9rem; }
-    .form-control:focus, .form-select:focus { background: #fff; border-color:var(--ji-green); color: #333; box-shadow:none; }
-    .btn-save { background:var(--ji-green);color:#fff;border:none;border-radius:8px;padding:10px 24px;font-weight:600;font-size:.95rem;cursor:pointer;width:100%; transition: .2s; }
-    .btn-save:hover { background: #1ebe5d; }
+    .form-label {
+      font-size: .85rem;
+      font-weight: 500;
+      color: #555;
+      margin-bottom: 5px;
+    }
+
+    .form-control,
+    .form-select {
+      background: #fff;
+      border: 1px solid #ced4da;
+      color: #333;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: .9rem;
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+      background: #fff;
+      border-color: var(--ji-green);
+      color: #333;
+      box-shadow: none;
+    }
+
+    .btn-save {
+      background: var(--ji-green);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 24px;
+      font-weight: 600;
+      font-size: .95rem;
+      cursor: pointer;
+      width: 100%;
+      transition: .2s;
+    }
+
+    .btn-save:hover {
+      background: #1ebe5d;
+    }
   </style>
 </head>
+
 <body>
 
   <div class="top-bar">
@@ -102,11 +405,11 @@
   </div>
 
   <div class="container-mobile">
-    
+
 
     <!-- Main Profile View -->
     <div id="profile-view">
-      
+
       <!-- Profile Overview Card -->
       <div class="card-dark">
         <div class="profile-header">
@@ -170,17 +473,18 @@
           <div class="strength-title">Manage Resumes</div>
           <div class="strength-pct" id="cvCountBadge" style="color: #666; font-size: 0.9rem;">0 / 4</div>
         </div>
-        
+
         <div id="cvListContainer">
           <!-- Populated by JS -->
         </div>
 
-        <div class="cv-upload-box" id="cvUploadBtn" onclick="document.getElementById('cvFileInput').click()">
+        <div class="cv-upload-box" id="cvUploadBtn" onclick="openUploadCvModal()">
           <i class="bi bi-cloud-arrow-up"></i>
           <div>Upload New CV</div>
-          <span id="cvUploadSub">PDF or DOCX max 10MB</span>
+          <span id="cvUploadSub">PDF or DOCX max 350 KB</span>
         </div>
-        <input type="file" id="cvFileInput" accept=".pdf,.doc,.docx" style="display: none;" onchange="uploadResume(this)">
+        <input type="file" id="cvFileInput" accept=".pdf,.doc,.docx" style="display: none;"
+          onchange="handleCvFileSelected(this)">
       </div>
 
 
@@ -262,9 +566,10 @@
             <label class="form-label">Alternate Mobile</label>
             <input type="tel" class="form-control" id="profileAltPhone">
           </div>
-          
+
           <div class="d-flex gap-2">
-            <button type="button" class="btn btn-outline-secondary w-50" style="border-radius:8px; font-weight:600;" onclick="toggleProfileEdit(false)">Cancel</button>
+            <button type="button" class="btn btn-outline-secondary w-50" style="border-radius:8px; font-weight:600;"
+              onclick="toggleProfileEdit(false)">Cancel</button>
             <button type="button" class="btn-save w-50" id="btnSaveProfile" onclick="updateProfile()">Save</button>
           </div>
         </form>
@@ -273,8 +578,91 @@
 
   </div>
 
+  <!-- Upload CV Modal with Category Selection -->
+  <div class="modal fade" id="uploadCvModal" tabindex="-1" aria-labelledby="uploadCvModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 420px;">
+      <div class="modal-content border-0 shadow" style="border-radius: 16px; overflow: hidden;">
+        <div class="modal-header border-0 pb-0 pt-4 px-4">
+          <div>
+            <h5 class="modal-title fw-bold" id="uploadCvModalLabel" style="font-size: 1.15rem; color: #111;">
+              <i class="bi bi-cloud-arrow-up-fill text-primary me-2"></i>Upload New CV
+            </h5>
+            <p class="text-muted small mb-0 mt-1">Attach your file (max 350 KB) and specify its role focus</p>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-4">
+
+          <!-- Selected File Preview -->
+          <div class="p-3 mb-3 rounded-3 d-flex align-items-center justify-content-between"
+            style="background: #f8fafc; border: 1px dashed #cbd5e1;">
+            <div class="d-flex align-items-center gap-3 overflow-hidden">
+              <div
+                style="width: 40px; height: 40px; background: #fee2e2; color: #ef4444; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; flex-shrink: 0;">
+                <i class="bi bi-file-earmark-pdf-fill"></i>
+              </div>
+              <div class="overflow-hidden">
+                <div class="fw-semibold text-truncate small text-dark" id="modalSelectedFileName">No file chosen</div>
+                <div class="text-muted" style="font-size: 0.72rem;" id="modalSelectedFileSize">—</div>
+              </div>
+            </div>
+            <button type="button" class="btn btn-sm btn-outline-secondary"
+              style="border-radius: 8px; font-size: 0.75rem;" onclick="document.getElementById('cvFileInput').click()">
+              Change
+            </button>
+          </div>
+
+          <!-- Category Selection -->
+          <div class="mb-3">
+            <label class="form-label fw-semibold text-dark mb-1" for="modalCvCategory" style="font-size: 0.85rem;">
+              Target Job Category <span class="text-danger">*</span>
+            </label>
+            <select class="form-select" id="modalCvCategory" required>
+              <option value="" disabled>Select Job Category</option>
+              <option value="retail">Retail &amp; Showrooms</option>
+              <option value="sales_business">Sales &amp; Business Executive</option>
+              <option value="hospitality">Hospitality &amp; Food Service</option>
+              <option value="healthcare">Healthcare &amp; Caretaking</option>
+              <option value="education">Education &amp; Academic Advisor</option>
+              <option value="office_data_entry">Office Admin &amp; Data Entry</option>
+              <option value="front_office">Receptionist &amp; Front Office</option>
+              <option value="finance_accounts">Accountant &amp; Billing Staff</option>
+              <option value="hr_management">HR, Branch Manager &amp; Team Lead</option>
+              <option value="telecalling">Telecaller &amp; Customer Support</option>
+              <option value="it_digital_marketing">IT &amp; Digital Marketing</option>
+              <option value="logistics_store">Driving, Logistics &amp; Store Keeper</option>
+              <option value="beauty_wellness">Beauty &amp; Wellness</option>
+              <option value="maintenance_technician">Maintenance &amp; Technician</option>
+              <option value="construction_labor">Construction &amp; Manual Labor</option>
+              <option value="gulf_abroad">Gulf / Abroad Jobs</option>
+              <option value="other">Other / General</option>
+            </select>
+            <div class="form-text mt-1 text-muted" style="font-size: 0.73rem; line-height: 1.35;">
+              <i class="bi bi-info-circle me-1"></i>Enables our system &amp; WhatsApp bot to accurately match this CV
+              with relevant vacancies.
+            </div>
+          </div>
+
+          <!-- Error container -->
+          <div id="modalUploadError" class="alert alert-danger py-2 px-3 small d-none" style="border-radius: 8px;">
+          </div>
+
+          <!-- Action buttons -->
+          <div class="d-flex gap-2 pt-2">
+            <button type="button" class="btn btn-light w-50" style="border-radius: 8px; font-weight: 600;"
+              data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn-save w-50" id="btnConfirmUploadCv" onclick="submitModalCvUpload()">
+              Upload CV
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="assets/js/config.js"></script>
-  <script src="assets/js/dashboard.js"></script>
+  <script src="assets/js/dashboard.js?v=5"></script>
 </body>
+
 </html>

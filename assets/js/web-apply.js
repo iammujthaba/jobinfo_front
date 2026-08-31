@@ -377,9 +377,9 @@ window.handleApplyCvFileChange = function(inputEl) {
     return;
   }
 
-  if (file.size > 10 * 1024 * 1024) {
+  if (file.size > 350 * 1024) {
     if (errorMsg) {
-      errorMsg.textContent = "File size exceeds 10MB limit.";
+      errorMsg.textContent = `File size (${(file.size / 1024).toFixed(0)} KB) exceeds the 350 KB limit. Please compress your file.`;
       errorMsg.style.display = "block";
     }
     inputEl.value = "";
@@ -393,7 +393,8 @@ window.handleApplyCvFileChange = function(inputEl) {
   // Show chosen file name
   const fnEl = document.getElementById("apply-new-cv-filename");
   if (fnEl) {
-    fnEl.textContent = `Selected: ${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB)`;
+    const sizeKb = (file.size / 1024).toFixed(0);
+    fnEl.textContent = `Selected: ${file.name} (${sizeKb} KB)`;
     fnEl.style.display = "block";
   }
 
@@ -471,6 +472,9 @@ window.submitWebApply = async function() {
       formData.append("wa_number", wa);
       formData.append("session_token", token);
       formData.append("file", selectedNewCvFile);
+      if (currentApplyJob && currentApplyJob.job_category) {
+        formData.append("category_tag", currentApplyJob.job_category);
+      }
 
       const cvRes = await fetch(`${JOBINFO_CONFIG.API_URL}/api/candidates/cvs`, {
         method: "POST",

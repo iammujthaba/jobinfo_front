@@ -462,13 +462,14 @@ async function showSeekerPinQrStep(isReg = false) {
 
 // ─── Step 2: Seeker Profile Registration Form Submission ─────────────────────
 
-async function uploadSeekerCvIfPresent(waNumber, sessionToken, file) {
+async function uploadSeekerCvIfPresent(waNumber, sessionToken, file, category) {
   if (!file) return;
   try {
     const fd = new FormData();
     fd.append("wa_number", waNumber);
     fd.append("session_token", sessionToken);
     fd.append("file", file);
+    if (category) fd.append("category_tag", category);
 
     await fetch(`${JOBINFO_CONFIG.API_URL}/api/candidates/cvs`, {
       method: "POST",
@@ -494,6 +495,12 @@ async function handleSeekerRegistration(e) {
   const altPhone = document.getElementById("seeker-alt-phone")?.value.trim() || null;
   const cvFileInput = document.getElementById("seeker-cv-file");
   const cvFile = cvFileInput && cvFileInput.files.length > 0 ? cvFileInput.files[0] : null;
+
+  if (cvFile && cvFile.size > 350 * 1024) {
+    swal("File Too Large", `CV file size (${(cvFile.size / 1024).toFixed(0)} KB) exceeds the 350 KB limit. Please compress your CV before uploading.`, "warning");
+    goToSeekerTab(1);
+    return;
+  }
 
   if (!name || !district || !exactLocation || !category) {
     swal("Missing Basic Details", "Please complete Step 1 details.", "warning");
@@ -550,7 +557,7 @@ async function handleSeekerRegistration(e) {
       localStorage.setItem("seeker_wa_number", data.wa_number);
 
       if (cvFile) {
-        await uploadSeekerCvIfPresent(data.wa_number, data.session_token, cvFile);
+        await uploadSeekerCvIfPresent(data.wa_number, data.session_token, cvFile, category);
       }
 
       swal("Profile Created! 🎉", "Welcome to JobInfo!", "success").then(() => {
@@ -645,7 +652,7 @@ async function verifySeekerOtp() {
       localStorage.setItem("seeker_wa_number", data.wa_number);
 
       if (pendingSeekerCvFile) {
-        await uploadSeekerCvIfPresent(data.wa_number, data.session_token, pendingSeekerCvFile);
+        await uploadSeekerCvIfPresent(data.wa_number, data.session_token, pendingSeekerCvFile, pendingSeekerRegData ? pendingSeekerRegData.category : null);
       }
 
       swal("Profile Created! 🎉", "Welcome to JobInfo!", "success").then(() => {

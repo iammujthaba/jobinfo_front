@@ -44,19 +44,19 @@ async function loadProfile() {
             document.getElementById("topbar-name").textContent = data.name || "Seeker Profile";
             document.getElementById("viewName").textContent = data.name || "—";
             document.getElementById("viewAge").textContent = data.age ? `${data.age} years` : "—";
-            
-            const locText = data.exact_location && data.district 
-                ? `📍 ${data.exact_location}, ${data.district}` 
+
+            const locText = data.exact_location && data.district
+                ? `📍 ${data.exact_location}, ${data.district}`
                 : (data.exact_location || data.district ? `📍 ${data.exact_location || data.district}` : "📍 Location Not Set");
             document.getElementById("viewHeaderLocation").textContent = locText;
-            
+
             document.getElementById("viewMobile").textContent = data.alt_phone || "—";
             document.getElementById("viewWhatsApp").textContent = waNumber ? `+${waNumber}` : "—";
             document.getElementById("viewGender").textContent = data.gender ? data.gender.charAt(0).toUpperCase() + data.gender.slice(1) : "—";
 
             if (data.name) {
                 const parts = data.name.trim().split(' ');
-                const initials = parts.length > 1 ? parts[0][0] + parts[parts.length-1][0] : parts[0][0];
+                const initials = parts.length > 1 ? parts[0][0] + parts[parts.length - 1][0] : parts[0][0];
                 document.getElementById("profile-avatar").textContent = initials.toUpperCase().substring(0, 2);
             } else {
                 document.getElementById("profile-avatar").textContent = "JS";
@@ -78,7 +78,7 @@ async function loadProfile() {
             document.getElementById("profileCategory").value = data.category || "";
             document.getElementById("profileAltPhone").value = data.alt_phone || "";
             document.getElementById("profileGender").value = data.gender || "";
-            
+
             computeProfileStrength(data);
         } else {
             console.error("Failed to load profile", await res.text());
@@ -115,16 +115,16 @@ async function updateProfile() {
 
         if (res.ok) {
             alert("Profile updated successfully!");
-            
+
             // Update local memory
             Object.assign(currentProfileData, payload);
-            
+
             // Update View Mode
             document.getElementById("topbar-name").textContent = currentProfileData.name || "Seeker Profile";
             document.getElementById("viewName").textContent = currentProfileData.name || "—";
             document.getElementById("viewAge").textContent = currentProfileData.age ? `${currentProfileData.age} years` : "—";
-            const locText = currentProfileData.exact_location && currentProfileData.district 
-                ? `📍 ${currentProfileData.exact_location}, ${currentProfileData.district}` 
+            const locText = currentProfileData.exact_location && currentProfileData.district
+                ? `📍 ${currentProfileData.exact_location}, ${currentProfileData.district}`
                 : (currentProfileData.exact_location || currentProfileData.district ? `📍 ${currentProfileData.exact_location || currentProfileData.district}` : "📍 Location Not Set");
             document.getElementById("viewHeaderLocation").textContent = locText;
             document.getElementById("viewMobile").textContent = currentProfileData.alt_phone || "—";
@@ -133,7 +133,7 @@ async function updateProfile() {
 
             if (currentProfileData.name) {
                 const parts = currentProfileData.name.trim().split(' ');
-                const initials = parts.length > 1 ? parts[0][0] + parts[parts.length-1][0] : parts[0][0];
+                const initials = parts.length > 1 ? parts[0][0] + parts[parts.length - 1][0] : parts[0][0];
                 document.getElementById("profile-avatar").textContent = initials.toUpperCase().substring(0, 2);
             } else {
                 document.getElementById("profile-avatar").textContent = "JS";
@@ -228,10 +228,9 @@ function computeProfileStrength(data) {
     }
 }
 
-
-// ─── End ───────────────────────────────────────────────────────────────────────
-
 // ─── CV Management ─────────────────────────────────────────────────────────────
+
+let pendingUploadFile = null;
 
 async function loadResumes() {
     try {
@@ -247,21 +246,23 @@ async function loadResumes() {
             const data = await res.json();
             const cvs = data.cvs || [];
             document.getElementById("cvCountBadge").textContent = `${cvs.length} / 4`;
-            
+
             const container = document.getElementById("cvListContainer");
             container.innerHTML = "";
-            
+
             cvs.forEach(cv => {
                 const dateText = cv.uploaded_at ? new Date(cv.uploaded_at).toLocaleDateString('en-GB') : "Unknown date";
-                const badge = cv.is_default ? `<span class="badge bg-success" style="font-size:0.6rem; margin-left:6px; font-weight: 500;">Default</span>` : '';
-                
+                const defaultBadge = cv.is_default ? `<span class="badge bg-success" style="font-size:0.62rem; margin-left:6px; font-weight: 500;">Default</span>` : '';
+                const categoryLabel = cv.category_label || cv.category_tag || "General";
+                const categoryBadge = `<span class="badge" style="background:#e0f2fe; color:#0369a1; font-weight:600; font-size:0.68rem; margin-right:5px;">${categoryLabel}</span>`;
+
                 const html = `
                 <div class="cv-item">
                     <div class="cv-info">
                         <i class="bi bi-file-earmark-pdf cv-icon"></i>
                         <div>
-                            <div class="cv-name">${cv.filename} ${badge}</div>
-                            <div class="cv-meta">Uploaded on ${dateText}</div>
+                            <div class="cv-name">${cv.filename} ${defaultBadge}</div>
+                            <div class="cv-meta">${categoryBadge}· Uploaded on ${dateText}</div>
                         </div>
                     </div>
                     <button class="btn-delete-cv" onclick="deleteResume(${cv.id})" title="Delete CV">
@@ -272,7 +273,6 @@ async function loadResumes() {
             });
 
             const uploadBtn = document.getElementById("cvUploadBtn");
-            const fileInput = document.getElementById("cvFileInput");
             if (cvs.length >= 4) {
                 uploadBtn.style.opacity = "0.5";
                 uploadBtn.style.pointerEvents = "none";
@@ -280,7 +280,7 @@ async function loadResumes() {
             } else {
                 uploadBtn.style.opacity = "1";
                 uploadBtn.style.pointerEvents = "auto";
-                document.getElementById("cvUploadSub").textContent = "PDF or DOCX max 10MB";
+                document.getElementById("cvUploadSub").textContent = "PDF or DOCX max 350 KB";
             }
         }
     } catch (e) {
@@ -288,38 +288,84 @@ async function loadResumes() {
     }
 }
 
-async function uploadResume(input) {
+function openUploadCvModal() {
+    const fileInput = document.getElementById("cvFileInput");
+    fileInput.value = "";
+    fileInput.click();
+}
+
+function handleCvFileSelected(input) {
     if (!input.files || input.files.length === 0) return;
     const file = input.files[0];
-    const allowed = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
-    
-    // Fallback manual extension check for weird OS MIME mappings
-    let isAllowed = false;
-    if (allowed.includes(file.type)) isAllowed = true;
-    else if (file.name.toLowerCase().endsWith('.pdf') || file.name.toLowerCase().endsWith('.docx') || file.name.toLowerCase().endsWith('.doc')) {
-        isAllowed = true;
-    }
 
-    if (!isAllowed) {
-        alert("Only PDF or Word documents are allowed.");
+    // Check file extension
+    const allowed = ['.pdf', '.docx', '.doc', '.csv'];
+    const ext = '.' + file.name.split('.').pop().toLowerCase();
+    if (!allowed.includes(ext)) {
+        alert("Only PDF or Word documents (.pdf, .doc, .docx) are allowed.");
         input.value = "";
         return;
     }
-    if (file.size > 10 * 1024 * 1024) {
-        alert("File size exceeds 10MB limit.");
+    if (file.size > 350 * 1024) {
+        alert(`File size (${(file.size / 1024).toFixed(0)} KB) exceeds the 350 KB limit. Please compress your CV file before uploading.`);
         input.value = "";
         return;
     }
 
-    const uploadBtn = document.getElementById("cvUploadBtn");
-    const originalContent = uploadBtn.innerHTML;
-    uploadBtn.innerHTML = `<div class="spinner-border spinner-border-sm text-secondary mb-2" role="status"></div><div>Uploading...</div>`;
-    uploadBtn.style.pointerEvents = "none";
+    pendingUploadFile = file;
+
+    // Populate modal preview
+    document.getElementById("modalSelectedFileName").textContent = file.name;
+    const sizeKb = (file.size / 1024).toFixed(0);
+    const sizeStr = file.size > 1024 * 1024 ? `${(file.size / (1024 * 1024)).toFixed(1)} MB` : `${sizeKb} KB`;
+    document.getElementById("modalSelectedFileSize").textContent = `${ext.toUpperCase().replace('.', '')} · ${sizeStr}`;
+
+    // Pre-select category from profile if available
+    const catSelect = document.getElementById("modalCvCategory");
+    if (currentProfileData && currentProfileData.category) {
+        catSelect.value = currentProfileData.category;
+    } else {
+        catSelect.value = "other";
+    }
+
+    const errBox = document.getElementById("modalUploadError");
+    errBox.classList.add("d-none");
+    errBox.textContent = "";
+
+    // Show modal
+    const modalEl = document.getElementById("uploadCvModal");
+    const modalInstance = bootstrap.Modal.getOrCreateInstance(modalEl);
+    modalInstance.show();
+}
+
+async function submitModalCvUpload() {
+    if (!pendingUploadFile) {
+        alert("Please select a CV file first.");
+        return;
+    }
+
+    const catSelect = document.getElementById("modalCvCategory");
+    const categoryTag = (catSelect.value || "").trim();
+    if (!categoryTag) {
+        const errBox = document.getElementById("modalUploadError");
+        errBox.textContent = "Please select a target job category for this CV.";
+        errBox.classList.remove("d-none");
+        return;
+    }
+
+    const btn = document.getElementById("btnConfirmUploadCv");
+    const originalText = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = `<span class="spinner-border spinner-border-sm me-2" role="status"></span>Uploading...`;
+
+    const errBox = document.getElementById("modalUploadError");
+    errBox.classList.add("d-none");
 
     const formData = new FormData();
     formData.append("wa_number", waNumber);
     formData.append("session_token", sessionToken);
-    formData.append("file", file);
+    formData.append("file", pendingUploadFile);
+    formData.append("category_tag", categoryTag);
 
     try {
         const res = await fetch(`${JOBINFO_CONFIG.API_URL}/api/candidates/cvs`, {
@@ -328,20 +374,32 @@ async function uploadResume(input) {
         });
 
         if (res.ok) {
-            loadResumes(); 
-            loadProfile(); 
+            const modalEl = document.getElementById("uploadCvModal");
+            const modalInstance = bootstrap.Modal.getInstance(modalEl);
+            if (modalInstance) modalInstance.hide();
+
+            pendingUploadFile = null;
+            document.getElementById("cvFileInput").value = "";
+
+            await loadResumes();
+            await loadProfile();
         } else {
-            const data = await res.json();
-            alert("Upload failed: " + (data.detail || "Unknown error"));
+            const data = await res.json().catch(() => ({}));
+            errBox.textContent = data.detail || "Failed to upload CV. Please try again.";
+            errBox.classList.remove("d-none");
         }
     } catch (e) {
         console.error("Upload error", e);
-        alert("Network error during upload.");
+        errBox.textContent = "Network error during upload. Please check your connection.";
+        errBox.classList.remove("d-none");
     } finally {
-        input.value = "";
-        uploadBtn.innerHTML = originalContent;
-        uploadBtn.style.pointerEvents = "auto";
+        btn.disabled = false;
+        btn.innerHTML = originalText;
     }
+}
+
+async function uploadResume(input) {
+    handleCvFileSelected(input);
 }
 
 async function deleteResume(resumeId) {
@@ -354,9 +412,9 @@ async function deleteResume(resumeId) {
 
         if (res.ok) {
             loadResumes();
-            loadProfile(); 
+            loadProfile();
         } else {
-            const data = await res.json();
+            const data = await res.json().catch(() => ({}));
             alert("Notice: " + (data.detail || "Could not delete CV."));
         }
     } catch (e) {
