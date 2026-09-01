@@ -691,8 +691,15 @@
     }
 
     @keyframes modalSlideIn {
-      from { transform: translateY(18px); opacity: 0; }
-      to   { transform: translateY(0);   opacity: 1; }
+      from {
+        transform: translateY(18px);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
     }
 
     .profile-edit-modal h3 {
@@ -964,10 +971,11 @@
           To receive your instant verification OTP, please send a quick message to our WhatsApp bot.
         </p>
         <div class="mb-3 p-2 bg-light rounded-3 d-inline-block border shadow-sm">
-          <img id="dash-qr-img" src="" alt="WhatsApp QR Code" style="width:160px;height:160px;display:block;margin:0 auto;" />
+          <img id="dash-qr-img" src="" alt="WhatsApp QR Code"
+            style="width:160px;height:160px;display:block;margin:0 auto;" />
         </div>
         <p class="text-muted small mb-3" style="font-size:.78rem;">Scan with your phone camera or WhatsApp</p>
-        
+
         <div class="d-grid gap-2 mb-2">
           <a id="dash-wa-chat-btn" href="#" target="_blank" class="btn btn-success fw-bold rounded-3 shadow-sm py-2">
             <i class="bi bi-whatsapp me-2"></i>Open WhatsApp Chat
@@ -1007,7 +1015,8 @@
         <div class="sub-label" id="topbar-name"></div>
       </div>
       <div style="display:flex; gap:8px; align-items:center;">
-        <button class="btn-logout" id="back-btn" onclick="history.back()" title="Go back"><i class="bi bi-arrow-left me-1"></i>Back</button>
+        <button class="btn-logout" id="back-btn" onclick="history.back()" title="Go back"><i
+            class="bi bi-arrow-left me-1"></i>Back</button>
         <button class="btn-logout" id="logout-btn"><i class="bi bi-box-arrow-right me-1"></i>Logout</button>
       </div>
     </div>
@@ -1069,7 +1078,8 @@
   <div class="profile-edit-overlay" id="profile-edit-overlay">
     <div class="profile-edit-modal">
       <h3>✏️ Edit Profile</h3>
-      <p class="pe-subtitle">Update your role, region, and contact number. Company name &amp; WhatsApp number are locked.</p>
+      <p class="pe-subtitle">Update your role, region, and contact number. Company name &amp; WhatsApp number are
+        locked.</p>
 
       <label>Company Name</label>
       <input type="text" id="pe-company" class="locked-field" disabled>
@@ -1115,8 +1125,9 @@
       <h3>✏️ Edit Vacancy</h3>
       <div class="edit-note">
         <i class="bi bi-info-circle me-1"></i>
-        Your vacancy will remain in <strong>Pending</strong> status for admin review.
-        The admin will see it marked as "Edited".
+        Your vacancy will be displayed to job seekers only after system approval,
+        <i style="color:var(--color-primary);">current status:</i>
+        <strong>Pending</strong>
       </div>
       <input type="hidden" id="edit-vac-id">
       <label>Job Code</label>
@@ -1228,8 +1239,10 @@
       </select>
 
       <label>Job Description</label>
-      <textarea id="edit-description" rows="5"
-        placeholder="Describe the role, responsibilities, and requirements…"></textarea>
+      <textarea id="edit-description" rows="5" maxlength="600"
+        placeholder="Describe the role, responsibilities, and requirements…"
+        oninput="updateDescCounter()"></textarea>
+      <div id="edit-desc-counter" style="text-align:right;font-size:.78rem;color:#64748b;margin-top:3px;">0 / 600</div>
       <div id="edit-err" style="color:#e74c3c;font-size:.82rem;margin-top:8px;display:none"></div>
       <div class="edit-modal-actions">
         <button class="btn-cancel-edit" id="cancel-edit-btn">Cancel</button>
@@ -1340,7 +1353,7 @@
             toStep(2);
             startCd();
           }
-        } catch(e) {}
+        } catch (e) { }
       };
 
       dashPollTimer = setInterval(checkStatus, 3000);
@@ -1491,10 +1504,10 @@
                🛠️ Resolve Problem & Edit
              </button>`
           : canEdit
-          ? `<button class="btn-edit-vac" onclick="openEditModal(${JSON.stringify(v).replace(/"/g, '&quot;')})">
+            ? `<button class="btn-edit-vac" onclick="openEditModal(${JSON.stringify(v).replace(/"/g, '&quot;')})">
                ✏️ Edit vacancy
              </button>`
-          : `<button class="btn-apps" onclick="goToApps(${v.id},'${esc(v.job_code)}','${esc(v.job_title)}',${v.application_count},'${esc(v.company_name || '')}')">
+            : `<button class="btn-apps" onclick="goToApps(${v.id},'${esc(v.job_code)}','${esc(v.job_title)}',${v.application_count},'${esc(v.company_name || '')}')">
                View apps
              </button>`;
 
@@ -1600,6 +1613,7 @@
       // cv_required is a boolean in the API — map it to the select's "yes"/"no" IDs
       document.getElementById("edit-cv").value = v.cv_required === true ? "yes" : v.cv_required === false ? "no" : "";
       document.getElementById("edit-description").value = v.job_description || "";
+      updateDescCounter();
       document.getElementById("edit-err").style.display = "none";
       document.getElementById("submit-edit-btn").disabled = false;
       document.getElementById("submit-edit-btn").innerHTML = '<i class="bi bi-send me-1"></i>Submit for Review';
@@ -1608,6 +1622,14 @@
 
     function closeEditModal() {
       document.getElementById("edit-overlay").classList.remove("open");
+    }
+
+    function updateDescCounter() {
+      const ta = document.getElementById("edit-description");
+      const counter = document.getElementById("edit-desc-counter");
+      const len = ta.value.length;
+      counter.textContent = len + " / 600";
+      counter.style.color = len >= 600 ? "#e74c3c" : "#64748b";
     }
 
     document.getElementById("cancel-edit-btn").addEventListener("click", closeEditModal);
@@ -1632,6 +1654,8 @@
       if (!district) { errEl.textContent = "Please select a district."; errEl.style.display = "block"; return; }
       if (!location) { errEl.textContent = "Exact location is required."; errEl.style.display = "block"; return; }
       if (!mode) { errEl.textContent = "Please select a job mode."; errEl.style.display = "block"; return; }
+      const description = document.getElementById("edit-description").value.trim();
+      if (description.length > 600) { errEl.textContent = "Job description must not exceed 600 characters."; errEl.style.display = "block"; return; }
       errEl.style.display = "none";
 
       const btn = document.getElementById("submit-edit-btn");
@@ -1724,10 +1748,10 @@
     });
 
     document.getElementById("pe-save-btn").addEventListener("click", async () => {
-      const role    = document.getElementById("pe-role").value;
+      const role = document.getElementById("pe-role").value;
       const location = document.getElementById("pe-location").value;
-      const contact  = document.getElementById("pe-contact").value.trim();
-      const errEl    = document.getElementById("pe-err");
+      const contact = document.getElementById("pe-contact").value.trim();
+      const errEl = document.getElementById("pe-err");
 
       if (!contact) {
         errEl.textContent = "Business contact number is required.";
@@ -1757,7 +1781,7 @@
 
         // Update local profile cache and re-render profile section
         currentRecruiterProfile.registrant_role = d.registrant_role;
-        currentRecruiterProfile.location        = d.location;
+        currentRecruiterProfile.location = d.location;
         currentRecruiterProfile.business_contact = d.business_contact;
         renderProfileCard(currentRecruiterProfile);
 
