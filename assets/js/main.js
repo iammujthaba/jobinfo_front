@@ -319,6 +319,15 @@ window.showJobDetailsModal = function(jobCode) {
   
   const expText = job.experience_required ? (expMap[job.experience_required] || job.experience_required) : 'Any';
   document.getElementById('jd-experience').textContent = expText;
+
+  const jobModeMap = {
+    'full_time': 'Full-Time',
+    'part_time': 'Part-Time',
+    'remote':    'Remote',
+    'hybrid':    'Hybrid'
+  };
+  const modeText = job.job_mode ? (jobModeMap[job.job_mode] || job.job_mode) : 'Not specified';
+  document.getElementById('jd-mode').textContent = modeText;
   
   document.getElementById('jd-description').textContent = job.job_description || 'No detailed description available.';
 

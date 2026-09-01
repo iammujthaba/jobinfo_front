@@ -1,5 +1,5 @@
 /**
- * jobs.js — Loads and renders live job listings from the backend API.
+ * jobs.js — Loads and renders New job listings from the backend API.
  * Powers jobs.html (browse/search/filter page).
  */
 
