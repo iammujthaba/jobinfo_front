@@ -401,7 +401,10 @@
       <div class="brand"><span>Job</span>info – Dashboard</div>
       <div class="sub-label" id="topbar-name">Loading...</div>
     </div>
-    <button class="btn-logout" onclick="logoutSeeker()">Logout</button>
+    <div style="display:flex; gap:8px; align-items:center;">
+      <button class="btn-logout" onclick="history.back()" title="Go back"><i class="bi bi-arrow-left me-1"></i>Back</button>
+      <button class="btn-logout" onclick="logoutSeeker()">Logout</button>
+    </div>
   </div>
 
   <div class="container-mobile">

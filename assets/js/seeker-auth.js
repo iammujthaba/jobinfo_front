@@ -17,6 +17,65 @@ let isSubmittingReg = false;
 let isVerifyingOtp = false;
 let isResendingOtp = false;
 
+/* ── BFCache Reset: clear stale OTP state when seeker navigates back ─────── */
+window.addEventListener('pageshow', (event) => {
+  if (!event.persisted) return; // Only runs when restored from bfcache (back/forward nav)
+
+  // ── 1. Force-close the Bootstrap seeker login modal if it's open ──────────
+  const modalEl = document.getElementById('seekerLoginModal');
+  if (modalEl) {
+    modalEl.style.display = 'none';
+    modalEl.classList.remove('show');
+    modalEl.removeAttribute('aria-modal');
+    modalEl.setAttribute('aria-hidden', 'true');
+    document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+    document.body.classList.remove('modal-open');
+    document.body.style.removeProperty('padding-right');
+    document.body.style.removeProperty('overflow');
+    try {
+      if (window.bootstrap) {
+        const inst = bootstrap.Modal.getInstance(modalEl);
+        if (inst) inst.dispose();
+      }
+    } catch (e) { /* ignore */ }
+  }
+
+  // ── 2. Reset all modal steps, inputs and in-memory state ─────────────────
+  // resetSeekerModal() is defined later in this file; call via a tiny defer
+  // so the function is guaranteed to be defined when this executes.
+  setTimeout(() => {
+    if (typeof resetSeekerModal === 'function') resetSeekerModal();
+  }, 0);
+
+  // Reset in-memory auth state immediately
+  currentSeekerPhone = "";
+  qrVerifiedForSeekerReg = null;
+  pendingSeekerRegData = null;
+  pendingSeekerCvFile = null;
+  if (seekerResendTimer) { clearInterval(seekerResendTimer); seekerResendTimer = null; }
+  if (seekerPinPollTimer) { clearInterval(seekerPinPollTimer); seekerPinPollTimer = null; }
+
+  // ── 3. Restore "My Application" nav button if seeker is still logged in ───
+  const seekerToken = localStorage.getItem('seeker_session_token');
+  if (seekerToken) {
+    const navBtn = document.getElementById('login-nav-btn');
+    if (navBtn) {
+      navBtn.innerHTML = '<i class="bi bi-person-check me-1"></i>My Application';
+      navBtn.href = 'dashboard.html';
+      navBtn.removeAttribute('data-bs-toggle');
+      navBtn.removeAttribute('data-bs-target');
+    }
+    const navBtnMobile = document.getElementById('login-nav-btn-mobile');
+    if (navBtnMobile) {
+      navBtnMobile.innerHTML = '<i class="bi bi-person-check me-1"></i>My Application';
+      navBtnMobile.href = 'dashboard.html';
+      navBtnMobile.removeAttribute('data-bs-toggle');
+      navBtnMobile.removeAttribute('data-bs-target');
+    }
+  }
+});
+
+
 function handleSeekerPostLoginRedirect() {
   const pendingJobCode = sessionStorage.getItem("pending_apply_job_code");
   if (pendingJobCode) {
@@ -443,13 +502,7 @@ async function showSeekerPinQrStep(isReg = false) {
           localStorage.setItem("seeker_session_token", data.session_token);
           localStorage.setItem("seeker_wa_number", data.wa_number);
 
-          swal(
-            "You're logged in! 🎉",
-            "WhatsApp verified successfully.",
-            "success"
-          ).then(() => {
-            window.location.href = "dashboard.html";
-          });
+          window.location.href = "dashboard.html";
         }
       }
     } catch (e) {
@@ -679,9 +732,7 @@ async function verifySeekerOtp() {
       localStorage.setItem("seeker_session_token", data.session_token);
       localStorage.setItem("seeker_wa_number", data.wa_number);
 
-      swal("You're logged in! 🎉", "Welcome back.", "success").then(() => {
-        handleSeekerPostLoginRedirect();
-      });
+      handleSeekerPostLoginRedirect();
     }
   } catch (err) {
     console.error("Seeker verify error:", err);
@@ -809,6 +860,18 @@ function bindSeekerEvents() {
   if (btnVerify && !btnVerify.dataset.bound) {
     btnVerify.dataset.bound = "true";
     btnVerify.addEventListener("click", verifySeekerOtp);
+  }
+
+  const otpInput = document.getElementById("loginOtp");
+  if (otpInput && !otpInput.dataset.bound) {
+    otpInput.dataset.bound = "true";
+    otpInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        const btn = document.getElementById("btnVerifyOtp");
+        if (btn) btn.click();
+      }
+    });
   }
 
   const btnResend = document.getElementById("btnResendOtp");

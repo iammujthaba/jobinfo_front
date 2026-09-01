@@ -4,6 +4,67 @@
 
 "use strict";
 
+/* ── BFCache Reset: clear stale OTP state when navigating back ───────────── */
+window.addEventListener('pageshow', (event) => {
+  if (!event.persisted) return; // Only runs when restored from bfcache (back/forward nav)
+
+  // ── 1. Force-close the Bootstrap recruiter login modal if it's open ───────
+  const modalEl = document.getElementById('recruiterLoginModal');
+  if (modalEl) {
+    // Remove Bootstrap modal open classes/styles from the DOM
+    modalEl.style.display = 'none';
+    modalEl.classList.remove('show');
+    modalEl.removeAttribute('aria-modal');
+    modalEl.setAttribute('aria-hidden', 'true');
+    // Remove backdrop if lingering
+    document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+    document.body.classList.remove('modal-open');
+    document.body.style.removeProperty('padding-right');
+    document.body.style.removeProperty('overflow');
+    // Destroy Bootstrap instance so it reinitialises cleanly next time
+    try {
+      if (window.bootstrap) {
+        const inst = bootstrap.Modal.getInstance(modalEl);
+        if (inst) inst.dispose();
+      }
+    } catch (e) { /* ignore */ }
+  }
+
+  // ── 2. Reset modal OTP steps back to step 1 ──────────────────────────────
+  ['modal-step2', 'modal-step3', 'modal-step-qr'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.style.display = 'none';
+  });
+  const modalStep1 = document.getElementById('modal-step1');
+  if (modalStep1) modalStep1.style.display = 'block';
+
+  // Clear modal OTP and phone inputs
+  const modalOtp = document.getElementById('modal-otp-input');
+  if (modalOtp) modalOtp.value = '';
+  const modalWa = document.getElementById('modal-wa-input');
+  if (modalWa) modalWa.value = '';
+
+  // ── 3. Reset inline OTP surface back to step 1 ───────────────────────────
+  ['otp-step2', 'otp-step3', 'otp-step-qr'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.style.display = 'none';
+  });
+  const step1 = document.getElementById('otp-step1');
+  if (step1) step1.style.display = 'block';
+
+  // Clear inline OTP and phone inputs
+  const otpInput = document.getElementById('otp-input');
+  if (otpInput) otpInput.value = '';
+  const waInput = document.getElementById('wa-number-input');
+  if (waInput) waInput.value = '';
+
+  // ── 4. Reset in-memory auth state ────────────────────────────────────────
+  verifiedWaNumber = null;
+  sessionToken = null;
+  qrVerifiedForReg = null;
+});
+
+
 let sessionToken = null;
 let verifiedWaNumber = null;
 // Store whether this specific surface is in registration mode
