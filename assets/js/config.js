@@ -31,15 +31,20 @@ const JOBINFO_CONFIG = {
   WA_COMMUNITY: "https://chat.whatsapp.com/LB8rI0BPgBTIMIhJAWAeMd",
 
   BUSINESS_TYPES: {
-    "shop_retail": "Shop / Retail",
-    "hotel_bakery": "Hotel / Bakery",
-    "contractor": "Contractor / Builder",
-    "individual": "Individual / Household",
-    "petrol_pump": "Petrol Pump",
-    "workshop_garage": "Workshop / Garage",
-    "transport": "Transport / Logistics",
-    "agency": "Agency / Consultancy",
     "company": "Company / Pvt Ltd",
+    "shop_retail": "Shop / Supermarket / Textiles",
+    "hotel_bakery": "Hotel / Restaurant / Bakery",
+    "healthcare": "Hospital / Clinic / Pharmacy",
+    "education": "School / College / Coaching",
+    "salon_spa": "Salon / Beauty Parlour / Spa",
+    "finance_bank": "Finance / Co-operative Bank",
+    "it_media": "IT / Media / Printing Studio",
+    "contractor": "Contractor / Builder",
+    "transport": "Travels / Transport / Logistics",
+    "workshop_garage": "Workshop / Garage",
+    "petrol_pump": "Petrol Pump / Gas Station",
+    "agency": "HR / Recruitment / Consultancy",
+    "individual": "Individual / Household",
     "other": "Other"
   },
 
