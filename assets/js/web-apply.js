@@ -12,6 +12,37 @@ let selectedNewCvFile = null;
 let isSubmittingWebApply = false;
 
 /**
+ * Handles 401 (expired / invalid session) by clearing stale credentials,
+ * closing the apply modal, and showing the login modal so the user can
+ * re-authenticate. The pending job code is saved so the apply flow
+ * resumes automatically after login.
+ */
+function handleApplySessionExpired(jobCode) {
+  // Clear stale credentials
+  localStorage.removeItem("seeker_session_token");
+  localStorage.removeItem("seeker_wa_number");
+
+  // Save the job code so the apply flow resumes after login
+  if (jobCode) {
+    sessionStorage.setItem("pending_apply_job_code", jobCode);
+  }
+
+  // Close the web-apply modal if it's open
+  const applyModalEl = document.getElementById("webApplyModal");
+  if (applyModalEl && typeof bootstrap !== "undefined") {
+    const applyModal = bootstrap.Modal.getInstance(applyModalEl);
+    if (applyModal) applyModal.hide();
+  }
+
+  // Show the login modal
+  const loginModalEl = document.getElementById("seekerLoginModal");
+  if (loginModalEl && typeof bootstrap !== "undefined") {
+    const loginModal = bootstrap.Modal.getOrCreateInstance(loginModalEl);
+    loginModal.show();
+  }
+}
+
+/**
  * Entry point: triggered by clicking "Apply on Website" on cards or modal.
  */
 window.triggerWebApply = async function(jobCode) {
@@ -216,6 +247,8 @@ async function fetchCandidateProfile(wa, token) {
     if (res.ok) {
       const data = await res.json();
       document.getElementById("apply-seeker-name").textContent = data.name || "Candidate";
+    } else if (res.status === 401) {
+      handleApplySessionExpired(currentApplyJob ? currentApplyJob.job_code : null);
     } else {
       document.getElementById("apply-seeker-name").textContent = "Candidate";
     }
@@ -263,6 +296,10 @@ async function loadCandidateResumesForApply(wa, token, isCvRequired) {
 
   try {
     const res = await fetch(`${JOBINFO_CONFIG.API_URL}/api/candidates/cvs?wa_number=${wa}&session_token=${token}`);
+    if (res.status === 401) {
+      handleApplySessionExpired(currentApplyJob ? currentApplyJob.job_code : null);
+      return;
+    }
     if (!res.ok) throw new Error("Could not load resumes");
     const data = await res.json();
     currentCandidateCvs = data.cvs || [];
@@ -435,11 +472,7 @@ window.submitWebApply = async function() {
   const wa = localStorage.getItem("seeker_wa_number");
   const token = localStorage.getItem("seeker_session_token");
   if (!wa || !token) {
-    if (typeof swal !== "undefined") {
-      swal("Session Expired", "Please log in with your WhatsApp number to submit applications.", "warning");
-    } else {
-      alert("Session expired. Please log in again.");
-    }
+    handleApplySessionExpired(currentApplyJob ? currentApplyJob.job_code : null);
     return;
   }
 
@@ -507,6 +540,10 @@ window.submitWebApply = async function() {
       }),
     });
 
+    if (applyRes.status === 401) {
+      handleApplySessionExpired(currentApplyJob ? currentApplyJob.job_code : null);
+      return;
+    }
     if (!applyRes.ok) {
       const errData = await applyRes.json().catch(() => ({}));
       throw new Error(errData.detail || `Application submission failed (${applyRes.status}).`);
