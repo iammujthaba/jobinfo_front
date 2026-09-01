@@ -306,8 +306,8 @@ function handleCvFileSelected(input) {
         input.value = "";
         return;
     }
-    if (file.size > 350 * 1024) {
-        alert(`File size (${(file.size / 1024).toFixed(0)} KB) exceeds the 350 KB limit. Please compress your CV file before uploading.`);
+    if (file.size > 1024 * 1024) {
+        alert(`File size (${(file.size / 1024).toFixed(0)} KB) exceeds the 1MB limit. Please compress your CV file before uploading.`);
         input.value = "";
         return;
     }

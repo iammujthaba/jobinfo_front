@@ -484,7 +484,7 @@
         <div class="cv-upload-box" id="cvUploadBtn" onclick="openUploadCvModal()">
           <i class="bi bi-cloud-arrow-up"></i>
           <div>Upload New CV</div>
-          <span id="cvUploadSub">PDF or DOCX max 350 KB</span>
+          <span id="cvUploadSub">PDF or DOCX max 1 MB</span>
         </div>
         <input type="file" id="cvFileInput" accept=".pdf,.doc,.docx" style="display: none;"
           onchange="handleCvFileSelected(this)">
@@ -590,7 +590,7 @@
             <h5 class="modal-title fw-bold" id="uploadCvModalLabel" style="font-size: 1.15rem; color: #111;">
               <i class="bi bi-cloud-arrow-up-fill text-primary me-2"></i>Upload New CV
             </h5>
-            <p class="text-muted small mb-0 mt-1">Attach your file (max 350 KB) and specify its role focus</p>
+            <p class="text-muted small mb-0 mt-1">Attach your file (max 1 MB) and specify its role focus</p>
           </div>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>

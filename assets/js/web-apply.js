@@ -377,9 +377,9 @@ window.handleApplyCvFileChange = function(inputEl) {
     return;
   }
 
-  if (file.size > 350 * 1024) {
+  if (file.size > 1024 * 1024) {
     if (errorMsg) {
-      errorMsg.textContent = `File size (${(file.size / 1024).toFixed(0)} KB) exceeds the 350 KB limit. Please compress your file.`;
+      errorMsg.textContent = `File size (${(file.size / 1024).toFixed(0)} KB) exceeds the 1MB limit. Please compress your file.`;
       errorMsg.style.display = "block";
     }
     inputEl.value = "";

@@ -549,8 +549,8 @@ async function handleSeekerRegistration(e) {
   const cvFileInput = document.getElementById("seeker-cv-file");
   const cvFile = cvFileInput && cvFileInput.files.length > 0 ? cvFileInput.files[0] : null;
 
-  if (cvFile && cvFile.size > 350 * 1024) {
-    swal("File Too Large", `CV file size (${(cvFile.size / 1024).toFixed(0)} KB) exceeds the 350 KB limit. Please compress your CV before uploading.`, "warning");
+  if (cvFile && cvFile.size > 1024 * 1024) {
+    swal("File Too Large", `CV file size (${(cvFile.size / 1024).toFixed(0)} KB) exceeds the 1MB limit. Please compress your CV before uploading.`, "warning");
     goToSeekerTab(1);
     return;
   }
