@@ -313,10 +313,12 @@
       font-size: 0.82rem;
       transition: color 0.2s;
     }
+
     .char-counter-wrap.limit-warn {
       color: #d97706 !important;
       font-weight: 700;
     }
+
     .char-counter-wrap.limit-reached {
       color: #dc2626 !important;
       font-weight: 700;
@@ -433,7 +435,8 @@
           <!-- Step 1: Phone Entry -->
           <div id="otp-step1">
             <h2 style="text-align:center;">Verify your WhatsApp</h2>
-            <p class="text-muted mb-4" style="text-align:center;font-size:.88rem">Enter your WhatsApp Number to verify.</p>
+            <p class="text-muted mb-4" style="text-align:center;font-size:.88rem">Enter your WhatsApp Number to verify.
+            </p>
             <div class="mb-3">
               <label class="field-label">WhatsApp Number</label>
               <div class="wa-wrap mb-4">
@@ -452,9 +455,13 @@
             </p>
 
             <!-- OTP display -->
-            <div style="background:#f0fdf4;border:1.5px dashed #25d366;border-radius:10px;padding:10px 8px;margin-bottom:12px;">
-              <p style="font-size:.72rem;font-weight:600;color:#555;margin:0 0 4px;">Send this OTP to <strong>+91 7025962176</strong> WhatsApp number</p>
-              <div id="pv-pin-display" style="font-size:1.6rem;font-weight:800;letter-spacing:.25rem;color:#1a1a2e;font-family:monospace;">——————</div>
+            <div
+              style="background:#f0fdf4;border:1.5px dashed #25d366;border-radius:10px;padding:10px 8px;margin-bottom:12px;">
+              <p style="font-size:.72rem;font-weight:600;color:#555;margin:0 0 4px;">Send this OTP to <strong>+91
+                  7025962176</strong> WhatsApp number</p>
+              <div id="pv-pin-display"
+                style="font-size:1.6rem;font-weight:800;letter-spacing:.25rem;color:#1a1a2e;font-family:monospace;">
+                ——————</div>
               <p style="font-size:.68rem;color:#888;margin:4px 0 0;">Expires in 5 minutes &nbsp;·&nbsp; Single use</p>
             </div>
 
@@ -467,7 +474,8 @@
 
             <!-- QR code -->
             <div class="mb-2 p-2 bg-light rounded-3 d-inline-block border shadow-sm">
-              <img id="pv-qr-img" src="" alt="WhatsApp QR Code" style="width:130px;height:130px;display:block;margin:0 auto;" />
+              <img id="pv-qr-img" src="" alt="WhatsApp QR Code"
+                style="width:130px;height:130px;display:block;margin:0 auto;" />
             </div>
 
             <!-- OR Divider -->
@@ -483,7 +491,8 @@
               </a>
             </div>
 
-            <div id="pv-pin-status-wrap" style="margin-top:10px;display:flex;align-items:center;justify-content:center;gap:8px;">
+            <div id="pv-pin-status-wrap"
+              style="margin-top:10px;display:flex;align-items:center;justify-content:center;gap:8px;">
               <div class="spinner-border spinner-border-sm text-success" role="status"></div>
               <span id="pv-pin-status-text" style="font-size:.8rem;color:#888;">Waiting for your OTP…</span>
             </div>
@@ -492,11 +501,13 @@
           <!-- Step 2: Registration Form -->
           <div id="otp-step2" style="display:none; text-align:left;">
             <h2 style="text-align:center;">Complete Profile</h2>
-            <p class="text-muted mb-4" style="text-align:center;font-size:.88rem">We need a few details before you can continue.</p>
+            <p class="text-muted mb-4" style="text-align:center;font-size:.88rem">We need a few details before you can
+              continue.</p>
             <form id="pv-reg-form">
               <div class="mb-3">
                 <label class="field-label">Company Name</label>
-                <input type="text" id="pv-company" class="form-control" style="font-size:.9rem" placeholder="e.g. ABC Pvt Ltd" required>
+                <input type="text" id="pv-company" class="form-control" style="font-size:.9rem"
+                  placeholder="e.g. ABC Pvt Ltd" required>
               </div>
               <div class="mb-3">
                 <label class="field-label">Business Type</label>
@@ -542,9 +553,11 @@
               </div>
               <div class="mb-4">
                 <label class="field-label">Business Contact Number</label>
-                <input type="tel" id="pv-contact" class="form-control" style="font-size:.9rem" placeholder="Phone/Mobile" required>
+                <input type="tel" id="pv-contact" class="form-control" style="font-size:.9rem"
+                  placeholder="Phone/Mobile" required>
               </div>
-              <button type="submit" class="btn-ji" id="pv-reg-submit"><i class="bi bi-person-check me-2"></i>Register &amp; Send OTP</button>
+              <button type="submit" class="btn-ji" id="pv-reg-submit"><i class="bi bi-person-check me-2"></i>Register
+                &amp; Send OTP</button>
             </form>
           </div>
 
@@ -554,7 +567,8 @@
             <p class="text-muted mb-4" style="font-size:.88rem">A 6-digit code was sent to your WhatsApp.</p>
             <div class="mb-4" style="text-align:left;">
               <label class="field-label">One-Time Password</label>
-              <input type="text" id="otp-input" class="otp-field" maxlength="6" placeholder="••••••" autocomplete="one-time-code">
+              <input type="text" id="otp-input" class="otp-field" maxlength="6" placeholder="••••••"
+                autocomplete="one-time-code">
             </div>
             <button class="btn-ji" id="verify-otp-btn">Verify OTP</button>
             <div class="resend-row" style="text-align:center;margin-top:15px">
@@ -567,7 +581,8 @@
         <div id="otp-step4" style="display:none">
           <div class="recruiter-session-banner mb-4">
             <i class="bi bi-patch-check-fill text-success fs-5"></i>
-            <span>You're logged in as <strong id="recruiter-display-wa">+91...</strong>. Fill in your vacancy details below.</span>
+            <span>You're logged in as <strong id="recruiter-display-wa">+91...</strong>. Fill in your vacancy details
+              below.</span>
           </div>
         </div>
 
@@ -633,8 +648,8 @@
               <label class="form-field-label">
                 <i class="bi bi-pin-map-fill"></i>Exact Location / Town <span class="text-danger">*</span>
               </label>
-              <input type="text" name="exact_location" class="form-control" placeholder="E.g. Vyttila, Edappally, Calicut Town"
-                required>
+              <input type="text" name="exact_location" class="form-control"
+                placeholder="E.g. Vyttila, Edappally, Calicut Town" required>
             </div>
             <div class="col-md-4">
               <label class="form-field-label">
@@ -695,7 +710,8 @@
             </div>
             <div class="col-12">
               <label class="form-field-label">
-                <i class="bi bi-file-earmark-text-fill"></i>Require CV from applicants? <span class="text-danger">*</span>
+                <i class="bi bi-file-earmark-text-fill"></i>Require CV from applicants? <span
+                  class="text-danger">*</span>
               </label>
               <select id="cv_required" name="cv_required" class="form-select" required>
                 <option value="" selected disabled>Select CV Requirement</option>
@@ -713,10 +729,12 @@
                 </span>
               </div>
               <textarea name="job_description" id="job_description_input" class="form-control" rows="4" maxlength="600"
-                placeholder="Briefly describe key duties, skills, qualifications, work timings, etc." required></textarea>
+                placeholder="Briefly describe key duties, skills, qualifications, work timings, etc."
+                required></textarea>
               <div class="d-flex justify-content-between align-items-center mt-1">
                 <small class="text-muted" style="font-size: 0.78rem;">
-                  <i class="bi bi-info-circle me-1"></i>Be clear and specific to attract the best candidates (max 600 characters).
+                  <i class="bi bi-info-circle me-1"></i>Be clear and specific to attract the best candidates (max 600
+                  characters).
                 </small>
               </div>
             </div>
@@ -765,7 +783,7 @@
           <div class="footer-contact pt-3">
             <p>Hilite Business Park, Bypass, Thondayad, Kozhikode</p>
             <p>Kerala – 673014</p>
-            <p class="mt-3"><strong>Phone:</strong> <span>+91 98471 78170</span></p>
+            <p class="mt-3"><strong>Phone:</strong> <span>+91 70259 62179</span></p>
             <p><strong>Email:</strong> <span>contact@jobinfo.pro</span></p>
           </div>
         </div>
@@ -782,10 +800,10 @@
           <h4>Follow Us</h4>
           <p>Stay connected for daily job updates and career tips.</p>
           <div class="social-links d-flex">
-            <a href=""><i class="bi bi-instagram"></i></a>
+            <a href="https://www.instagram.com/jobinfo.pro?utm_source=ig_web_button_share_sheet&amp;igsi=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer"><i class="bi bi-instagram"></i></a>
             <a href=""><i class="bi bi-linkedin"></i></a>
-            <a href=""><i class="bi bi-facebook"></i></a>
-            <a href=""><i class="bi bi-youtube"></i></a>
+            <a href="https://www.facebook.com/profile.php?id=61575626495777" target="_blank" rel="noopener noreferrer"><i class="bi bi-facebook"></i></a>
+            <a href="https://youtube.com/@jobinfo-x6l?si=WAVoFrJ3FflkCsPO" target="_blank" rel="noopener noreferrer"><i class="bi bi-youtube"></i></a>
           </div>
         </div>
       </div>
@@ -801,28 +819,36 @@
   </a>
 
   <!-- Vacancy Submission Success Modal -->
-  <div class="modal fade" id="vacancySuccessModal" tabindex="-1" aria-labelledby="vacancySuccessModalLabel" aria-hidden="true" data-bs-backdrop="static">
+  <div class="modal fade" id="vacancySuccessModal" tabindex="-1" aria-labelledby="vacancySuccessModalLabel"
+    aria-hidden="true" data-bs-backdrop="static">
     <div class="modal-dialog modal-dialog-centered" style="max-width: 440px;">
       <div class="modal-content border-0 shadow-lg" style="border-radius: 20px; overflow: hidden;">
         <div class="modal-body text-center p-4 p-md-5">
           <div class="mb-3">
-            <div class="d-inline-flex align-items-center justify-content-center bg-success bg-opacity-10 text-success rounded-circle shadow-sm" style="width: 72px; height: 72px;">
+            <div
+              class="d-inline-flex align-items-center justify-content-center bg-success bg-opacity-10 text-success rounded-circle shadow-sm"
+              style="width: 72px; height: 72px;">
               <i class="bi bi-check-circle-fill" style="font-size: 2.4rem;"></i>
             </div>
           </div>
           <h4 class="fw-bold mb-2 text-dark" id="vacancySuccessModalLabel">Vacancy Submitted!</h4>
-          <div class="d-inline-flex align-items-center justify-content-center gap-2 px-3 py-2 rounded-pill mb-3" style="background: #e0f2fe; border: 1.5px solid #7dd3fc;">
+          <div class="d-inline-flex align-items-center justify-content-center gap-2 px-3 py-2 rounded-pill mb-3"
+            style="background: #e0f2fe; border: 1.5px solid #7dd3fc;">
             <span style="color: #0369a1; font-size: 0.9rem; font-weight: 600;">Job Code:</span>
-            <span id="success-job-code" style="color: #0c4a6e; font-size: 1.05rem; font-weight: 700; letter-spacing: 0.5px;">---</span>
+            <span id="success-job-code"
+              style="color: #0c4a6e; font-size: 1.05rem; font-weight: 700; letter-spacing: 0.5px;">---</span>
           </div>
           <p class="text-muted small mb-4" id="success-modal-msg" style="line-height: 1.55;">
-            Your vacancy has been received and is under review. You'll receive a WhatsApp notification once it is approved and broadcast to job seekers.
+            Your vacancy has been received and is under review. You'll receive a WhatsApp notification once it is
+            approved and broadcast to job seekers.
           </p>
           <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-            <button type="button" class="btn btn-outline-secondary rounded-pill px-4 fw-medium" data-bs-dismiss="modal" id="post-another-btn">
+            <button type="button" class="btn btn-outline-secondary rounded-pill px-4 fw-medium" data-bs-dismiss="modal"
+              id="post-another-btn">
               <i class="bi bi-plus-circle me-1"></i>Post Another
             </button>
-            <a href="recruiter-dashboard.html" class="btn btn-primary rounded-pill px-4 fw-medium" style="background: #107bbc; border-color: #107bbc;">
+            <a href="recruiter-dashboard.html" class="btn btn-primary rounded-pill px-4 fw-medium"
+              style="background: #107bbc; border-color: #107bbc;">
               <i class="bi bi-speedometer2 me-1"></i>My Dashboard
             </a>
           </div>

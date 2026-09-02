@@ -35,15 +35,29 @@
   mobileNavToggleBtn.addEventListener('click', mobileNavToogle);
 
   /**
-   * Hide mobile nav on same-page/hash links
+   * Smooth scroll and hide mobile nav on same-page/hash links
    */
   document.querySelectorAll('#navmenu a').forEach(navmenu => {
-    navmenu.addEventListener('click', () => {
-      if (document.querySelector('.mobile-nav-active')) {
+    navmenu.addEventListener('click', (e) => {
+      if (navmenu.hash && document.querySelector(navmenu.hash)) {
+        e.preventDefault();
+        if (document.querySelector('.mobile-nav-active')) {
+          mobileNavToogle();
+        }
+        let section = document.querySelector(navmenu.hash);
+        let scrollMarginTop = getComputedStyle(section).scrollMarginTop;
+        let header = document.querySelector('#header');
+        let headerOffset = header ? header.offsetHeight : 0;
+        let offsetTop = section.offsetTop - (parseInt(scrollMarginTop) || headerOffset || 70);
+        window.scrollTo({
+          top: offsetTop,
+          behavior: 'smooth'
+        });
+        history.pushState(null, null, navmenu.hash);
+      } else if (document.querySelector('.mobile-nav-active')) {
         mobileNavToogle();
       }
     });
-
   });
 
   /**

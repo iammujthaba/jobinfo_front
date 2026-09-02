@@ -177,6 +177,467 @@
       background: #107bbc;
       color: #fff;
     }
+
+    /* ══════════════════════════════════════════════════════════════════════
+       Recruiter Portal & Vacancy Form Modern UI Styles
+    ══════════════════════════════════════════════════════════════════════ */
+    .recruiter-auth-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 24px;
+      box-shadow: 0 20px 40px -12px rgba(15, 23, 42, 0.08), 0 4px 16px -2px rgba(15, 23, 42, 0.03);
+      padding: 36px 32px;
+      max-width: 520px;
+      margin: 0 auto 30px;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    /* Auth Step Progress Indicator (namespaced to avoid modals.html collision) */
+    .auth-steps-header {
+      margin-bottom: 28px;
+    }
+
+    .rp-step-indicator {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+    }
+
+    .rp-step-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      position: relative;
+      z-index: 2;
+      flex: 1;
+      width: auto !important;
+      height: auto !important;
+      background: transparent !important;
+      border: none !important;
+    }
+
+    .rp-dot-circle {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: #f1f5f9;
+      color: #64748b;
+      font-weight: 700;
+      font-size: 0.88rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #e2e8f0;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .rp-dot-label {
+      font-size: 0.72rem;
+      color: #64748b;
+      font-weight: 600;
+      transition: color 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .rp-step-item.active .rp-dot-circle {
+      background: #25d366;
+      color: #ffffff;
+      border-color: #25d366;
+      box-shadow: 0 0 0 4px rgba(37, 211, 102, 0.22);
+      transform: scale(1.05);
+    }
+
+    .rp-step-item.active .rp-dot-label {
+      color: #0d8a43;
+      font-weight: 700;
+    }
+
+    .rp-step-line {
+      flex: 1;
+      height: 2px;
+      background: #e2e8f0;
+      margin: 0 4px 22px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Card Header & Badges */
+    .auth-card-icon-wrap {
+      width: 56px;
+      height: 56px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, rgba(37, 211, 102, 0.15) 0%, rgba(18, 140, 126, 0.08) 100%);
+      color: #128c7e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      margin: 0 auto 16px;
+      border: 1px solid rgba(37, 211, 102, 0.25);
+    }
+
+    /* Form Fields */
+    .form-field-label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #334155;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .form-field-label i {
+      color: #107bbc;
+      font-size: 0.95rem;
+    }
+
+    .phone-input-group {
+      display: flex;
+      border: 1.5px solid #dde1e7;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #ffffff;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .phone-input-group:focus-within {
+      border-color: #25d366;
+      box-shadow: 0 0 0 3.5px rgba(37, 211, 102, 0.18);
+    }
+
+    .phone-prefix {
+      background: #f8fafc;
+      padding: 12px 14px;
+      font-size: 0.92rem;
+      color: #334155;
+      border-right: 1.5px solid #dde1e7;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+
+    .phone-input-field {
+      border: none;
+      padding: 12px 16px;
+      width: 100%;
+      font-size: 1rem;
+      color: #1e293b;
+      font-weight: 500;
+      outline: none;
+      background: transparent;
+    }
+
+    .phone-input-field::placeholder {
+      color: #94a3b8;
+    }
+
+    .recruiter-auth-card .form-control,
+    .recruiter-auth-card .form-select,
+    .vacancy-card .form-control,
+    .vacancy-card .form-select {
+      border: 1.5px solid #dde1e7;
+      border-radius: 12px;
+      padding: 11px 14px;
+      font-size: 0.92rem;
+      color: #1e293b;
+      background-color: #ffffff;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .recruiter-auth-card .form-control:focus,
+    .recruiter-auth-card .form-select:focus,
+    .vacancy-card .form-control:focus,
+    .vacancy-card .form-select:focus {
+      border-color: #107bbc;
+      box-shadow: 0 0 0 3.5px rgba(16, 123, 188, 0.15);
+      outline: none;
+    }
+
+    .btn-recruiter-primary {
+      background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+      color: #ffffff !important;
+      border: none;
+      border-radius: 12px;
+      padding: 13px 24px;
+      font-size: 1rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 6px 18px rgba(37, 211, 102, 0.32);
+      transition: all 0.25s ease;
+      cursor: pointer;
+      text-decoration: none;
+      width: 100%;
+    }
+
+    .btn-recruiter-primary:hover {
+      background: linear-gradient(135deg, #20ba5a 0%, #0e7065 100%);
+      transform: translateY(-1.5px);
+      box-shadow: 0 8px 24px rgba(37, 211, 102, 0.42);
+    }
+
+    .btn-recruiter-primary:active {
+      transform: translateY(0);
+    }
+
+    .btn-recruiter-primary:disabled {
+      background: #94a3b8 !important;
+      box-shadow: none !important;
+      transform: none !important;
+      cursor: not-allowed;
+    }
+
+    .auth-perks-row {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      gap: 6px;
+      margin-top: 22px;
+      padding-top: 18px;
+      border-top: 1px solid #f1f5f9;
+    }
+
+    .auth-perk-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.76rem;
+      font-weight: 600;
+      color: #64748b;
+    }
+
+    /* Step QR Styles */
+    .reverse-otp-box {
+      background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
+      border: 1.5px dashed #25d366;
+      border-radius: 14px;
+      padding: 14px 12px;
+      margin-bottom: 16px;
+    }
+
+    .otp-box-subtitle {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #334155;
+      margin-bottom: 4px;
+    }
+
+    .reverse-otp-code {
+      font-size: 1.85rem;
+      font-weight: 800;
+      letter-spacing: 0.3rem;
+      color: #0f172a;
+      font-family: monospace;
+      margin-bottom: 2px;
+    }
+
+    .otp-box-expiry {
+      font-size: 0.72rem;
+      color: #64748b;
+      display: inline-block;
+    }
+
+    .qr-preview-card {
+      display: inline-block;
+      padding: 10px;
+      background: #ffffff;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 14px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+      margin-bottom: 16px;
+    }
+
+    .qr-image {
+      width: 140px;
+      height: 140px;
+      display: block;
+      margin: 0 auto;
+      border-radius: 8px;
+    }
+
+    .qr-hint {
+      font-size: 0.75rem;
+      color: #64748b;
+      display: block;
+      margin-top: 6px;
+    }
+
+    .pin-status-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 8px 14px;
+      background: #f8fafc;
+      border-radius: 10px;
+      border: 1px solid #e2e8f0;
+    }
+
+    .pin-status-text {
+      font-size: 0.82rem;
+      color: #64748b;
+      font-weight: 500;
+    }
+
+    /* Modern OTP Input */
+    .modern-otp-input {
+      font-size: 1.85rem;
+      letter-spacing: 0.6rem;
+      text-align: center;
+      font-weight: 700;
+      width: 100%;
+      max-width: 280px;
+      margin: 0 auto;
+      padding: 12px;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 14px;
+      outline: none;
+      background: #f8fafc;
+      color: #0f172a;
+      transition: all 0.2s ease;
+    }
+
+    .modern-otp-input:focus {
+      background: #ffffff;
+      border-color: #25d366;
+      box-shadow: 0 0 0 3.5px rgba(37, 211, 102, 0.18);
+    }
+
+    .btn-resend-clean {
+      background: transparent;
+      border: none;
+      color: #64748b;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .btn-resend-clean:not(:disabled):hover {
+      color: #128c7e;
+      text-decoration: underline;
+    }
+
+    .btn-resend-clean:disabled {
+      color: #94a3b8;
+      cursor: default;
+    }
+
+    /* Recruiter Session Banner */
+    .recruiter-session-banner {
+      background: linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 100%);
+      border: 1.5px solid #a7f3d0;
+      border-radius: 14px;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      color: #065f46;
+      font-size: 0.95rem;
+      font-weight: 600;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.08);
+      max-width: 840px;
+      margin: 0 auto 24px;
+    }
+
+    /* Vacancy Card & Form */
+    .vacancy-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 22px;
+      box-shadow: 0 20px 45px -10px rgba(15, 23, 42, 0.08), 0 4px 16px -2px rgba(15, 23, 42, 0.03);
+      padding: 36px 36px;
+      max-width: 840px;
+      margin: 0 auto 24px;
+      transition: all 0.3s ease;
+    }
+
+    .form-section-title {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #1e293b;
+      padding-bottom: 8px;
+      margin-bottom: 16px;
+      border-bottom: 1.5px dashed #e2e8f0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .form-section-title i {
+      color: #107bbc;
+      font-size: 1.05rem;
+    }
+
+    .char-counter-wrap {
+      font-size: 0.8rem;
+      transition: color 0.2s;
+    }
+
+    .char-counter-wrap.limit-warn {
+      color: #d97706 !important;
+      font-weight: 700;
+    }
+
+    .char-counter-wrap.limit-reached {
+      color: #dc2626 !important;
+      font-weight: 700;
+    }
+
+    .btn-recruiter-submit {
+      background: linear-gradient(135deg, #107bbc 0%, #0a5682 100%);
+      color: #ffffff;
+      border: none;
+      border-radius: 14px;
+      padding: 14px 44px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 8px 24px rgba(16, 123, 188, 0.35);
+      transition: all 0.25s ease;
+      cursor: pointer;
+    }
+
+    .btn-recruiter-submit:hover {
+      background: linear-gradient(135deg, #0d6da7 0%, #074366 100%);
+      color: #ffffff;
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(16, 123, 188, 0.45);
+    }
+
+    .btn-recruiter-submit:active {
+      transform: translateY(0);
+    }
+
+    @media (max-width: 576px) {
+      .recruiter-auth-card {
+        padding: 24px 18px;
+        border-radius: 18px;
+      }
+
+      .vacancy-card {
+        padding: 24px 18px;
+        border-radius: 18px;
+      }
+
+      .btn-recruiter-submit {
+        width: 100%;
+      }
+    }
   </style>
 
 </head>
@@ -196,12 +657,13 @@
 
       <nav id="navmenu" class="navmenu">
         <ul>
-          <li><a href="#hero" class="active">Home</a></li>
-          <li><a href="#featured-services">Services</a></li>
-          <li><a href="#recruiter-benefits">Benefits</a></li>
-          <li><a href="#recruiter-guidelines">Guidelines</a></li>
-          <li><a href="#join-now">Network</a></li>
-          <li><a href="#faq">FAQ</a></li>
+          <li><a href="recruiter.html#hero" class="active">Home</a></li>
+          <li><a href="recruiter.html#featured-services">Services</a></li>
+          <li><a href="recruiter.html#recruiter-benefits">Benefits</a></li>
+          <li><a href="recruiter.html#recruiter-guidelines">Guidelines</a></li>
+          <li><a href="recruiter.html#submit-job">Hire</a></li>
+          <li><a href="recruiter.html#join-now">Network</a></li>
+          <li><a href="recruiter.html#faq">FAQ</a></li>
           <li class="d-xl-none text-center" style="padding: 10px 20px;">
             <a class="btn-nav-outline w-100 justify-content-center" href="index.html"><i
                 class="bi bi-briefcase"></i>Browse Jobs</a>
@@ -460,134 +922,267 @@
     <section id="submit-job" class="container py-5" data-aos="fade-up">
 
       <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <span>Submit Job Vacancy<br></span>
+      <div class="container section-title text-center mb-4" data-aos="fade-up">
+        <span>Share Vacancy<br></span>
         <h2>Share Vacancy</h2>
-        <p>Share your job vacancy with us to reach a wider pool of candidates through JobInfo.</p>
+        <p>Post your job openings in minutes and reach a wider pool of verified local candidates through JobInfo.</p>
       </div><!-- End Section Title -->
 
-      <!-- ── Step 1: WhatsApp number ──────────────────────────── -->
-      <div id="otp-step1" class="bg-white p-4 rounded shadow mb-4" style="max-width:480px;margin:0 auto 24px">
-        <h5 class="mb-3"><i class="bi bi-whatsapp text-success me-2"></i>Verify Your WhatsApp Number</h5>
-        <p class="text-muted small mb-3">We'll send a one-time password to your WhatsApp to verify your identity before
-          posting.</p>
-        <div class="input-group">
-          <span class="input-group-text">+91</span>
-          <input type="tel" id="wa-number-input" class="form-control" placeholder="Your WhatsApp number" maxlength="10"
-            pattern="[0-9]{10}">
-        </div>
-        <button type="button" id="send-otp-btn" class="btn btn-success w-100 mt-3 fw-bold"><i
-            class="bi bi-send me-1"></i>Send OTP</button>
-      </div>
+      <!-- ── Auth & Profile Container Card (Steps 1, QR, 2, 3) ── -->
+      <div id="inline-auth-card" class="recruiter-auth-card" data-aos="fade-up">
+        <script>
+          if (sessionStorage.getItem("ji_r_token") || sessionStorage.getItem("ji_token")) {
+            document.getElementById("inline-auth-card").style.display = "none";
+          }
+        </script>
 
-      <!-- ── Step QR: Connect WhatsApp (24h Window Activation) ── -->
-      <div id="otp-step-qr" class="bg-white p-4 rounded shadow mb-4 text-center"
-        style="display:none;max-width:480px;margin:0 auto 24px;">
-        <h5 class="mb-2"><i class="bi bi-whatsapp text-success me-2"></i>Connect to WhatsApp</h5>
-        <p class="text-muted small mb-3">To receive your instant verification code, please send a quick message to our
-          Jobinfo bot.</p>
-        <div class="mb-3 p-2 bg-light rounded-3 d-inline-block border shadow-sm">
-          <img id="inline-qr-img" src="" alt="WhatsApp QR Code"
-            style="width:160px;height:160px;display:block;margin:0 auto;" />
+        <!-- Progress Steps Indicator -->
+        <div class="auth-steps-header">
+          <div class="rp-step-indicator">
+            <div class="rp-step-item active" id="inline-dot1">
+              <div class="rp-dot-circle">1</div>
+              <span class="rp-dot-label">WhatsApp</span>
+            </div>
+            <div class="rp-step-line"></div>
+            <div class="rp-step-item" id="inline-dot2">
+              <div class="rp-dot-circle">2</div>
+              <span class="rp-dot-label">Profile</span>
+            </div>
+            <div class="rp-step-line"></div>
+            <div class="rp-step-item" id="inline-dot3">
+              <div class="rp-dot-circle">3</div>
+              <span class="rp-dot-label">Verify</span>
+            </div>
+          </div>
         </div>
-        <p class="text-muted small mb-3" style="font-size:.78rem;">Scan with your phone camera or WhatsApp</p>
-        <div class="d-grid gap-2">
-          <a id="inline-wa-chat-btn" href="#" target="_blank" class="btn btn-success fw-bold rounded-3 shadow-sm py-2">
-            <i class="bi bi-whatsapp me-2"></i>Open WhatsApp Chat
-          </a>
-          <button type="button" class="btn btn-outline-secondary btn-sm rounded-3 mt-1 py-2" id="inline-check-wa-btn">
-            <i class="bi bi-arrow-clockwise me-1"></i>I've Sent the Message — Continue
+
+        <!-- ── Step 1: WhatsApp number ──────────────────────────── -->
+        <div id="otp-step1">
+          <div class="text-center mb-4">
+            <div class="auth-card-icon-wrap">
+              <i class="bi bi-whatsapp"></i>
+            </div>
+            <h4 class="fw-bold mb-1" style="color:#0f172a;">Verify WhatsApp Number</h4>
+            <p class="text-muted small mb-0">We'll send an instant one-time password to your WhatsApp to verify your
+              account.</p>
+          </div>
+          <div class="mb-3 text-start">
+            <label class="form-field-label" for="wa-number-input">
+              <i class="bi bi-whatsapp text-success"></i> WhatsApp Number <span class="text-danger">*</span>
+            </label>
+            <div class="phone-input-group mb-1">
+              <span class="phone-prefix"><i class="bi bi-whatsapp text-success"></i> +91</span>
+              <input type="tel" id="wa-number-input" class="phone-input-field" placeholder="10-digit mobile number"
+                maxlength="10" pattern="[0-9]{10}" autocomplete="tel">
+            </div>
+            <div class="form-text text-muted" style="font-size:0.78rem;">
+              <i class="bi bi-lock-fill text-muted me-1"></i>Your number is securely verified and kept confidential.
+            </div>
+          </div>
+          <button type="button" id="send-otp-btn" class="btn-recruiter-primary">
+            <i class="bi bi-send-fill me-1"></i>Send OTP
           </button>
+          <div class="auth-perks-row">
+            <div class="auth-perk-item">
+              <i class="bi bi-lightning-charge-fill text-warning"></i>
+              <span>Instant OTP</span>
+            </div>
+            <div class="auth-perk-item">
+              <i class="bi bi-shield-fill-check text-success"></i>
+              <span>Verified Hiring</span>
+            </div>
+            <div class="auth-perk-item">
+              <i class="bi bi-check-circle-fill text-primary"></i>
+              <span>100% Free</span>
+            </div>
+          </div>
         </div>
-      </div>
 
-      <!-- ── Step 2: Registration Form ────────────────────────── -->
-      <div id="otp-step2" class="bg-white p-4 rounded shadow mb-4"
-        style="display:none;max-width:480px;margin:0 auto 24px;">
-        <h5 class="mb-3"><i class="bi bi-person-lines-fill text-success me-2"></i>Complete Profile</h5>
-        <p class="text-muted small mb-3">We need a few details before you can continue.</p>
-        <form id="inline-reg-form">
-          <div class="mb-3">
-            <label class="form-label small fw-bold text-secondary mb-1">Company Name</label>
-            <input type="text" id="inline-company" class="form-control" placeholder="e.g. ABC Pvt Ltd" required>
+        <!-- ── Step QR: Connect WhatsApp (24h Window Activation) ── -->
+        <div id="otp-step-qr" style="display:none; text-align:center;">
+          <div class="text-center mb-4">
+            <div class="auth-card-icon-wrap">
+              <i class="bi bi-whatsapp"></i>
+            </div>
+            <h2 style="font-size:1.2rem;font-weight:700;">WhatsApp OTP Verification 📱</h2>
+            <p class="text-muted mb-3" style="font-size:.85rem;">
+              Open WhatsApp and verify OTP with <strong>JobInfo</strong> bot.
+            </p>
           </div>
-          <div class="mb-3">
-            <label class="form-label small fw-bold text-secondary mb-1">Business Type</label>
-            <select id="inline-type" class="form-select" required>
-              <option value="">Select Type</option>
-              <option value="company">Company / Pvt Ltd</option>
-              <option value="shop_retail">Shop / Supermarket / Textiles</option>
-              <option value="hotel_bakery">Hotel / Restaurant / Bakery</option>
-              <option value="healthcare">Hospital / Clinic / Pharmacy</option>
-              <option value="education">School / College / Coaching</option>
-              <option value="salon_spa">Salon / Beauty Parlour / Spa</option>
-              <option value="finance_bank">Finance / Co-operative Bank</option>
-              <option value="it_media">IT / Media / Printing Studio</option>
-              <option value="contractor">Contractor / Builder</option>
-              <option value="transport">Travels / Transport / Logistics</option>
-              <option value="workshop_garage">Workshop / Garage</option>
-              <option value="petrol_pump">Petrol Pump / Gas Station</option>
-              <option value="agency">HR / Recruitment / Consultancy</option>
-              <option value="individual">Individual / Household</option>
-              <option value="other">Other</option>
-            </select>
+
+          <!-- OTP display -->
+          <div
+            style="background:#f0fdf4;border:1.5px dashed #25d366;border-radius:10px;padding:10px 8px;margin-bottom:12px;">
+            <p style="font-size:.72rem;font-weight:600;color:#555;margin:0 0 4px;">Send this OTP to <strong>+91
+                7025962176</strong> WhatsApp number</p>
+            <div id="inline-pin-display"
+              style="font-size:1.6rem;font-weight:800;letter-spacing:.25rem;color:#1a1a2e;font-family:monospace;">
+              ——————
+            </div>
+            <p style="font-size:.68rem;color:#888;margin:4px 0 0;">Expires in 5 minutes &nbsp;·&nbsp; Single use</p>
           </div>
-          <div class="mb-3">
-            <label class="form-label small fw-bold text-secondary mb-1">Your Role in Company / Shop</label>
-            <select id="inline-role" class="form-select" required>
-              <option value="">Select Your Role</option>
-              <option value="founder">Founder / Owner</option>
-              <option value="hr">HR / Recruiter</option>
-              <option value="manager">Manager</option>
-              <option value="employee">Employee</option>
-              <option value="other">Other</option>
-            </select>
+
+          <!-- OR Divider -->
+          <div style="display:flex;align-items:center;margin:10px 0;color:#888;font-size:.75rem;font-weight:600;">
+            <div style="flex:1;border-bottom:1px dashed #ccc;"></div>
+            <span style="padding:0 10px;">OR</span>
+            <div style="flex:1;border-bottom:1px dashed #ccc;"></div>
           </div>
-          <div class="mb-3">
-            <label class="form-label small fw-bold text-secondary mb-1">Company Location</label>
-            <select id="inline-location" class="form-select" required>
-              <option value="">Select Region</option>
-              <option value="Kerala">Kerala</option>
-              <option value="Karnataka">Karnataka</option>
-              <option value="GCC">GCC</option>
-              <option value="Other">Other</option>
-            </select>
+
+          <!-- QR code -->
+          <div class="mb-2 p-2 bg-light rounded-3 d-inline-block border shadow-sm">
+            <img id="inline-qr-img" src="" alt="WhatsApp QR Code"
+              style="width:130px;height:130px;display:block;margin:0 auto;" />
+          </div>
+
+          <!-- OR Divider -->
+          <div style="display:flex;align-items:center;margin:10px 0;color:#888;font-size:.75rem;font-weight:600;">
+            <div style="flex:1;border-bottom:1px dashed #ccc;"></div>
+            <span style="padding:0 10px;">OR</span>
+            <div style="flex:1;border-bottom:1px dashed #ccc;"></div>
+          </div>
+
+          <div class="d-grid mb-2">
+            <a id="inline-wa-chat-btn" href="#" target="_blank"
+              class="btn btn-success fw-bold rounded-3 shadow-sm py-2">
+              <i class="bi bi-whatsapp me-2"></i>Open WhatsApp &amp; Send OTP
+            </a>
+          </div>
+
+          <div id="inline-pin-status-wrap"
+            style="margin-top:10px;display:flex;align-items:center;justify-content:center;gap:8px;">
+            <div class="spinner-border spinner-border-sm text-success" role="status"></div>
+            <span id="inline-pin-status-text" style="font-size:.8rem;color:#888;">Waiting for your OTP…</span>
+          </div>
+        </div>
+
+        <!-- ── Step 2: Registration Form ────────────────────────── -->
+        <div id="otp-step2" style="display:none;">
+          <div class="text-center mb-4">
+            <div class="auth-card-icon-wrap"
+              style="color:#107bbc;background:rgba(16, 123, 188, 0.1);border-color:rgba(16, 123, 188, 0.25);">
+              <i class="bi bi-building"></i>
+            </div>
+            <h4 class="fw-bold mb-1" style="color:#0f172a;">Complete Recruiter Profile</h4>
+            <p class="text-muted small mb-0">We need a few details to register your organization.</p>
+          </div>
+          <form id="inline-reg-form">
+            <div class="row g-3">
+              <div class="col-12">
+                <label class="form-field-label">
+                  <i class="bi bi-building-fill"></i>Company / Shop Name <span class="text-danger">*</span>
+                </label>
+                <input type="text" id="inline-company" class="form-control" placeholder="e.g. Acme Technologies Pvt Ltd"
+                  required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-field-label">
+                  <i class="bi bi-shop"></i>Business Type <span class="text-danger">*</span>
+                </label>
+                <select id="inline-type" class="form-select" required>
+                  <option value="" selected disabled>Select Type</option>
+                  <option value="company">Company / Pvt Ltd</option>
+                  <option value="shop_retail">Shop / Supermarket / Textiles</option>
+                  <option value="hotel_bakery">Hotel / Restaurant / Bakery</option>
+                  <option value="healthcare">Hospital / Clinic / Pharmacy</option>
+                  <option value="education">School / College / Coaching</option>
+                  <option value="salon_spa">Salon / Beauty Parlour / Spa</option>
+                  <option value="finance_bank">Finance / Co-operative Bank</option>
+                  <option value="it_media">IT / Media / Printing Studio</option>
+                  <option value="contractor">Contractor / Builder</option>
+                  <option value="transport">Travels / Transport / Logistics</option>
+                  <option value="workshop_garage">Workshop / Garage</option>
+                  <option value="petrol_pump">Petrol Pump / Gas Station</option>
+                  <option value="agency">HR / Recruitment / Consultancy</option>
+                  <option value="individual">Individual / Household</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-field-label">
+                  <i class="bi bi-person-badge-fill"></i>Your Role in Company <span class="text-danger">*</span>
+                </label>
+                <select id="inline-role" class="form-select" required>
+                  <option value="" selected disabled>Select Your Role</option>
+                  <option value="founder">Founder / Owner</option>
+                  <option value="hr">HR / Recruiter</option>
+                  <option value="manager">Manager</option>
+                  <option value="employee">Employee</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-field-label">
+                  <i class="bi bi-geo-alt-fill"></i>Company Location <span class="text-danger">*</span>
+                </label>
+                <select id="inline-location" class="form-select" required>
+                  <option value="" selected disabled>Select Region</option>
+                  <option value="Kerala">Kerala</option>
+                  <option value="Karnataka">Karnataka</option>
+                  <option value="GCC">GCC</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-field-label">
+                  <i class="bi bi-telephone-fill"></i>Business Contact Number <span class="text-danger">*</span>
+                </label>
+                <input type="tel" id="inline-contact" class="form-control" placeholder="Phone/Mobile number" required>
+              </div>
+              <div class="col-12 mt-4">
+                <button type="submit" class="btn-recruiter-primary" id="inline-reg-submit">
+                  <i class="bi bi-person-check-fill me-1"></i>Register &amp; Send OTP
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <!-- ── Step 3: Enter OTP ─────────────────────────────────── -->
+        <div id="otp-step3" style="display:none; text-align:center;">
+          <div class="text-center mb-4">
+            <div class="auth-card-icon-wrap">
+              <i class="bi bi-shield-check text-success"></i>
+            </div>
+            <h4 class="fw-bold mb-1" style="color:#0f172a;">Enter Verification Code</h4>
+            <p class="text-muted small mb-0">A 6-digit OTP was sent to your WhatsApp. Enter it below to proceed.</p>
           </div>
           <div class="mb-4">
-            <label class="form-label small fw-bold text-secondary mb-1">Business Contact Number</label>
-            <input type="tel" id="inline-contact" class="form-control" placeholder="Phone/Mobile" required>
+            <input type="text" id="otp-input" class="modern-otp-input" maxlength="6" placeholder="• • • • • •"
+              autocomplete="one-time-code">
           </div>
-          <button type="submit" class="btn btn-success w-100 fw-bold" id="inline-reg-submit"><i
-              class="bi bi-person-check me-1"></i>Register &amp; Send OTP</button>
-        </form>
-      </div>
-
-      <!-- ── Step 3: Enter OTP ─────────────────────────────────── -->
-      <div id="otp-step3" class="bg-white p-4 rounded shadow mb-4"
-        style="display:none;max-width:480px;margin:0 auto 24px">
-        <h5 class="mb-2"><i class="bi bi-shield-check text-success me-2"></i>Enter OTP</h5>
-        <p class="text-muted small mb-3">A 6-digit OTP was sent to your WhatsApp. Enter it below.</p>
-        <input type="text" id="otp-input" class="form-control text-center fw-bold" maxlength="6"
-          placeholder="_ _ _ _ _ _" style="font-size:1.5rem;letter-spacing:.5rem">
-        <button type="button" id="verify-otp-btn" class="btn btn-success w-100 mt-3 fw-bold">Verify OTP</button>
-        <div class="text-center mt-2">
-          <button type="button" id="resend-otp-btn" class="btn btn-link btn-sm text-muted" disabled>Resend OTP</button>
+          <button type="button" id="verify-otp-btn" class="btn-recruiter-primary">
+            <i class="bi bi-check-circle-fill me-1"></i>Verify OTP
+          </button>
+          <div class="text-center mt-3">
+            <button type="button" id="resend-otp-btn" class="btn-resend-clean" disabled>
+              Resend OTP in <span id="inline-cd">60</span>s
+            </button>
+          </div>
         </div>
-      </div>
+
+      </div><!-- End #inline-auth-card -->
 
       <!-- ── Step 4: Vacancy form (hidden until OTP verified) ─── -->
       <div id="otp-step4" style="display:none">
-        <div class="alert alert-success text-center fw-semibold" style="max-width:800px;margin:0 auto 24px;">
-          <i class="bi bi-check-circle-fill me-2"></i>WhatsApp verified! Now fill in your vacancy details.
+        <div class="recruiter-session-banner mb-4">
+          <i class="bi bi-patch-check-fill text-success fs-5"></i>
+          <span>WhatsApp verified! Fill in your vacancy details below.</span>
         </div>
       </div>
 
-      <form name="job-form" class="job-form bg-white p-4 rounded shadow"
-        style="display:none;max-width:800px;margin:0 auto 24px;">
-        <div class="row gy-3">
+      <form name="job-form" class="job-form vacancy-card" style="display:none;">
+        <!-- Section 1: Position & Company -->
+        <div class="form-section-title">
+          <i class="bi bi-briefcase-fill"></i> Position &amp; Company Overview
+        </div>
+        <div class="row g-3 mb-4">
           <div class="col-md-6">
+            <label class="form-field-label">
+              <i class="bi bi-grid-fill"></i>Job Category <span class="text-danger">*</span>
+            </label>
             <select name="job_category" class="form-select" required>
-              <option value="">Job Category?</option>
+              <option value="" selected disabled>Select Job Category</option>
               <option value="retail">Retail &amp; Showrooms</option>
               <option value="sales_business">Sales &amp; Business Executive</option>
               <option value="hospitality">Hospitality &amp; Food Service</option>
@@ -608,15 +1203,32 @@
             </select>
           </div>
           <div class="col-md-6">
-            <input type="text" name="company_name" class="form-control" placeholder="Company / Shop Name" required>
-          </div>
-          <div class="col-md-12">
-            <input type="text" name="job_title" class="form-control" placeholder="Job Title (E.g. Sales Executive)"
+            <label class="form-field-label">
+              <i class="bi bi-building"></i>Company / Shop Name <span class="text-danger">*</span>
+            </label>
+            <input type="text" name="company_name" class="form-control" placeholder="e.g. Acme Technologies Pvt Ltd"
               required>
           </div>
+          <div class="col-12">
+            <label class="form-field-label">
+              <i class="bi bi-card-heading"></i>Job Title <span class="text-danger">*</span>
+            </label>
+            <input type="text" name="job_title" class="form-control"
+              placeholder="E.g. Senior Sales Executive, Branch Accountant" required>
+          </div>
+        </div>
+
+        <!-- Section 2: Location & Work Mode -->
+        <div class="form-section-title">
+          <i class="bi bi-geo-alt-fill"></i> Location &amp; Work Mode
+        </div>
+        <div class="row g-3 mb-4">
           <div class="col-md-6">
+            <label class="form-field-label">
+              <i class="bi bi-map-fill"></i>District / Region <span class="text-danger">*</span>
+            </label>
             <select name="district_region" class="form-select" required>
-              <option value="">District / Region?</option>
+              <option value="" selected disabled>Select District / Region</option>
               <option value="Kasaragod">Kasaragod</option>
               <option value="Kannur">Kannur</option>
               <option value="Wayanad">Wayanad</option>
@@ -635,12 +1247,18 @@
             </select>
           </div>
           <div class="col-md-6">
-            <input type="text" name="exact_location" class="form-control" placeholder="Exact Location (E.g. Vyttila)"
-              required>
+            <label class="form-field-label">
+              <i class="bi bi-pin-map-fill"></i>Exact Location / Town <span class="text-danger">*</span>
+            </label>
+            <input type="text" name="exact_location" class="form-control"
+              placeholder="E.g. Vyttila, Edappally, Kozhikode Town" required>
           </div>
           <div class="col-md-4">
+            <label class="form-field-label">
+              <i class="bi bi-clock-fill"></i>Job Mode <span class="text-danger">*</span>
+            </label>
             <select name="job_mode" class="form-select" required>
-              <option value="">Job Mode?</option>
+              <option value="" selected disabled>Select Mode</option>
               <option value="full_time">Full-Time</option>
               <option value="part_time">Part-Time</option>
               <option value="remote">Remote</option>
@@ -648,8 +1266,11 @@
             </select>
           </div>
           <div class="col-md-4">
+            <label class="form-field-label">
+              <i class="bi bi-award-fill"></i>Experience Required <span class="text-danger">*</span>
+            </label>
             <select name="experience_required" class="form-select" required>
-              <option value="">Experience Required?</option>
+              <option value="" selected disabled>Select Experience</option>
               <option value="no_experience">No Experience Required</option>
               <option value="fresher_or_exp">Fresher or Experienced</option>
               <option value="1_2_years">1-2 Years</option>
@@ -658,8 +1279,11 @@
             </select>
           </div>
           <div class="col-md-4">
+            <label class="form-field-label">
+              <i class="bi bi-cash-stack"></i>Salary Range <span class="text-danger">*</span>
+            </label>
             <select name="salary_range" class="form-select" required>
-              <option value="">Salary Range?</option>
+              <option value="" selected disabled>Select Salary Range</option>
               <option value="interview_based">Based on Interview</option>
               <option value="not_mentioned">Not Mentioned</option>
               <option value="stipend">Stipend</option>
@@ -686,24 +1310,47 @@
               <option value="above_300k">Above ₹3,00,000</option>
             </select>
           </div>
-          <div class="col-md-12">
+        </div>
+
+        <!-- Section 3: Requirements & Description -->
+        <div class="form-section-title">
+          <i class="bi bi-file-earmark-text-fill"></i> Role Details &amp; Applicant Requirements
+        </div>
+        <div class="row g-3">
+          <div class="col-12">
+            <label class="form-field-label">
+              <i class="bi bi-file-earmark-person-fill"></i>Require CV from applicants? <span
+                class="text-danger">*</span>
+            </label>
             <select id="cv_required" name="cv_required" class="form-select" required>
-              <option value="">Require CV from applicants?</option>
-              <option value="false">No (CV is optional)</option>
+              <option value="" selected disabled>Select CV Requirement</option>
+              <option value="false">No (CV is optional - faster applications)</option>
               <option value="true">Yes (CV is mandatory)</option>
             </select>
           </div>
           <div class="col-12">
-            <textarea name="job_description" class="form-control" rows="4"
-              placeholder="Job Description (Duties, skills, qualifications, timings, etc.)" required></textarea>
+            <label class="form-field-label d-flex justify-content-between align-items-center">
+              <span><i class="bi bi-card-text"></i>Job Description <span class="text-danger">*</span></span>
+              <span class="text-muted fw-normal char-counter-wrap" id="desc-char-wrap"><span
+                  id="desc-char-count">0</span> / 600</span>
+            </label>
+            <textarea name="job_description" class="form-control" rows="5"
+              placeholder="Detail key responsibilities, qualifications, work timings, benefits, etc." maxlength="600"
+              required></textarea>
           </div>
+
           <!-- Hidden verified WA number field (set by recruiter.js after OTP) -->
           <input type="hidden" id="form-wa-number" name="form-wa-number">
 
-          <div class="col-12 text-center mt-4">
-            <button type="submit" class="btn btn-primary px-5">Submit Job</button>
+          <div class="col-12 text-center mt-4 pt-2">
+            <button type="submit" class="btn-recruiter-submit">
+              <i class="bi bi-send-check-fill me-2"></i>Submit Job Vacancy
+            </button>
+            <p class="text-muted small mt-2 mb-0">
+              <i class="bi bi-shield-check text-success me-1"></i>All submissions are reviewed and published within
+              24 hours.
+            </p>
           </div>
-
         </div>
       </form>
     </section>
@@ -858,7 +1505,7 @@
             <p>Bypass, Thondayad,
               Kozhikode</p>
             <p>Kerala - 673014</p>
-            <p class="mt-3"><strong>Phone:</strong> <span>+91 98471 78170</span></p>
+            <p class="mt-3"><strong>Phone:</strong> <span>+91 70259 62179</span></p>
             <p><strong>Email:</strong> <span>contact@jobinfo.pro</span></p>
           </div>
         </div>
@@ -888,10 +1535,10 @@
           <p>Stay connected with us on social media for daily job updates, hiring tips, and news. Join our growing
             community and boost your career!</p>
           <div class="social-links d-flex">
-            <a href=""><i class="bi bi-instagram"></i></a>
+            <a href="https://www.instagram.com/jobinfo.pro?utm_source=ig_web_button_share_sheet&amp;igsi=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer"><i class="bi bi-instagram"></i></a>
             <a href=""><i class="bi bi-linkedin"></i></a>
-            <a href=""><i class="bi bi-facebook"></i></a>
-            <a href=""><i class="bi bi-youtube"></i></a>
+            <a href="https://www.facebook.com/profile.php?id=61575626495777" target="_blank" rel="noopener noreferrer"><i class="bi bi-facebook"></i></a>
+            <a href="https://youtube.com/@jobinfo-x6l?si=WAVoFrJ3FflkCsPO" target="_blank" rel="noopener noreferrer"><i class="bi bi-youtube"></i></a>
           </div>
         </div>
 
@@ -935,15 +1582,15 @@
   <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
 
   <!-- Main JS -->
-  <script src="assets/js/main.js"></script>
+  <script src="assets/js/main.js?v=2"></script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   <script src="assets/js/config.js"></script>
-  <script src="assets/js/recruiter.js?v=2"></script>
+  <script src="assets/js/recruiter.js?v=3"></script>
   <script src="assets/js/jobseeker.js?v=2"></script>
   <script>
     (function () {
-      const token = sessionStorage.getItem("ji_r_token");
-      const wa = sessionStorage.getItem("ji_r_wa");
+      const token = sessionStorage.getItem("ji_r_token") || sessionStorage.getItem("ji_token");
+      const wa = sessionStorage.getItem("ji_r_wa") || sessionStorage.getItem("ji_wa");
       if (token && wa) {
         const btn = document.getElementById("login-nav-btn");
         if (btn) {
@@ -953,6 +1600,8 @@
         if (btnMobile) {
           btnMobile.innerHTML = '<i class="bi bi-layout-text-sidebar-reverse me-1"></i>My Vacancies';
         }
+        const inlineAuth = document.getElementById("inline-auth-card");
+        if (inlineAuth) inlineAuth.style.display = "none";
       }
     })();
   </script>

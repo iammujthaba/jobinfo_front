@@ -629,6 +629,8 @@ function handleSuccessfulLogin(intent, setDisplay) {
 
     const pvAuth = document.getElementById("pv-auth-card");
     if (pvAuth) pvAuth.style.display = "none";
+    const inlineAuth = document.getElementById("inline-auth-card");
+    if (inlineAuth) inlineAuth.style.display = "none";
 
     const jf = document.querySelector(".job-form");
     if (jf) {
@@ -685,6 +687,8 @@ document.querySelectorAll(".accordion-header").forEach((header) => {
 
   const pvAuth = document.getElementById("pv-auth-card");
   if (pvAuth) pvAuth.style.display = "none";
+  const inlineAuth = document.getElementById("inline-auth-card");
+  if (inlineAuth) inlineAuth.style.display = "none";
 
   if (document.getElementById("otp-step1")) document.getElementById("otp-step1").style.display = "none";
   if (document.getElementById("otp-step2")) document.getElementById("otp-step2").style.display = "none";
