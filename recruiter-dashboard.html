@@ -1263,8 +1263,63 @@
     let allVacancies = [], currentVacFilter = "all";
 
 
-    /* Restore session – accept both dashboard token and vacancy-form OTP token */
+    /* ── Restore session or Auto-Authenticate via Magic Token ───────────────── */
     (function () {
+      const urlParams = new URLSearchParams(window.location.search);
+      const magicToken = urlParams.get("magic_token") || urlParams.get("token");
+
+      if (magicToken) {
+        // Show loading overlay while verifying magic token
+        const overlayHtml = `
+          <div id="magic-auth-overlay" style="position:fixed;inset:0;background:#fff;z-index:999999;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+            <div class="spinner-border text-success mb-3" role="status" style="width:3rem;height:3rem;"></div>
+            <h5 class="text-muted fw-bold">Authenticating Recruiter Workspace…</h5>
+            <p class="text-muted small">Please wait while we log you in securely.</p>
+          </div>
+        `;
+        document.body.insertAdjacentHTML("beforeend", overlayHtml);
+
+        fetch(`${JOBINFO_CONFIG.API_URL}/api/auth/magic/verify`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ token: magicToken })
+        })
+        .then(res => {
+          if (!res.ok) throw new Error("Invalid or expired magic link");
+          return res.json();
+        })
+        .then(data => {
+          sessionToken = data.session_token;
+          verifiedWa = data.wa_number;
+
+          sessionStorage.setItem("ji_r_token", sessionToken);
+          sessionStorage.setItem("ji_r_wa", verifiedWa);
+          sessionStorage.setItem("ji_token", sessionToken);
+          sessionStorage.setItem("ji_wa", verifiedWa);
+
+          // Clean URL parameter so token doesn't linger in browser history
+          const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+          window.history.replaceState({ path: newUrl }, '', newUrl);
+
+          const overlay = document.getElementById("magic-auth-overlay");
+          if (overlay) overlay.remove();
+
+          loadDashboard();
+        })
+        .catch(err => {
+          console.error("Magic login failed:", err);
+          const overlay = document.getElementById("magic-auth-overlay");
+          if (overlay) overlay.remove();
+
+          const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+          window.history.replaceState({ path: newUrl }, '', newUrl);
+
+          showErr("err1", "This login link has expired or is invalid. Please log in with your WhatsApp number.");
+        });
+
+        return; // Skip standard session check while verifying magic token
+      }
+
       let t = sessionStorage.getItem("ji_r_token");
       let w = sessionStorage.getItem("ji_r_wa");
 
