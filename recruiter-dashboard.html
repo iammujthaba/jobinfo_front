@@ -648,8 +648,12 @@
     }
 
     .btn-submit-edit:disabled {
-      background: #aaa;
+      background: #cbd5e1;
+      color: #94a3b8;
       cursor: not-allowed;
+      opacity: 0.75;
+      transform: none !important;
+      box-shadow: none !important;
     }
 
     .edit-note {
@@ -1652,31 +1656,144 @@
 
     /* ══════════════════ EDIT VACANCY ══════════════════ */
 
+    function normalizeDistrictValue(raw) {
+      if (!raw) return "";
+      const s = String(raw).trim().toLowerCase();
+      const map = {
+        "thiruvananthapuram": "Thiruvananthapuram",
+        "trivandrum": "Thiruvananthapuram",
+        "tvm": "Thiruvananthapuram",
+        "kollam": "Kollam",
+        "quilon": "Kollam",
+        "pathanamthitta": "Pathanamthitta",
+        "alappuzha": "Alappuzha",
+        "alleppey": "Alappuzha",
+        "kottayam": "Kottayam",
+        "idukki": "Idukki",
+        "ernakulam": "Ernakulam",
+        "cochin": "Ernakulam",
+        "kochi": "Ernakulam",
+        "thrissur": "Thrissur",
+        "trichur": "Thrissur",
+        "palakkad": "Palakkad",
+        "palghat": "Palakkad",
+        "malappuram": "Malappuram",
+        "kozhikode": "Kozhikode",
+        "calicut": "Kozhikode",
+        "wayanad": "Wayanad",
+        "wynad": "Wayanad",
+        "kannur": "Kannur",
+        "cannanore": "Kannur",
+        "kasaragod": "Kasaragod",
+        "kasargod": "Kasaragod",
+        "bangalore": "Bangalore",
+        "bengaluru": "Bangalore",
+        "gcc / abroad": "GCC / Abroad",
+        "gcc": "GCC / Abroad",
+        "abroad": "GCC / Abroad",
+        "gulf": "GCC / Abroad",
+        "uae": "GCC / Abroad",
+        "dubai": "GCC / Abroad",
+        "saudi": "GCC / Abroad",
+        "saudi arabia": "GCC / Abroad",
+        "saudi_arabia": "GCC / Abroad",
+        "riyadh": "GCC / Abroad",
+        "qatar": "GCC / Abroad",
+        "doha": "GCC / Abroad",
+        "oman": "GCC / Abroad",
+        "muscat": "GCC / Abroad",
+        "kuwait": "GCC / Abroad",
+        "bahrain": "GCC / Abroad",
+        "manama": "GCC / Abroad",
+        "other": "Other",
+        "other_location": "Other"
+      };
+      if (map[s]) return map[s];
+      const select = document.getElementById("edit-district");
+      if (select) {
+        for (let opt of select.options) {
+          if (opt.value && opt.value.trim().toLowerCase() === s) {
+            return opt.value;
+          }
+        }
+      }
+      return "";
+    }
+
+    let initialEditFormState = null;
+
+    function getEditFormValues() {
+      return {
+        category: (document.getElementById("edit-category")?.value || "").trim(),
+        title: (document.getElementById("edit-title")?.value || "").trim(),
+        district: (document.getElementById("edit-district")?.value || "").trim(),
+        location: (document.getElementById("edit-location")?.value || "").trim(),
+        mode: (document.getElementById("edit-mode")?.value || "").trim(),
+        salary: (document.getElementById("edit-salary")?.value || "").trim(),
+        experience: (document.getElementById("edit-experience")?.value || "").trim(),
+        cv: (document.getElementById("edit-cv")?.value || "").trim(),
+        description: (document.getElementById("edit-description")?.value || "").trim(),
+      };
+    }
+
+    function checkEditFormDirty() {
+      const btn = document.getElementById("submit-edit-btn");
+      if (!btn) return;
+      if (!initialEditFormState) {
+        btn.disabled = true;
+        return;
+      }
+      const current = getEditFormValues();
+      const isChanged = Object.keys(initialEditFormState).some(k => initialEditFormState[k] !== current[k]);
+      const hasRequired = !!(current.category && current.title && current.district && current.location && current.mode);
+      const validLength = current.description.length <= 600;
+
+      // Only enable button if at least one field was edited AND all required fields are filled
+      btn.disabled = !(isChanged && hasRequired && validLength);
+    }
+
     function openEditModal(v) {
       // v can be an object (when called programmatically) or come from onclick as
       // a stringified object via data-attribute — handle both cases.
       if (typeof v === "string") { try { v = JSON.parse(v); } catch { return; } }
       document.getElementById("edit-vac-id").value = v.id;
       document.getElementById("edit-job-code").value = v.job_code || "";
-      document.getElementById("edit-category").value = v.job_category || "";
+
+      let cat = v.job_category || "";
+      if (cat === "office_admin") cat = "office_data_entry";
+      document.getElementById("edit-category").value = cat;
+
       document.getElementById("edit-title").value = v.job_title || "";
-      document.getElementById("edit-district").value = v.district_region || "";
+      document.getElementById("edit-district").value = normalizeDistrictValue(v.district_region);
       document.getElementById("edit-location").value = v.exact_location || "";
       document.getElementById("edit-mode").value = v.job_mode || "";
       document.getElementById("edit-salary").value = v.salary_range || "";
       document.getElementById("edit-experience").value = v.experience_required || "";
-      // cv_required is a boolean in the API — map it to the select's "yes"/"no" IDs
-      document.getElementById("edit-cv").value = v.cv_required === true ? "yes" : v.cv_required === false ? "no" : "";
+
+      // cv_required mapping: robustly handle boolean or string representations
+      let cvVal = "no";
+      if (v.cv_required === true || String(v.cv_required).toLowerCase() === "yes" || String(v.cv_required).toLowerCase() === "true" || v.cv_required === 1 || v.cv_required === "1") {
+        cvVal = "yes";
+      } else if (v.cv_required === false || String(v.cv_required).toLowerCase() === "no" || String(v.cv_required).toLowerCase() === "false" || v.cv_required === 0 || v.cv_required === "0") {
+        cvVal = "no";
+      }
+      document.getElementById("edit-cv").value = cvVal;
+
       document.getElementById("edit-description").value = v.job_description || "";
       updateDescCounter();
       document.getElementById("edit-err").style.display = "none";
-      document.getElementById("submit-edit-btn").disabled = false;
+
+      // Snapshot the initial form state and disable submit button until changes are made
+      initialEditFormState = getEditFormValues();
+      checkEditFormDirty();
+
       document.getElementById("submit-edit-btn").innerHTML = '<i class="bi bi-send me-1"></i>Submit for Review';
       document.getElementById("edit-overlay").classList.add("open");
     }
 
     function closeEditModal() {
       document.getElementById("edit-overlay").classList.remove("open");
+      initialEditFormState = null;
     }
 
     function updateDescCounter() {
@@ -1686,6 +1803,20 @@
       counter.textContent = len + " / 600";
       counter.style.color = len >= 600 ? "#e74c3c" : "#64748b";
     }
+
+    // Attach dirty checking to all editable form fields
+    ["edit-category", "edit-title", "edit-district", "edit-location", "edit-mode", "edit-salary", "edit-experience", "edit-cv", "edit-description"].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.addEventListener("input", () => {
+          if (id === "edit-description") updateDescCounter();
+          checkEditFormDirty();
+        });
+        el.addEventListener("change", () => {
+          checkEditFormDirty();
+        });
+      }
+    });
 
     document.getElementById("cancel-edit-btn").addEventListener("click", closeEditModal);
     document.getElementById("edit-overlay").addEventListener("click", e => {
@@ -1755,7 +1886,8 @@
       } catch (e) {
         errEl.textContent = "Network error. Please try again."; errEl.style.display = "block";
       } finally {
-        btn.disabled = false; btn.innerHTML = '<i class="bi bi-send me-1"></i>Submit for Review';
+        checkEditFormDirty();
+        btn.innerHTML = '<i class="bi bi-send me-1"></i>Submit for Review';
       }
     });
 
