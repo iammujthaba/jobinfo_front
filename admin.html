@@ -1720,16 +1720,21 @@ async function loadAnalytics() {
 }
 
 function renderAnalytics(d) {
+  if (!d) return;
   // Totals
-  document.getElementById("a-recruiters").textContent    = d.totals.recruiters;
-  document.getElementById("a-candidates").textContent    = d.totals.candidates;
-  document.getElementById("a-vacancies").textContent     = d.totals.vacancies;
-  document.getElementById("a-applications").textContent   = d.totals.applications;
-  document.getElementById("a-pending").textContent       = d.vacancy_status.pending;
-  document.getElementById("a-approved").textContent      = d.vacancy_status.approved;
-  document.getElementById("a-rejected").textContent      = d.vacancy_status.rejected;
+  document.getElementById("a-recruiters").textContent    = d.totals?.recruiters ?? 0;
+  document.getElementById("a-candidates").textContent    = d.totals?.candidates ?? 0;
+  document.getElementById("a-vacancies").textContent     = d.totals?.vacancies ?? (d.period_totals?.vacancies ?? 0);
+  document.getElementById("a-applications").textContent   = d.totals?.applications ?? 0;
+  document.getElementById("a-pending").textContent       = d.vacancy_status?.pending ?? 0;
+  document.getElementById("a-approved").textContent      = d.vacancy_status?.approved ?? 0;
+  document.getElementById("a-rejected").textContent      = d.vacancy_status?.rejected ?? 0;
 
-  const labels = d.vacancy_daily.map(r => {
+  const vDaily = d.vacancy_daily || [];
+  const aDaily = d.applications_daily || [];
+  const rDaily = d.recruiters_daily || [];
+
+  const labels = vDaily.map(r => {
     const dt = new Date(r.date);
     return dt.toLocaleDateString("en-IN", { day:"numeric", month:"short" });
   });
@@ -1743,19 +1748,19 @@ function renderAnalytics(d) {
       datasets: [
         {
           label: "Vacancies Submitted",
-          data: d.vacancy_daily.map(r => r.count),
+          data: vDaily.map(r => r.count),
           borderColor: "#25d366", backgroundColor: "rgba(37,211,102,.1)",
           tension: .35, fill: true, pointRadius: 3,
         },
         {
           label: "Applications",
-          data: d.applications_daily.map(r => r.count),
+          data: aDaily.map(r => r.count),
           borderColor: "#2980b9", backgroundColor: "rgba(41,128,185,.08)",
           tension: .35, fill: true, pointRadius: 3,
         },
         {
           label: "New Recruiters",
-          data: d.recruiters_daily.map(r => r.count),
+          data: rDaily.map(r => r.count),
           borderColor: "#8e44ad", backgroundColor: "rgba(142,68,173,.08)",
           tension: .35, fill: false, pointRadius: 3, borderDash: [5,3],
         },
@@ -1765,16 +1770,17 @@ function renderAnalytics(d) {
   });
 
   // Top recruiters bar
+  const recList = d.vacancies_per_recruiter || [];
   if (recruiterChart) recruiterChart.destroy();
-  const rec = d.vacancies_per_recruiter.slice(0, 10);
+  const rec = recList.slice(0, 10);
   recruiterChart = new Chart(document.getElementById("chart-recruiters"), {
     type: "bar",
     data: {
-      labels: rec.map(r => r.recruiter.substring(0, 20)),
+      labels: rec.map(r => (r.recruiter || "").substring(0, 20)),
       datasets: [
-        { label: "Approved", data: rec.map(r => r.approved), backgroundColor: "#25d366" },
-        { label: "Pending",  data: rec.map(r => r.pending),  backgroundColor: "#f39c12" },
-        { label: "Rejected", data: rec.map(r => r.rejected), backgroundColor: "#e74c3c" },
+        { label: "Approved", data: rec.map(r => r.approved || 0), backgroundColor: "#25d366" },
+        { label: "Pending",  data: rec.map(r => r.pending || 0),  backgroundColor: "#f39c12" },
+        { label: "Rejected", data: rec.map(r => r.rejected || 0), backgroundColor: "#e74c3c" },
       ],
     },
     options: {
@@ -1785,15 +1791,16 @@ function renderAnalytics(d) {
   });
 
   // Top jobs by applications
+  const tjList = d.top_jobs_by_applications || [];
   if (topJobsChart) topJobsChart.destroy();
-  const tj = d.top_jobs_by_applications.slice(0, 10);
+  const tj = tjList.slice(0, 10);
   topJobsChart = new Chart(document.getElementById("chart-top-jobs"), {
     type: "bar",
     data: {
-      labels: tj.map(j => j.title.substring(0, 22)),
+      labels: tj.map(j => (j.title || "").substring(0, 22)),
       datasets: [{
         label: "Applications",
-        data: tj.map(j => j.applications),
+        data: tj.map(j => j.applications || 0),
         backgroundColor: "rgba(41,128,185,.75)",
         borderRadius: 4,
       }],
@@ -1808,40 +1815,40 @@ function renderAnalytics(d) {
   // Recruiter detail table
   const rtbody = document.getElementById("recruiter-tbody");
   rtbody.innerHTML = "";
-  const maxRec = Math.max(...d.vacancies_per_recruiter.map(r => r.total), 1);
-  d.vacancies_per_recruiter.forEach(r => {
-    const pct = Math.round((r.total / maxRec) * 100);
+  const maxRec = Math.max(...recList.map(r => r.total || 0), 1);
+  recList.forEach(r => {
+    const pct = Math.round(((r.total || 0) / maxRec) * 100);
     rtbody.insertAdjacentHTML("beforeend", `
       <tr>
-        <td>${escHtml(r.recruiter)}</td>
-        <td><strong>${r.total}</strong></td>
-        <td style="color:#27ae60">${r.approved}</td>
-        <td style="color:#f39c12">${r.pending}</td>
-        <td style="color:#e74c3c">${r.rejected}</td>
+        <td>${escHtml(r.recruiter || '—')}</td>
+        <td><strong>${r.total || 0}</strong></td>
+        <td style="color:#27ae60">${r.approved || 0}</td>
+        <td style="color:#f39c12">${r.pending || 0}</td>
+        <td style="color:#e74c3c">${r.rejected || 0}</td>
         <td><div class="mini-bar"><div class="mini-bar-fill" style="width:${pct}%"></div></div></td>
       </tr>
     `);
   });
-  if (!d.vacancies_per_recruiter.length) rtbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#aaa;padding:24px">No data yet</td></tr>';
+  if (!recList.length) rtbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#aaa;padding:24px">No data yet</td></tr>';
 
   // Top jobs detail table
   const jtbody = document.getElementById("topjobs-tbody");
   jtbody.innerHTML = "";
-  const maxApps = Math.max(...d.top_jobs_by_applications.map(j => j.applications), 1);
-  d.top_jobs_by_applications.forEach(j => {
-    const pct = Math.round((j.applications / maxApps) * 100);
+  const maxApps = Math.max(...tjList.map(j => j.applications || 0), 1);
+  tjList.forEach(j => {
+    const pct = Math.round(((j.applications || 0) / maxApps) * 100);
     const sb = { approved:"badge-approved", pending:"badge-pending", rejected:"badge-rejected" }[j.status] || "badge-pending";
     jtbody.insertAdjacentHTML("beforeend", `
       <tr>
-        <td><strong>${escHtml(j.title)}</strong><br><code class="jc">${escHtml(j.job_code)}</code></td>
-        <td>${escHtml(j.location)}</td>
-        <td><span class="${sb}">${j.status}</span></td>
-        <td><strong>${j.applications}</strong></td>
+        <td><strong>${escHtml(j.title || '—')}</strong><br><code class="jc">${escHtml(j.job_code || '')}</code></td>
+        <td>${escHtml(j.location || '—')}</td>
+        <td><span class="${sb}">${j.status || '—'}</span></td>
+        <td><strong>${j.applications || 0}</strong></td>
         <td><div class="mini-bar"><div class="mini-bar-fill" style="width:${pct}%;background:#2980b9"></div></div></td>
       </tr>
     `);
   });
-  if (!d.top_jobs_by_applications.length) jtbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:#aaa;padding:24px">No data yet</td></tr>';
+  if (!tjList.length) jtbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:#aaa;padding:24px">No data yet</td></tr>';
 
   // Restore opacity
   ["chart-daily","chart-recruiters","chart-top-jobs"].forEach(id => {
